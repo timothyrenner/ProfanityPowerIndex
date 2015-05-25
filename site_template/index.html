@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Fuck This Debate</title>
+        
+        <!-- bootstrap stylesheet -->
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+        <!-- bootstrap theme -->
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    </head>
+    <body>
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+        <!-- bootstrap js -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+        <!-- d3 js -->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+        <!-- sparkline utility -->
+        <script src="js/sparkline.js"></script>
+
+        <!-- hbar utility -->
+        <script src="js/hbar.js"></script>
+        
+        <!-- data -->
+        <script src="sample_data/sample_data.json"></script>
+        
+        <script>
+            // Height for the big sparkline at the top.
+            var bigPlotHeight = 145;
+
+            // Helper function for counting by time.
+            var timeReducer = 
+                function(a, x) { 
+                    var xTime = Date.parse(x.time);
+                    if((a.length == 0) || (a[a.length-1].x != xTime)) {
+                        a.push({x: xTime, y: x.count});
+                    } else {
+                        a[a.length-1].y += x.count;
+                    }
+                    return a;
+                };// Close timeReducer.
+
+            // Helper function for performing a count reduction by word.
+            var wordCountReducer = 
+                function(a, x) {
+                    if(x.word in a) {
+                        a[x.word] += x.count;
+                    } else {
+                        a[x.word] = x.count;
+                    }
+                    return a;
+                };// Close wordCountReducer.
+
+            // Helper function that counts words, then converts to a canonical
+            // d3js array.
+            var wordCounts = function(d) {
+                var c = [];
+                var countDict = d.reduce(wordCountReducer, {});
+                for(var w in countDict) {
+                    c.push({'lab': w, 'val': countDict[w]});
+                }
+                c.sort(function(a,b) {
+                    if(a.lab < b.lab) { 
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+                return c;
+            } // Close wordCounts.
+
+            // All of the counts as a function of time.
+            var allCountsByTime = data.reduce(timeReducer, []);
+
+            // All of Rand Paul's counts as a function of time.
+            var allCountsRandPaul = data.filter(
+                function(x) { 
+                    return x.candidate === "Rand Paul";
+                }).reduce(timeReducer, []);
+
+            // All of Ted Cruz's counts as a function of time.
+            var allCountsTedCruz = data.filter(
+                function(x) { 
+                    return x.candidate === "Ted Cruz";
+                }).reduce(timeReducer, []);
+
+            // Rand Paul's total counts.
+            var randPaulWordCount = wordCounts(data.filter(
+                function(x) { return x.candidate === "Rand Paul"; }));
+
+            // Ted Cruz's total counts.
+            var tedCruzWordCount = wordCounts(data.filter(
+                function(x) { return x.candidate === "Ted Cruz"; }));
+
+            // Maximum value for the cuss words across the candidates.
+            var maxValue = d3.max(randPaulWordCount.concat(tedCruzWordCount),
+                function(d) { return d.val; });
+            
+        </script>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" id="big-sparkline">
+                    <br>
+                    <script>
+                        // Get the width of the div as calculated by the
+                        // browser.
+                        var bigSparklineDiv = 
+                            document.getElementById("big-sparkline");
+                        var bigSparklineWidth = 
+                            parseInt(window
+                                     .getComputedStyle(bigSparklineDiv)
+                                     .width) - 5;
+                        var bigSparklineHeight = bigPlotHeight;
+
+                        // Draw the sparkline and save the plot.
+                        // d3 methods accesible via bigSparkline.graph.
+                        var bigSparkline = sparkline(d3, 
+                                                     '#big-sparkline', 
+                                                      allCountsByTime,
+                                                      bigSparklineWidth,
+                                                      bigSparklineHeight)
+                                            .color("#67000d");
+                    </script>
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div> <!-- row -->
+            <div class="row">
+                <div class="col-md-2" id="rand-paul-barchart">
+                    <script>
+                        var randPaulBarChartDiv = 
+                            document.getElementById("rand-paul-barchart");
+                        var randPaulBarChartWidth = 
+                            parseInt(
+                                window.getComputedStyle(randPaulBarChartDiv)
+                                      .width) - 5;
+
+                        var randPaulBarChartHeight = randPaulBarChartWidth;
+                        var randPaulBarChart = hbar(d3,
+                                                    "#rand-paul-barchart",
+                                                    randPaulWordCount,
+                                                    randPaulBarChartWidth,
+                                                    randPaulBarChartHeight,
+                                                    maxValue);
+                    </script>
+                </div>
+                <div class="col-md-2" id="rand-paul-image">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/7/78/Rand_Paul%2C_official_portrait%2C_112th_Congress_alternate.jpg"
+                        style="width: 100%; height:100%; border:2px solid black"/>
+                </div>
+                <div class="col-md-2" id="rand-paul-sparkline">
+                    <script>
+                        var randPaulSparklineDiv = 
+                            document.getElementById("rand-paul-sparkline");
+
+                        var randPaulSparklineWidth = 
+                            parseInt(
+                                window
+                                .getComputedStyle(randPaulSparklineDiv)
+                                .width) - 5;
+                        
+                        var randPaulSparklineHeight = randPaulSparklineWidth;
+
+                        var randPaulSparkline = 
+                            sparkline(d3,
+                                      "#rand-paul-sparkline",
+                                      allCountsRandPaul,
+                                      randPaulSparklineWidth, 
+                                      randPaulSparklineHeight)
+                            .color("#a50f15");
+                    </script>
+                </div>
+                <div class="col-md-2" id="ted-cruz-barchart">
+                    <script>
+                        var tedCruzBarChartDiv = 
+                            document.getElementById("ted-cruz-barchart");
+                        var tedCruzBarChartWidth = 
+                            parseInt(
+                                window.getComputedStyle(tedCruzBarChartDiv)
+                                      .width) - 5;
+                        var tedCruzBarChartHeight = tedCruzBarChartWidth;
+                        var tedCruzBarChart = hbar(d3,
+                                                   "#ted-cruz-barchart",
+                                                   tedCruzWordCount,
+                                                   tedCruzBarChartWidth,
+                                                   tedCruzBarChartHeight,
+                                                   maxValue);
+
+                    </script>
+                </div>
+                <div class="col-md-2" id="ted-cruz-image">
+                    <img src="http://upload.wikimedia.org/wikipedia/commons/8/87/Ted_Cruz%2C_official_portrait%2C_113th_Congress.jpg"
+                        style="width:100%; height:100%; border: 2px solid black"/>
+                </div>
+                <div class="col-md-2" id="ted-cruz-sparkline">
+                    <script>
+                        var tedCruzSparklineDiv = 
+                            document.getElementById("ted-cruz-sparkline");
+                        var tedCruzSparklineWidth = 
+                            parseInt(window
+                                .getComputedStyle(tedCruzSparklineDiv)
+                                .width) - 5;
+                        var tedCruzSparklineHeight = tedCruzSparklineWidth;
+                        var tedCruzSparkline = 
+                            sparkline(d3,
+                                      "#ted-cruz-sparkline",
+                                      allCountsTedCruz,
+                                      tedCruzSparklineWidth,
+                                      tedCruzSparklineHeight)
+                            .color("#cb181d");
+                    </script>
+                </div>
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div> <!-- row -->
+        </div> <!-- container -->
+
+    </body>
+
+</html>
