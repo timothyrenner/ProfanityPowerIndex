@@ -8,7 +8,8 @@ function hbar(d3, id, data, width, height, maxVal) {
                  .attr("width", width)
                  .attr("height", height)
                  .append("g")
-                 .attr("transform","translate(" + -60 + ",0)"),
+                 .attr("transform","translate(" + -60 + ",0)")
+                 .attr('font-weight','bold'),
 
         // Start the scales.
         x: d3.scale.linear()
@@ -40,7 +41,9 @@ function hbar(d3, id, data, width, height, maxVal) {
         .attr("width", function(d) { return width - plot.x(d.val); })
         .attr("y", function(d) { return plot.y(d.lab); })
         .attr("height", function(d) { return plot.y.rangeBand(); })
-        .attr("fill", "blue");
+        .attr("fill", "blue")
+        .attr("stroke", "black")
+        .attr("stroke-width", "0.5px");
 
     plot.graph.append("g")
               .attr("class", "y-axis")
@@ -50,5 +53,9 @@ function hbar(d3, id, data, width, height, maxVal) {
               .attr('fill','none')
               .attr('stroke', 'black');
 
+    plot.color = function(c) {
+        plot.graph.selectAll(".bar").attr("fill", c);
+        return plot;
+    }
     return plot; 
 } // Close hbar.

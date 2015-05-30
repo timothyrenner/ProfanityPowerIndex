@@ -76,9 +76,6 @@
                 return c;
             } // Close wordCounts.
 
-            // All of the counts as a function of time.
-            var allCountsByTime = data.reduce(timeReducer, []);
-
             // All of Rand Paul's counts as a function of time.
             var allCountsRandPaul = data.filter(
                 function(x) { 
@@ -106,35 +103,12 @@
         </script>
         <div class="container">
             <div class="row">
-                <div class="col-md-12" id="big-sparkline">
-                    <br>
-                    <script>
-                        // Get the width of the div as calculated by the
-                        // browser.
-                        var bigSparklineDiv = 
-                            document.getElementById("big-sparkline");
-                        var bigSparklineWidth = 
-                            parseInt(window
-                                     .getComputedStyle(bigSparklineDiv)
-                                     .width) - 5;
-                        var bigSparklineHeight = bigPlotHeight;
-
-                        // Draw the sparkline and save the plot.
-                        // d3 methods accesible via bigSparkline.graph.
-                        var bigSparkline = sparkline(d3, 
-                                                     '#big-sparkline', 
-                                                      allCountsByTime,
-                                                      bigSparklineWidth,
-                                                      bigSparklineHeight)
-                                            .color("#67000d");
-                    </script>
-                </div>
                 <div class="col-md-12">
-                    <hr>
-                </div>
+                    <h1>FUCK THIS DEBATE</h1>
+                </div> <!-- Heading -->
             </div> <!-- row -->
             <div class="row">
-                <div class="col-md-2" id="rand-paul-barchart">
+                <div class="col-md-5" id="rand-paul-barchart">
                     <script>
                         var randPaulBarChartDiv = 
                             document.getElementById("rand-paul-barchart");
@@ -143,20 +117,21 @@
                                 window.getComputedStyle(randPaulBarChartDiv)
                                       .width) - 5;
 
-                        var randPaulBarChartHeight = randPaulBarChartWidth;
+                        var randPaulBarChartHeight = randPaulBarChartWidth/2;
                         var randPaulBarChart = hbar(d3,
                                                     "#rand-paul-barchart",
                                                     randPaulWordCount,
                                                     randPaulBarChartWidth,
-                                                    randPaulBarChartHeight,
-                                                    maxValue);
+                                                    229,
+                                                    maxValue)
+                                               .color("#cb181d");
                     </script>
-                </div>
+                </div> <!-- barchart column -->
                 <div class="col-md-2" id="rand-paul-image">
-                    <img src="http://upload.wikimedia.org/wikipedia/commons/7/78/Rand_Paul%2C_official_portrait%2C_112th_Congress_alternate.jpg"
-                        style="width: 100%; height:100%; border:2px solid black"/>
-                </div>
-                <div class="col-md-2" id="rand-paul-sparkline">
+                        <img class="img-responsive" src="http://upload.wikimedia.org/wikipedia/commons/7/78/Rand_Paul%2C_official_portrait%2C_112th_Congress_alternate.jpg"
+                            style="max-width: 180px; max-height:229px; border:2px solid black; margin: 0 auto"/>
+                </div> <!-- Image column -->
+                <div class="col-md-5" id="rand-paul-sparkline">
                     <script>
                         var randPaulSparklineDiv = 
                             document.getElementById("rand-paul-sparkline");
@@ -167,18 +142,25 @@
                                 .getComputedStyle(randPaulSparklineDiv)
                                 .width) - 5;
                         
-                        var randPaulSparklineHeight = randPaulSparklineWidth;
+                        var randPaulSparklineHeight = randPaulSparklineWidth/2;
 
                         var randPaulSparkline = 
                             sparkline(d3,
                                       "#rand-paul-sparkline",
                                       allCountsRandPaul,
-                                      randPaulSparklineWidth, 
-                                      randPaulSparklineHeight)
-                            .color("#a50f15");
+                                      randPaulSparklineWidth,
+                                      229) 
+                            .color("#cb181d");
                     </script>
-                </div>
-                <div class="col-md-2" id="ted-cruz-barchart">
+                </div> <!-- sparkline column -->
+            </div> <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div><!-- hr column -->
+            </div> <!-- row -->
+            <div class="row">
+                <div class="col-md-5" id="ted-cruz-barchart">
                     <script>
                         var tedCruzBarChartDiv = 
                             document.getElementById("ted-cruz-barchart");
@@ -191,16 +173,17 @@
                                                    "#ted-cruz-barchart",
                                                    tedCruzWordCount,
                                                    tedCruzBarChartWidth,
-                                                   tedCruzBarChartHeight,
-                                                   maxValue);
+                                                   229,
+                                                   maxValue)
+                                              .color("#cb181d");
 
                     </script>
-                </div>
+                </div> <!-- barchart column -->
                 <div class="col-md-2" id="ted-cruz-image">
-                    <img src="http://upload.wikimedia.org/wikipedia/commons/8/87/Ted_Cruz%2C_official_portrait%2C_113th_Congress.jpg"
-                        style="width:100%; height:100%; border: 2px solid black"/>
-                </div>
-                <div class="col-md-2" id="ted-cruz-sparkline">
+                    <img class="img-responsive" src="http://upload.wikimedia.org/wikipedia/commons/8/87/Ted_Cruz%2C_official_portrait%2C_113th_Congress.jpg"
+                        style="max-width:180px; max-height:229px; border: 2px solid black; margin: 0 auto"/>
+                </div> <!-- image column -->
+                <div class="col-md-5" id="ted-cruz-sparkline">
                     <script>
                         var tedCruzSparklineDiv = 
                             document.getElementById("ted-cruz-sparkline");
@@ -214,13 +197,13 @@
                                       "#ted-cruz-sparkline",
                                       allCountsTedCruz,
                                       tedCruzSparklineWidth,
-                                      tedCruzSparklineHeight)
+                                      229)
                             .color("#cb181d");
                     </script>
-                </div>
+                </div> <!-- sparkline column -->
                 <div class="col-md-12">
                     <hr>
-                </div>
+                </div><!-- hr column -->
             </div> <!-- row -->
         </div> <!-- container -->
 

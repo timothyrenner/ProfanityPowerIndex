@@ -21,7 +21,7 @@ function sparkline(d3, id, data, width, height) {
     plot.graph.append("svg:path")
         .data(plot.data)
         .attr("d", plot.line(plot.data))
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 2.5)
         .attr("fill","none");
 
     plot.color = function(c) {
