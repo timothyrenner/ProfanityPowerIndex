@@ -30,77 +30,34 @@
         
         <!-- data -->
         <script src="sample_data/sample_data.json"></script>
+
+        <!-- setup -->
+        <script src="js/setup.js"></script>
         
+        <!-- variables -->
         <script>
             // Height for the big sparkline at the top.
             var bigPlotHeight = 145;
 
-            // Helper function for counting by time.
-            var timeReducer = 
-                function(a, x) { 
-                    var xTime = Date.parse(x.time);
-                    if((a.length == 0) || (a[a.length-1].x != xTime)) {
-                        a.push({x: xTime, y: x.count});
-                    } else {
-                        a[a.length-1].y += x.count;
-                    }
-                    return a;
-                };// Close timeReducer.
-
-            // Helper function for performing a count reduction by word.
-            var wordCountReducer = 
-                function(a, x) {
-                    if(x.word in a) {
-                        a[x.word] += x.count;
-                    } else {
-                        a[x.word] = x.count;
-                    }
-                    return a;
-                };// Close wordCountReducer.
-
-            // Helper function that counts words, then converts to a canonical
-            // d3js array.
-            var wordCounts = function(d) {
-                var c = [];
-                var countDict = d.reduce(wordCountReducer, {});
-                for(var w in countDict) {
-                    c.push({'lab': w, 'val': countDict[w]});
-                }
-                c.sort(function(a,b) {
-                    if(a.lab < b.lab) { 
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                });
-                return c;
-            } // Close wordCounts.
-
             // All of Rand Paul's counts as a function of time.
-            var allCountsRandPaul = data.filter(
-                function(x) { 
-                    return x.candidate === "Rand Paul";
-                }).reduce(timeReducer, []);
+            var allCountsRandPaul = 
+                candidateWordCountsByTime("Rand Paul", data);
 
             // All of Ted Cruz's counts as a function of time.
-            var allCountsTedCruz = data.filter(
-                function(x) { 
-                    return x.candidate === "Ted Cruz";
-                }).reduce(timeReducer, []);
+            var allCountsTedCruz = 
+                candidateWordCountsByTime("Ted Cruz", data);
 
             // Rand Paul's total counts.
-            var randPaulWordCount = wordCounts(data.filter(
-                function(x) { return x.candidate === "Rand Paul"; }));
+            var randPaulWordCount = candidateWordCounts("Rand Paul", data);
 
             // Ted Cruz's total counts.
-            var tedCruzWordCount = wordCounts(data.filter(
-                function(x) { return x.candidate === "Ted Cruz"; }));
+            var tedCruzWordCount = candidateWordCounts("Ted Cruz", data);
 
             // Maximum value for the cuss words across the candidates.
             var maxValue = d3.max(randPaulWordCount.concat(tedCruzWordCount),
                 function(d) { return d.val; });
-            
         </script>
+        
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -117,14 +74,11 @@
                                 window.getComputedStyle(randPaulBarChartDiv)
                                       .width) - 5;
 
-                        var randPaulBarChartHeight = randPaulBarChartWidth/2;
-                        var randPaulBarChart = hbar(d3,
-                                                    "#rand-paul-barchart",
-                                                    randPaulWordCount,
-                                                    randPaulBarChartWidth,
-                                                    229,
-                                                    maxValue)
-                                               .color("#cb181d");
+                        hbar(d3, "#rand-paul-barchart",
+                                 randPaulWordCount,
+                                 randPaulBarChartWidth,
+                                 229,
+                                 maxValue);
                     </script>
                 </div> <!-- barchart column -->
                 <div class="col-md-2" id="rand-paul-image">
@@ -144,13 +98,11 @@
                         
                         var randPaulSparklineHeight = randPaulSparklineWidth/2;
 
-                        var randPaulSparkline = 
-                            sparkline(d3,
-                                      "#rand-paul-sparkline",
-                                      allCountsRandPaul,
-                                      randPaulSparklineWidth,
-                                      229) 
-                            .color("#cb181d");
+                        sparkline(d3,
+                                  "#rand-paul-sparkline",
+                                  allCountsRandPaul,
+                                  randPaulSparklineWidth,
+                                  229);                        
                     </script>
                 </div> <!-- sparkline column -->
             </div> <!-- row -->
@@ -169,13 +121,11 @@
                                 window.getComputedStyle(tedCruzBarChartDiv)
                                       .width) - 5;
                         var tedCruzBarChartHeight = tedCruzBarChartWidth;
-                        var tedCruzBarChart = hbar(d3,
-                                                   "#ted-cruz-barchart",
-                                                   tedCruzWordCount,
-                                                   tedCruzBarChartWidth,
-                                                   229,
-                                                   maxValue)
-                                              .color("#cb181d");
+                        hbar(d3, "#ted-cruz-barchart",
+                                 tedCruzWordCount,
+                                 tedCruzBarChartWidth,
+                                 229,
+                                 maxValue);
 
                     </script>
                 </div> <!-- barchart column -->
@@ -191,14 +141,11 @@
                             parseInt(window
                                 .getComputedStyle(tedCruzSparklineDiv)
                                 .width) - 5;
-                        var tedCruzSparklineHeight = tedCruzSparklineWidth;
-                        var tedCruzSparkline = 
-                            sparkline(d3,
-                                      "#ted-cruz-sparkline",
-                                      allCountsTedCruz,
-                                      tedCruzSparklineWidth,
-                                      229)
-                            .color("#cb181d");
+                        sparkline(d3,
+                                  "#ted-cruz-sparkline",
+                                  allCountsTedCruz,
+                                  tedCruzSparklineWidth,
+                                  229);
                     </script>
                 </div> <!-- sparkline column -->
                 <div class="col-md-12">
