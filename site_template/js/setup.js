@@ -67,4 +67,11 @@ function candidateWordCountsByTime(c, d) {
 function wordCountsByTime(w, d){
 
     return d.filter(function(x) { return x.word === w; });
-}// Close wordCountsByTime
+}// Close wordCountsByTime.
+
+// Returns the width of the selected div.
+function elementWidth(divId) {
+    return parseInt(window.getComputedStyle(document.getElementById(divId))
+                          .width) - 5;
+}// Close elementHeight.
+

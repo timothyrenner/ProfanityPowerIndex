@@ -1,4 +1,4 @@
-function sparkline(d3, id, data, width, height) {
+function sparkline(d3, id, data, width, height, gradient) {
 
     // Offsets for endpoints.
     var widthOffset = 6;
@@ -36,12 +36,7 @@ function sparkline(d3, id, data, width, height) {
        .attr("x1", xScale(0)).attr("y1", yScale(0.10*maxCount))
        .attr("x2", xScale(0)).attr("y2", yScale(0.90*maxCount))
        .selectAll("stop")
-       .data([
-            {offset: "0%",   color: "#fcbba1"},
-            {offset: "25%",  color: "#fcae91"},
-            {offset: "50%",  color: "#fb6a4a"},
-            {offset: "75%",  color: "#de2d26"},
-            {offset: "100%", color: "#a50f15"}])
+       .data(gradient)
        .enter()
        .append('stop')
        .attr("offset", function(d) { return d.offset; })

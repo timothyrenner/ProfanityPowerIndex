@@ -36,8 +36,18 @@
         
         <!-- variables -->
         <script>
-            // Height for the big sparkline at the top.
-            var bigPlotHeight = 145;
+            // Height for the plots.
+            var plotHeight = 229;
+
+            // Gradient colors for the sparklines.
+            var gradientColors = 
+            [
+                {offset: "0%",   color: "#fcbba1"},
+                {offset: "25%",  color: "#fcae91"},
+                {offset: "50%",  color: "#fb6a4a"},
+                {offset: "75%",  color: "#de2d26"},
+                {offset: "100%", color: "#a50f15"}
+            ];
 
             // All of Rand Paul's counts as a function of time.
             var allCountsRandPaul = 
@@ -67,18 +77,12 @@
             <div class="row">
                 <div class="col-md-5" id="rand-paul-barchart">
                     <script>
-                        var randPaulBarChartDiv = 
-                            document.getElementById("rand-paul-barchart");
-                        var randPaulBarChartWidth = 
-                            parseInt(
-                                window.getComputedStyle(randPaulBarChartDiv)
-                                      .width) - 5;
-
                         hbar(d3, "#rand-paul-barchart",
                                  randPaulWordCount,
-                                 randPaulBarChartWidth,
-                                 229,
-                                 maxValue);
+                                 elementWidth("rand-paul-barchart"),
+                                 plotHeight,
+                                 maxValue,
+                                 "#bd0026");
                     </script>
                 </div> <!-- barchart column -->
                 <div class="col-md-2" id="rand-paul-image">
@@ -87,22 +91,12 @@
                 </div> <!-- Image column -->
                 <div class="col-md-5" id="rand-paul-sparkline">
                     <script>
-                        var randPaulSparklineDiv = 
-                            document.getElementById("rand-paul-sparkline");
-
-                        var randPaulSparklineWidth = 
-                            parseInt(
-                                window
-                                .getComputedStyle(randPaulSparklineDiv)
-                                .width) - 5;
-                        
-                        var randPaulSparklineHeight = randPaulSparklineWidth/2;
-
                         sparkline(d3,
                                   "#rand-paul-sparkline",
                                   allCountsRandPaul,
-                                  randPaulSparklineWidth,
-                                  229);                        
+                                  elementWidth("rand-paul-sparkline"),
+                                  plotHeight,
+                                  gradientColors);                        
                     </script>
                 </div> <!-- sparkline column -->
             </div> <!-- row -->
@@ -114,18 +108,12 @@
             <div class="row">
                 <div class="col-md-5" id="ted-cruz-barchart">
                     <script>
-                        var tedCruzBarChartDiv = 
-                            document.getElementById("ted-cruz-barchart");
-                        var tedCruzBarChartWidth = 
-                            parseInt(
-                                window.getComputedStyle(tedCruzBarChartDiv)
-                                      .width) - 5;
-                        var tedCruzBarChartHeight = tedCruzBarChartWidth;
                         hbar(d3, "#ted-cruz-barchart",
                                  tedCruzWordCount,
-                                 tedCruzBarChartWidth,
-                                 229,
-                                 maxValue);
+                                 elementWidth("ted-cruz-barchart"),
+                                 plotHeight,
+                                 maxValue,
+                                 "#bd0026");
 
                     </script>
                 </div> <!-- barchart column -->
@@ -135,17 +123,12 @@
                 </div> <!-- image column -->
                 <div class="col-md-5" id="ted-cruz-sparkline">
                     <script>
-                        var tedCruzSparklineDiv = 
-                            document.getElementById("ted-cruz-sparkline");
-                        var tedCruzSparklineWidth = 
-                            parseInt(window
-                                .getComputedStyle(tedCruzSparklineDiv)
-                                .width) - 5;
                         sparkline(d3,
                                   "#ted-cruz-sparkline",
                                   allCountsTedCruz,
-                                  tedCruzSparklineWidth,
-                                  229);
+                                  elementWidth("ted-cruz-sparkline"),
+                                  plotHeight,
+                                  gradientColors);
                     </script>
                 </div> <!-- sparkline column -->
                 <div class="col-md-12">

@@ -1,4 +1,4 @@
-function hbar(d3, id, data, width, height, maxVal) {
+function hbar(d3, id, data, width, height, maxVal, color) {
     // Create the svg group.
     var svg = d3.select(id)
                 .append("svg:svg")
@@ -38,7 +38,7 @@ function hbar(d3, id, data, width, height, maxVal) {
        .attr("height", function(d) { return yScale.rangeBand(); })
        .attr("stroke", "black")
        .attr("stroke-width", "1.0px")
-       .attr("fill", "#bd0026");
+       .attr("fill", color);
 
     // Draw the axis.       
     svg.append("g")
