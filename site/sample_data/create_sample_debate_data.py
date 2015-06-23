@@ -1,12 +1,12 @@
-import json
+import csv
 from random import randint
 from datetime import datetime
 from datetime import timedelta
 
 candidates = ['Ted Cruz', 'Rand Paul', 'Marco Rubio', 'Ben Carson', 
-             'Mike Huckabee', 'Jeb Bush', 'Chris Christie', 'Rick Perry']
+              'Mike Huckabee', 'Jeb Bush', 'Rick Perry', 'Rick Santorum']
 
-cuss_words = ['fuck', 'shit', 'ass', 'bitch', 'douche', 'dick']
+cuss_words = ['fuck', 'shit', 'ass', 'bitch', 'douche', 'dick', 'damn']
 
 # Three hours in `interval` second intervals.
 interval = 60
@@ -23,5 +23,11 @@ dataset = [{'candidate': c, 'word': w, 'time': t.isoformat(), 'count': v}
             for w in cuss_words
             for t,v in zip(times, random_walk(len(times)))]
 
-print("var data = " + json.dumps(sorted(dataset,key=lambda x: x['time']),
-                                 indent=2))
+with open('sample_data.csv', 'w') as out:
+    fieldnames = ["candidate", "word", "time", "count"]
+
+    writer = csv.DictWriter(out, fieldnames=fieldnames, delimiter="\t")
+    
+    writer.writeheader()
+    for row in sorted(dataset, key=lambda x: x['time']):
+        writer.writerow(row)

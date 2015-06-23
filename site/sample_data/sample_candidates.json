@@ -1,0 +1,107 @@
+[
+    {
+        "name": "Rand Paul",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/7/78/Rand_Paul%2C_official_portrait%2C_112th_Congress_alternate.jpg",
+        "id": "rand-paul",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    },
+    {
+        "name": "Ted Cruz",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/8/87/Ted_Cruz%2C_official_portrait%2C_113th_Congress.jpg",
+        "id": "ted-cruz",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    },
+    {
+        "name": "Marco Rubio",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/7/79/Marco_Rubio%2C_Official_Portrait%2C_112th_Congress.jpg",
+        "id": "marco-rubio",        
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    },
+    {
+        "name": "Ben Carson",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Ben_Carson_at_CPAC_2015.jpg",
+        "id": "ben-carson",        
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    },
+    {
+        "name": "Mike Huckabee",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Gov_Huckabee_May_2015.jpg",
+        "id": "mike-huckabee",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    },
+    {
+        "name": "Jeb Bush",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Jeb_Bush_by_Gage_Skidmore_2.jpg",
+        "id": "jeb-bush",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    },
+    {
+        "name": "Rick Perry",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/1/15/Gov._Perry_CPAC_February_2015.jpg",
+        "id": "rick-perry",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    },
+    {
+        "name": "Rick Santorum",
+        "picture": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Rick_Santorum_by_Gage_Skidmore_8.jpg",
+        "id": "rick-santorum",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026" }
+        }
+    }
+]
+
