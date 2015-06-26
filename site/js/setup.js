@@ -70,61 +70,6 @@ function elementWidth(divId) {
 //         'word'      : word,
 //         'time'      : time,
 //         'count'     : count }]
-function hbar(d3, id, data, width, height, maxVal, color) {
-
-    var countData = wordCounts(data);
-
-    // Create the svg group.
-    var svg = d3.select(id)
-                .append("svg:svg")
-                .attr("id", id + "-svg")
-                .attr("width", width)
-                .attr("height", height)
-                .append("g")
-                .attr("transform", "translate(" + -60 + ",0)")
-                .attr("font-weight", "bold");
-
-    // Create the x and y scales.
-
-    // We need to anchor left, so the highest values need to
-    // map to the smallest width so when we subtract the scale
-    // value we get the remaining space to draw.
-    // This is because SVG rect's draw from the top left.
-    var xScale = d3.scale.linear()
-                         .range([width, 60 + 5])
-                         .domain([0, maxVal]);
-
-    var yScale = d3.scale.ordinal()
-                         .rangeRoundBands([0, height], 0.35)
-                         .domain(data.map( function(d) { return d.word; }));
-
-    // Draw the axis.
-    var yAxis = d3.svg.axis().scale(yScale).orient("right");
-
-    // Draw the bars.
-    svg.selectAll(".bar")
-       .data(countData)
-       .enter()
-       .append("rect")
-       .attr("class","bar")
-       .attr("x", function(d) { return xScale(d.count); })
-       .attr("width", function(d) { return width - xScale(d.count); })
-       .attr("y", function(d) { return yScale(d.word); })
-       .attr("height", function(d) { return yScale.rangeBand(); })
-       .attr("stroke", "black")
-       .attr("stroke-width", "1.0px")
-       .attr("fill", color.base);
-
-    // Draw the axis.       
-    svg.append("g")
-       .attr("class", "y-axis")
-       .attr("transform","translate(" + width + ",0)")
-       .call(yAxis)
-       .select("path")
-       .attr('fill','none')
-       .attr('stroke', 'none');
-}// Close hbar.
-
 function sparkline(d3, id, data, width, height, gradient) {
 
     var dataByTime = data.slice(1).reduce(countByTime,
@@ -139,7 +84,8 @@ function sparkline(d3, id, data, width, height, gradient) {
     var heightOffset = 6;
 
     // Perform the initial selection.
-    var svg = d3.select(id).append("svg:svg")
+    var svg = d3.select("#"+id).append("svg")
+                           .attr("id", id + "-svg")
                            .attr("height", height)
                            .attr("width", width);
 
@@ -177,15 +123,18 @@ function sparkline(d3, id, data, width, height, gradient) {
        .attr("stop-color", function(d) { return d.color; });
 
     // Add the line to the svg.
-    svg.append("svg:path")
-       .data(dataByTime)
-       .attr("d", line(dataByTime))
+    svg.append("path")
+       .data([dataByTime])
+       .attr("id", id + "-line")
+       .attr("class", "line")
+       .attr("d", line)
        .attr("stroke-width", 2.5)
        .attr("fill", "none")
        .attr("stroke", "url(#"+id+"-svg-count-gradient)");
 
     // Add the end points to the svg.
     svg.selectAll("circle")
+       .attr("class", "end-points")
        .data([dataByTime[0], dataByTime[dataByTime.length-1]])
        .enter()
        .append("circle")
@@ -194,6 +143,115 @@ function sparkline(d3, id, data, width, height, gradient) {
        .attr("cy", function(d) { return yScale(d.count); })
        .attr("fill", "url(#"+id+"-svg-count-gradient)");
 } // Close sparkline.
+
+function updateSparkline(d3, id, data, width, height) {
+
+    // Slice out the data by time.
+    var dataByTime = data.slice(1).reduce(countByTime,
+        [
+            {
+                time: data[0].time,
+                count: data[0].count
+            }]);
+
+    // Offsets for endpoints.
+    var widthOffset = 6;
+    var heightOffset = 6;
+
+    // Redraw the y-scale.
+    var yScale = d3.scale.linear()
+                          .range([height - heightOffset, heightOffset])
+                          .domain(d3.extent(dataByTime, 
+                                            function(d) { return d.count; }));
+    var xScale = d3.time.scale()
+                        .range([widthOffset, width - widthOffset])
+                        .domain(d3.extent(dataByTime, 
+                                          function(d) { return d.time; }));
+    // Create the line new line function.
+    var line = d3.svg.line()
+                     .x(function(d) { return xScale(d.time); })
+                     .y(function(d) { return yScale(d.count); })
+                     .interpolate("basis");
+
+    var svg = d3.select("#"+id+"-svg");
+    var transitionTime = 500;
+
+    // Update the line for the svg.
+    svg.selectAll("path")
+      .data([dataByTime])
+      .transition()
+      .duration(transitionTime)
+      .attr("d", line);
+
+    // Add the end points to the svg.
+    svg.selectAll("circle")
+      .data([dataByTime[0], dataByTime[dataByTime.length-1]])
+      .transition()
+      .duration(transitionTime)
+      .attr("cy", function(d) {return yScale(d.count);})
+      .attr("fill", "url(#"+id+"-svg-count-gradient)");
+} // Close updateSparkline.
+
+function hbar(d3, id, data, width, height, maxVal, color) {
+
+    var countData = wordCounts(data);
+
+    // Create the svg group.
+    var svg = d3.select("#"+id)
+                .append("svg")
+                .attr("id", id + "-svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", "translate(" + -60 + ",0)")
+                .attr("font-weight", "bold");
+
+    // Create the x and y scales.
+
+    // We need to anchor left, so the highest values need to
+    // map to the smallest width so when we subtract the scale
+    // value we get the remaining space to draw.
+    // This is because SVG rect's draw from the top left.
+    var xScale = d3.scale.linear()
+                         .range([width, 60 + 5])
+                         .domain([0, maxVal]);
+
+    var yScale = d3.scale.ordinal()
+                         .rangeRoundBands([0, height], 0.35)
+                         .domain(data.map( function(d) { return d.word; }));
+
+    // Draw the axis.
+    var yAxis = d3.svg.axis().scale(yScale).orient("right");
+
+    // Draw the bars.
+    svg.selectAll(".bar")
+       .data(countData)
+       .enter()
+       .append("rect")
+       .attr("class","bar")
+       .attr("x", function(d) { return xScale(d.count); })
+       .attr("width", function(d) { return width - xScale(d.count); })
+       .attr("y", function(d) { return yScale(d.word); })
+       .attr("height", function(d) { return yScale.rangeBand(); })
+       .attr("stroke", "black")
+       .attr("stroke-width", "1.0px")
+       .attr("fill", color.base)
+       .on("mouseover", function(d) { 
+            updateSparkline(d3, id.replace("barchart", "sparkline"), 
+                filterWord(d.word, data), width, height); })
+       .on("mouseout", function(d) { 
+            updateSparkline(d3, id.replace("barchart", "sparkline"), data,
+                width, height); });
+
+    // Draw the axis.       
+    svg.append("g")
+       .attr("class", "y-axis")
+       .attr("transform","translate(" + width + ",0)")
+       .call(yAxis)
+       .select("path")
+       .attr('fill','none')
+       .attr('stroke', 'none');
+}// Close hbar.
 
 // Constants.
 
@@ -255,13 +313,13 @@ function tsvCallback(candidatesString) {
         candidates.forEach(
             function(x) {
                 sparkline(d3,
-                          "#" + x.id + "-sparkline", 
+                          x.id + "-sparkline", 
                           filterCandidate(x.name, cleanedData),
                           elementWidth(x.id + "-sparkline"),
                           plotHeight,
                           x.colors.sparkline);
                 hbar(d3,
-                     "#" + x.id + "-barchart",
+                     x.id + "-barchart",
                      filterCandidate(x.name, cleanedData),
                      elementWidth(x.id + "-barchart"),
                      plotHeight,
