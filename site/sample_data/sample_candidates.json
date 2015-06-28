@@ -9,7 +9,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     },
     {
@@ -22,7 +23,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     },
     {
@@ -35,7 +37,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     },
     {
@@ -48,7 +51,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     },
     {
@@ -61,7 +65,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     },
     {
@@ -74,7 +79,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     },
     {
@@ -87,7 +93,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     },
     {
@@ -100,7 +107,8 @@
                            {  "offset": "50%",  "color": "#fb6a4a" },
                            {  "offset": "75%",  "color": "#de2d26" },
                            {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026" }
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
         }
     }
 ]

@@ -70,6 +70,9 @@ function elementWidth(divId) {
 //         'word'      : word,
 //         'time'      : time,
 //         'count'     : count }]
+
+// TODO: Add x-axes to both charts?
+// TODO: Fill the actual debate times on the sparklines?
 function sparkline(d3, id, data, width, height, gradient) {
 
     var dataByTime = data.slice(1).reduce(countByTime,
@@ -238,10 +241,14 @@ function hbar(d3, id, data, width, height, maxVal, color) {
        .attr("fill", color.base)
        .on("mouseover", function(d) { 
             updateSparkline(d3, id.replace("barchart", "sparkline"), 
-                filterWord(d.word, data), width, height); })
+                filterWord(d.word, data), width, height); 
+            updateBarChart(d3.select(this), color.hover);
+            })
        .on("mouseout", function(d) { 
             updateSparkline(d3, id.replace("barchart", "sparkline"), data,
-                width, height); });
+                width, height); 
+            updateBarChart(d3.select(this), color.base);
+            });
 
     // Draw the axis.       
     svg.append("g")
@@ -252,6 +259,14 @@ function hbar(d3, id, data, width, height, maxVal, color) {
        .attr('fill','none')
        .attr('stroke', 'none');
 }// Close hbar.
+
+function updateBarChart(selection, color, count) {
+    selection
+      .transition()
+      .duration(500)
+      .attr("fill", color);
+
+}// Close updateBarChart.
 
 // Constants.
 
