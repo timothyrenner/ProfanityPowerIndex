@@ -11,7 +11,8 @@
     (include-css (str "https://maxcdn.bootstrapcdn.com/"
                       "bootstrap/3.3.4/css/bootstrap.min.css"))
     (include-css (str "https://maxcdn.bootstrapcdn.com/"
-                      "bootstrap/3.3.4/css/bootstrap-theme.min.css"))])
+                      "bootstrap/3.3.4/css/bootstrap-theme.min.css"))
+    (include-css "css/style.css")])
 
 (defn row [id-base cand-name picture-link colors]
   (let [barchart-id  (str id-base "-barchart")

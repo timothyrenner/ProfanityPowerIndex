@@ -227,10 +227,11 @@ function hbar(d3, id, data, width, height, maxVal, color) {
     var yAxis = d3.svg.axis().scale(yScale).orient("right");
 
     // Draw the bars.
-    svg.selectAll(".bar")
+    var bars = svg.selectAll(".bar")
        .data(countData)
        .enter()
-       .append("rect")
+       
+    bars.append("rect")
        .attr("class","bar")
        .attr("x", function(d) { return xScale(d.count); })
        .attr("width", function(d) { return width - xScale(d.count); })
@@ -243,13 +244,47 @@ function hbar(d3, id, data, width, height, maxVal, color) {
             updateSparkline(d3, id.replace("barchart", "sparkline"), 
                 filterWord(d.word, data), width, height); 
             updateBarChart(d3.select(this), color.hover);
+            d3.selectAll("."+id+"-svg-text")
+              .transition()
+              .duration(500)
+              .attr("fill-opacity","1")
+              .attr("stroke-opacity","1");
             })
        .on("mouseout", function(d) { 
             updateSparkline(d3, id.replace("barchart", "sparkline"), data,
                 width, height); 
             updateBarChart(d3.select(this), color.base);
+            d3.selectAll("."+id+"-svg-text")
+              .transition()
+              .duration(500)
+              .attr("fill-opacity", "0")
+              .attr("stroke-opacity", "0");
             });
 
+    // Draw the values "permanently".
+    // May be able to use jquery to hide them.
+    bars.append("text")
+        .attr("class","bar-text")
+        .attr("class", "noselect")
+        .attr("class",id + "-svg-text")
+        .attr("x", 
+            function(d) { return ((d.count/maxVal) >= 0.1) ? 
+                                 xScale(d.count) + 5 : xScale(d.count) - 5; })
+        .attr("y", 
+            function(d) { return yScale(d.word) + yScale.rangeBand()/1.35; })
+        .text(function(d) { return d.count; })
+        .attr("letter-spacing", "1")
+        .attr("fill", 
+            function(d) { 
+                return ((d.count/maxVal) >= 0.1) ? "white": "black";})
+        .attr("stroke","black")
+        .attr("stroke-width", "0.5")
+        .attr("text-anchor", 
+            function(d) { 
+                return ((d.count/maxVal) >= 0.1) ? "start": "end"; })
+        .attr("fill-opacity","0")
+        .attr("stroke-opacity", "0");
+        
     // Draw the axis.       
     svg.append("g")
        .attr("class", "y-axis")
