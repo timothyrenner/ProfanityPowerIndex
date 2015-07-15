@@ -231,6 +231,10 @@ function hbar(d3, id, data, width, height, maxVal, color) {
        .data(countData)
        .enter()
        
+    // Define some parameters before building out.
+    var transitionTime = 500; // Transition duration.
+    // Define a threshold for which we put the count *outside* the bar.
+    var lowerWidthThreshold = 0.25;
     bars.append("rect")
        .attr("class","bar")
        .attr("x", function(d) { return xScale(d.count); })
@@ -246,7 +250,7 @@ function hbar(d3, id, data, width, height, maxVal, color) {
             updateBarChart(d3.select(this), color.hover);
             d3.selectAll("."+id+"-svg-text")
               .transition()
-              .duration(500)
+              .duration(transitionTime)
               .attr("fill-opacity","1")
               .attr("stroke-opacity","1");
             })
@@ -256,7 +260,7 @@ function hbar(d3, id, data, width, height, maxVal, color) {
             updateBarChart(d3.select(this), color.base);
             d3.selectAll("."+id+"-svg-text")
               .transition()
-              .duration(500)
+              .duration(transitionTime)
               .attr("fill-opacity", "0")
               .attr("stroke-opacity", "0");
             });
@@ -264,7 +268,7 @@ function hbar(d3, id, data, width, height, maxVal, color) {
     bars.append("text")
         .attr("class",id + "-svg-text noselect")
         .attr("x", 
-            function(d) { return ((d.count/maxVal) >= 0.1) ? 
+            function(d) { return ((d.count/maxVal) >= lowerWidthThreshold) ? 
                                  xScale(d.count) + 5 : xScale(d.count) - 5; })
         .attr("y", 
             function(d) { return yScale(d.word) + yScale.rangeBand()/1.35; })
@@ -272,12 +276,14 @@ function hbar(d3, id, data, width, height, maxVal, color) {
         .attr("letter-spacing", "1")
         .attr("fill", 
             function(d) { 
-                return ((d.count/maxVal) >= 0.1) ? "white": "black";})
+                return ((d.count/maxVal) >= lowerWidthThreshold) ? 
+                        "white": "black";})
         .attr("stroke","black")
         .attr("stroke-width", "0.5")
         .attr("text-anchor", 
             function(d) { 
-                return ((d.count/maxVal) >= 0.1) ? "start": "end"; })
+                return ((d.count/maxVal) >= lowerWidthThreshold) ? 
+                        "start": "end"; })
         .attr("fill-opacity","0")
         .attr("stroke-opacity", "0");
         
