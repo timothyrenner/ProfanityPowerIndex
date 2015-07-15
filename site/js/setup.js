@@ -261,18 +261,14 @@ function hbar(d3, id, data, width, height, maxVal, color) {
               .attr("stroke-opacity", "0");
             });
 
-    // Draw the values "permanently".
-    // May be able to use jquery to hide them.
     bars.append("text")
-        .attr("class","bar-text")
-        .attr("class", "noselect")
-        .attr("class",id + "-svg-text")
+        .attr("class",id + "-svg-text noselect")
         .attr("x", 
             function(d) { return ((d.count/maxVal) >= 0.1) ? 
                                  xScale(d.count) + 5 : xScale(d.count) - 5; })
         .attr("y", 
             function(d) { return yScale(d.word) + yScale.rangeBand()/1.35; })
-        .text(function(d) { return d.count; })
+        .text(function(d) { return d.count.toLocaleString(); })
         .attr("letter-spacing", "1")
         .attr("fill", 
             function(d) { 
