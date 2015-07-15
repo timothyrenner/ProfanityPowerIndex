@@ -83,8 +83,8 @@ function sparkline(d3, id, data, width, height, gradient) {
             }]);
 
     // Offsets for endpoints.
-    var widthOffset = 6;
-    var heightOffset = 6;
+    var widthOffset = 20;
+    var heightOffset = 16;
 
     // Perform the initial selection.
     var svg = d3.select("#"+id).append("svg")
@@ -99,7 +99,7 @@ function sparkline(d3, id, data, width, height, gradient) {
                                           function(d) { return d.time; }));
     
     var yScale = d3.scale.linear()
-                          .range([height - heightOffset, heightOffset])
+                          .range([height - 2*heightOffset, heightOffset])
                           .domain(d3.extent(dataByTime, 
                                             function(d) { return d.count; }));
 
@@ -109,6 +109,14 @@ function sparkline(d3, id, data, width, height, gradient) {
                      .y(function(d) { return yScale(d.count); })
                      .interpolate("basis");
 
+    // Create the time axis.
+    var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient('bottom')
+                .ticks(d3.time.hour)
+                .tickFormat(d3.time.format("%_I %p"))
+                .tickSize(0);
+    
     // Grab the max counts.
     var maxCount = d3.max(dataByTime, function(d) { return d.count; });
 
@@ -145,6 +153,12 @@ function sparkline(d3, id, data, width, height, gradient) {
        .attr("cx", function(d) { return xScale(d.time); })
        .attr("cy", function(d) { return yScale(d.count); })
        .attr("fill", "url(#"+id+"-svg-count-gradient)");
+    
+    svg.append("g")
+       .attr("class", "time-axis")
+       .attr("transform", "translate(0," + (height - heightOffset) + ")")
+       .attr("font-weight", "bold")
+       .call(xAxis);
 } // Close sparkline.
 
 function updateSparkline(d3, id, data, width, height) {
@@ -158,8 +172,8 @@ function updateSparkline(d3, id, data, width, height) {
             }]);
 
     // Offsets for endpoints.
-    var widthOffset = 6;
-    var heightOffset = 6;
+    var widthOffset = 20;
+    var heightOffset = 16;
 
     // Redraw the y-scale.
     var yScale = d3.scale.linear()
