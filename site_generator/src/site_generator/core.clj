@@ -61,12 +61,11 @@
    The time column is in ISO 8601 or some other format recognizable by
    `new Date(time)` in Javascript."
 
-  (let [candidates (json/parse-string (slurp (first args)) true)
-        title "Profanity Power Index"]
+  (let [candidates (json/parse-string (slurp (first args)) true)]
 
     (println 
       (html5 {:lang "en"} 
-        (head title)
+        (head "Profanity Power Index")
           [:body 
             (include-js (str "https://ajax.googleapis.com/"
                              "ajax/libs/jquery/1.11.2/jquery.min.js"))
