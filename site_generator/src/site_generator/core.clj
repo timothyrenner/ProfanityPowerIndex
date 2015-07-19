@@ -1,5 +1,6 @@
 (ns site-generator.core
   (:require [hiccup.page :refer [html5 include-css include-js]]
+            [hiccup.util :refer [escape-html]]
             [clojure.string :as str]
             [cheshire.core :as json])
   (:gen-class))
@@ -20,12 +21,15 @@
         sparkline-id (str id-base "-sparkline")]
     [:div.row
       [:div.col-md-5 {:id barchart-id}]
-      [:div.col-md-2 {:id image-id}
-        [:img.img-responsive {:src picture-link 
-                              :style (str/join ";" ["width: 180px"
-                                                    "height: 229px"
-                                                    "border:2px solid black"
-                                                    "margin: 0 auto"])}]]
+      [:div.col-md-2 
+        [:div.row {:id image-id}
+            [:img.img-responsive {:src picture-link 
+                                  :style (str/join ";" ["width: 180px"
+                                                        "height: 229px"
+                                                        "border:2px solid black"
+                                                        "margin: 0 auto"])}]]
+        [:div.row.text-center 
+         [:h5 (escape-html cand-name)]]]
       [:div.col-md-5 {:id sparkline-id}]]))
 
 (defn js-call [name & args]
@@ -38,6 +42,7 @@
 
   `[{
      \"name\": \"Rand Paul\",
+     \"display_name\": \"Rand \\\"Filibuster\\\" Paul\",
      \"picture\": \"www.wikipedia.org\", 
      \"id\": \"rand-paul\",
      \"colors\": {
@@ -57,7 +62,7 @@
    `new Date(time)` in Javascript."
 
   (let [candidates (json/parse-string (slurp (first args)) true)
-        title "Fuck this Debate"]
+        title "Profanity Power Index"]
 
     (println 
       (html5 {:lang "en"} 
@@ -71,17 +76,18 @@
             (include-js "js/setup.js")
           [:div.container
             [:div.row
-              [:h1.text-center "Fuck This Debate"]]
+              [:h1.text-center "Profanity Power Index"]
+              [:h3.text-center "2016 Republican Primary Edition"]]
             [:hr]
             [:div.row
               [:div.col-md-6
                 [:h2.text-center "1,000,000,000 Tweets"]]
               [:div.col-md-6
-                [:h2.text-center "Some other shit here."]]]
+                [:h2.text-center "Fox News Debate, 8/6/2015"]]]
             [:hr]
             (interpose [:hr]
               (map (fn [c] (row (:id c) 
-                                (:name c) 
+                                (:display_name c) 
                                 (:picture c) 
                                 (:colors c)))
                    candidates))]

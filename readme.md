@@ -72,6 +72,7 @@ The candidate file is a JSON file with the following structure:
 ```
 [
     { "name": "Rand Paul",
+      "display_name": "Rand \"Filibuster\" Paul",
       "picture": "www.wikipedia.org",
       "id": "rand-paul",
       "colors": {

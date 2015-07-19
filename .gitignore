@@ -1,3 +1,4 @@
 *.csv
 site/index.html
 .zedstate
+twitter4j.properties

@@ -4,7 +4,8 @@ from datetime import datetime
 from datetime import timedelta
 
 candidates = ['Ted Cruz', 'Rand Paul', 'Marco Rubio', 'Ben Carson', 
-              'Mike Huckabee', 'Jeb Bush', 'Rick Perry', 'Rick Santorum']
+              'Mike Huckabee', 'Jeb Bush', 'Rick Perry', 'Rick Santorum',
+              'Donald Trump']
 
 cuss_words = ['fuck', 'shit', 'ass', 'bitch', 'douche', 'dick', 'damn']
 

@@ -304,7 +304,7 @@ function hbar(d3, id, data, width, height, maxVal, color) {
     // Draw the axis.       
     svg.append("g")
        .attr("class", "y-axis")
-       .attr("transform","translate(" + width + ",0)")
+       .attr("transform","translate(" + (width-5) + ",0)")
        .call(yAxis)
        .select("path")
        .attr('fill','none')
