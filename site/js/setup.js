@@ -45,11 +45,11 @@ function wordCounts(d) {
     return c;
 }// Close wordCounts.
 
-// Filters all entries matching a specific candidate.
-// data looks like [ { candidate: String , .... } ]
-function filterCandidate(c, d) {
+// Filters all entries matching a specific subject.
+// data looks like [ { subject: String , .... } ]
+function filterSubject(c, d) {
 
-    return d.filter(function(x) { return x.candidate === c; });
+    return d.filter(function(x) { return x.subject === c; });
 }
 
 // Filters all entries matching a specific word.
@@ -66,12 +66,11 @@ function elementWidth(divId) {
 }// Close elementHeight.
 
 // D3 functions.
-// data: [{'candidate' : candidate,
+// data: [{'subject'   : subject,
 //         'word'      : word,
 //         'time'      : time,
 //         'count'     : count }]
 
-// TODO: Add x-axes to both charts?
 // TODO: Fill the actual debate times on the sparklines?
 function sparkline(d3, id, data, width, height, gradient) {
 
@@ -325,22 +324,22 @@ function updateBarChart(selection, color, count) {
 var plotHeight = 229;
 
 function getMaxValue(data) {
-    // All counts per candidate, word.
+    // All counts per subject, word.
     var allCounts = data.reduce(function(a, x) {
-        if(x.candidate in a) {
-            if(x.word in a[x.candidate]) {
-                a[x.candidate][x.word] += x.count;
+        if(x.subject in a) {
+            if(x.word in a[x.subject]) {
+                a[x.subject][x.word] += x.count;
             } else {
-                a[x.candidate][x.word] = x.count;
+                a[x.subject][x.word] = x.count;
             }
         } else {
-            a[x.candidate] = {};
-            a[x.candidate][x.word] = x.count;
+            a[x.subject] = {};
+            a[x.subject][x.word] = x.count;
         }
         return a;
     }, {});
 
-    // Maximum word, candidate combination.
+    // Maximum word, subject combination.
     var maxValue = 
         Object.keys(allCounts)
               .reduce(function(a, x) { 
@@ -352,8 +351,8 @@ function getMaxValue(data) {
 }// Close getMaxValue.
 
 // Generates the callback for the d3.tsv function based on the contents of
-// candidateString.
-function tsvCallback(candidatesString) {
+// subjects.
+function tsvCallback(subjects) {
 
     var cb = function(data) {
         
@@ -365,7 +364,7 @@ function tsvCallback(candidatesString) {
 
             // Convert count to integer.
             return { 
-                candidate: x.candidate,
+                subject: x.subject,
                 word: x.word,
                 time: newTime,
                 count: parseInt(x.count)
@@ -373,20 +372,19 @@ function tsvCallback(candidatesString) {
         });
 
         var maxValue = getMaxValue(cleanedData);
-        var candidates = candidatesString;
 
-        // For each candidate, draw the sparkline and barchart.
-        candidates.forEach(
+        // For each subject, draw the sparkline and barchart.
+        subjects.forEach(
             function(x) {
                 sparkline(d3,
                           x.id + "-sparkline", 
-                          filterCandidate(x.name, cleanedData),
+                          filterSubject(x.name, cleanedData),
                           elementWidth(x.id + "-sparkline"),
                           plotHeight,
                           x.colors.sparkline);
                 hbar(d3,
                      x.id + "-barchart",
-                     filterCandidate(x.name, cleanedData),
+                     filterSubject(x.name, cleanedData),
                      elementWidth(x.id + "-barchart"),
                      plotHeight,
                      maxValue,

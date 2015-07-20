@@ -15,7 +15,7 @@
                       "bootstrap/3.3.4/css/bootstrap-theme.min.css"))
     (include-css "css/style.css")])
 
-(defn row [id-base cand-name picture-link colors]
+(defn row [id-base subj-name picture-link colors]
   (let [barchart-id  (str id-base "-barchart")
         image-id     (str id-base "-image")
         sparkline-id (str id-base "-sparkline")]
@@ -29,7 +29,7 @@
                                                         "border:2px solid black"
                                                         "margin: 0 auto"])}]]
         [:div.row.text-center 
-         [:h5 (escape-html cand-name)]]]
+         [:h5 (escape-html subj-name)]]]
       [:div.col-md-5 {:id sparkline-id}]]))
 
 (defn js-call [name & args]
@@ -56,12 +56,13 @@
    }]`
 
    The second is a tab separated data file with the following columns, headers
-   included: candidate, word, time, count
+   included: subject, word, time, count
 
    The time column is in ISO 8601 or some other format recognizable by
    `new Date(time)` in Javascript."
 
-  (let [candidates (json/parse-string (slurp (first args)) true)]
+  (let [subjects-string (slurp (first args))
+        subjects (json/parse-string subjects-string true)]
 
     (println 
       (html5 {:lang "en"} 
@@ -89,9 +90,7 @@
                                 (:display_name c) 
                                 (:picture c) 
                                 (:colors c)))
-                   candidates))]
+                   subjects))]
             [:script (js-call "d3.tsv" 
                               (str "\"" (second args) "\"")
-                              (js-call "tsvCallback" 
-                                       (json/generate-string candidates)))]
-        ]))))
+                              (js-call "tsvCallback" subjects-string))]]))))

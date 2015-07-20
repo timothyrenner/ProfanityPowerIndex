@@ -19,13 +19,13 @@ def random_walk(walk_length):
                   [randint(0,3) for _ in range(walk_length)],
                   [randint(0,10)])
 
-dataset = [{'candidate': c, 'word': w, 'time': t.isoformat(), 'count': v}
+dataset = [{'subject': c, 'word': w, 'time': t.isoformat(), 'count': v}
             for c in candidates
             for w in cuss_words
             for t,v in zip(times, random_walk(len(times)))]
 
 with open('sample_data.csv', 'w') as out:
-    fieldnames = ["candidate", "word", "time", "count"]
+    fieldnames = ["subject", "word", "time", "count"]
 
     writer = csv.DictWriter(out, fieldnames=fieldnames, delimiter="\t")
     
