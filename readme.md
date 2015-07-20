@@ -1,4 +1,4 @@
-# Fuck This Debate
+# Profanity Power Index
 
 ## Quickstart
 
