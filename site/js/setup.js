@@ -72,7 +72,7 @@ function elementWidth(divId) {
 //         'count'     : count }]
 
 // TODO: Fill the actual debate times on the sparklines?
-function sparkline(d3, id, data, width, height, gradient) {
+function sparkline(d3, id, data, start, stop, width, height, gradient) {
 
     var dataByTime = data.slice(1).reduce(countByTime,
         [
@@ -81,6 +81,9 @@ function sparkline(d3, id, data, width, height, gradient) {
                 count: data[0].count
             }]);
 
+    var dataInDebate = dataByTime.filter(
+        function(x) { return (x.time >= start && x.time <= stop); });
+    
     // Offsets for endpoints.
     var widthOffset = 20;
     var heightOffset = 16;
@@ -153,6 +156,28 @@ function sparkline(d3, id, data, width, height, gradient) {
        .attr("cy", function(d) { return yScale(d.count); })
        .attr("fill", "url(#"+id+"-svg-count-gradient)");
     
+    // Highlight the actual debate time.
+    svg.append("line")
+       .attr("x1", xScale(start))
+       .attr("y1", height - heightOffset)
+       .attr("x2", xScale(stop))
+       .attr("y2", height - heightOffset)
+       .attr("stroke", "silver")
+       .attr("stroke-width", "2px");
+    
+    var area = d3.svg.area()
+      .x(function(d) { return xScale(d.time); })
+      .y0(height - heightOffset)
+      .y1(function(d) { return yScale(d.count); });
+    
+    svg.append("path")
+       .datum(dataInDebate)
+       .attr("class", "area")
+       .attr("d", area)
+       .attr("fill", "silver")
+       .attr("fill-opacity", "0.2");
+    
+    // Draw the time axis.
     svg.append("g")
        .attr("class", "time-axis")
        .attr("transform", "translate(0," + (height - heightOffset) + ")")
@@ -160,7 +185,7 @@ function sparkline(d3, id, data, width, height, gradient) {
        .call(xAxis);
 } // Close sparkline.
 
-function updateSparkline(d3, id, data, width, height) {
+function updateSparkline(d3, id, data, start, stop, width, height) {
 
     // Slice out the data by time.
     var dataByTime = data.slice(1).reduce(countByTime,
@@ -170,6 +195,9 @@ function updateSparkline(d3, id, data, width, height) {
                 count: data[0].count
             }]);
 
+    var dataInDebate = dataByTime.filter(
+        function(x) { return (x.time >= start && x.time <= stop); });
+        
     // Offsets for endpoints.
     var widthOffset = 20;
     var heightOffset = 16;
@@ -199,16 +227,28 @@ function updateSparkline(d3, id, data, width, height) {
       .duration(transitionTime)
       .attr("d", line);
 
-    // Add the end points to the svg.
+    // Update the end points to the svg.
     svg.selectAll("circle")
       .data([dataByTime[0], dataByTime[dataByTime.length-1]])
       .transition()
       .duration(transitionTime)
       .attr("cy", function(d) {return yScale(d.count);})
       .attr("fill", "url(#"+id+"-svg-count-gradient)");
+    
+    // Update the area.
+    var area = d3.svg.area()
+      .x(function(d) { return xScale(d.time); })
+      .y0(height - heightOffset)
+      .y1(function(d) { return yScale(d.count); });
+      
+    svg.select(".area")
+      .datum(dataInDebate)
+      .transition()
+      .duration(transitionTime)
+      .attr("d", area);
 } // Close updateSparkline.
 
-function hbar(d3, id, data, width, height, maxVal, color) {
+function hbar(d3, id, data, start, stop, width, height, maxVal, color) {
 
     var countData = wordCounts(data);
 
@@ -259,7 +299,7 @@ function hbar(d3, id, data, width, height, maxVal, color) {
        .attr("fill", color.base)
        .on("mouseover", function(d) { 
             updateSparkline(d3, id.replace("barchart", "sparkline"), 
-                filterWord(d.word, data), width, height); 
+                filterWord(d.word, data), start, stop, width, height); 
             updateBarChart(d3.select(this), color.hover);
             d3.selectAll("."+id+"-svg-text")
               .transition()
@@ -269,7 +309,7 @@ function hbar(d3, id, data, width, height, maxVal, color) {
             })
        .on("mouseout", function(d) { 
             updateSparkline(d3, id.replace("barchart", "sparkline"), data,
-                width, height); 
+                start, stop, width, height); 
             updateBarChart(d3.select(this), color.base);
             d3.selectAll("."+id+"-svg-text")
               .transition()
@@ -352,11 +392,11 @@ function getMaxValue(data) {
 
 // Generates the callback for the d3.tsv function based on the contents of
 // subjects.
-function tsvCallback(subjects) {
+function tsvCallback(subjects, start, stop) {
 
     var cb = function(data) {
         
-        cleanedData = data.map(function(x) {
+        var cleanedData = data.map(function(x) {
             // Convert date type and truncate to minute.
             var newTime = new Date(x.time);
             newTime.setSeconds(0);
@@ -372,19 +412,23 @@ function tsvCallback(subjects) {
         });
 
         var maxValue = getMaxValue(cleanedData);
-
+        var startTime = new Date(start);
+        var stopTime = new Date(stop);
+        
         // For each subject, draw the sparkline and barchart.
         subjects.forEach(
             function(x) {
                 sparkline(d3,
                           x.id + "-sparkline", 
                           filterSubject(x.name, cleanedData),
+                          startTime.getTime(), stopTime.getTime(),
                           elementWidth(x.id + "-sparkline"),
                           plotHeight,
                           x.colors.sparkline);
                 hbar(d3,
                      x.id + "-barchart",
                      filterSubject(x.name, cleanedData),
+                     startTime.getTime(), stopTime.getTime(),
                      elementWidth(x.id + "-barchart"),
                      plotHeight,
                      maxValue,

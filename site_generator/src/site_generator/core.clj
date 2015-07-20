@@ -62,7 +62,9 @@
    `new Date(time)` in Javascript."
 
   (let [subjects-string (slurp (first args))
-        subjects (json/parse-string subjects-string true)]
+        subjects (json/parse-string subjects-string true)
+        start "2015-07-18T22:00:00.000000"
+        stop  "2015-07-18T23:00:00.000000"]
 
     (println 
       (html5 {:lang "en"} 
@@ -93,4 +95,6 @@
                    subjects))]
             [:script (js-call "d3.tsv" 
                               (str "\"" (second args) "\"")
-                              (js-call "tsvCallback" subjects-string))]]))))
+                              (js-call "tsvCallback" subjects-string 
+                                       (str "\"" start "\"")
+                                       (str "\"" stop "\"")))]]))))
