@@ -1,0 +1,16 @@
+{
+    "tracking":["bush","trump","walker","perry","santorum",
+                "christie", "huckabee","carson","paul","graham"],
+    "targets":{
+        "bush": "Jeb Bush",
+        "trump": "Donald Trump",
+        "walker": "Scott Walker",
+        "perry": "Rick Perry",
+        "santorum": "Rick Santorum",
+        "christie": "Chris Christie",
+        "huckabee": "Mike Huckabee",
+        "carson": "Ben Carson",
+        "paul": "Rand Paul",
+        "graham": "Lindsey Graham"
+    }
+}
