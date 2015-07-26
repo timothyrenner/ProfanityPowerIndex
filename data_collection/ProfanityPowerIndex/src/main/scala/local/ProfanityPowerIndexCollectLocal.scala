@@ -36,7 +36,8 @@ package local {
             twitterStream.filter(tracking:_*)
             
             // FOR DEBUGGING ONLY.
-            Thread.sleep(120 * 1000)
+            //Thread.sleep((3 * 60 + 30) * 60 * 1000)
+            Thread.sleep(30 * 1000)
             
             // Close the stream.
             twitterStream.cleanUp

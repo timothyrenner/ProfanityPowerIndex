@@ -1,5 +1,5 @@
 package util {
-    import ProfanityPowerIndexUtils._
+    import ProfanityPowerIndexUtils.processTweet
     import twitter4j.StatusListener
     import twitter4j.StatusDeletionNotice
     import twitter4j.StallWarning
@@ -8,14 +8,10 @@ package util {
     class ProfanityPowerIndexListener(targets: Map[String, String])
     extends StatusListener {
         
-        def onStatus(status: Status) = {
-            val time = processTweetTime(status.getCreatedAt)
-            val id = status.getId
-            val rt = status.isRetweet
+        def onStatus(status: Status) {
             
-            for((t,p) <- parseTweetText(status.getText, targets)) {
-                println(List(id, rt, time.toString, t, p).mkString("\t"))
-            } // Close for loop on parseTweetText.
+            processTweet(status, targets).foreach(println)
+            
         } // Close onStatus.
         
         def onDeletionNotice(notice: StatusDeletionNotice) { }

@@ -77,5 +77,16 @@ package util {
             tweetTime.setTime((tweetTime.getTime/60000)*60000) 
             return tweetTime
         } // Close processTweetTime.
+        
+        def processTweet(tweet: Status, targets:Map[String, String]) =
+        {
+            val time = processTweetTime(tweet.getCreatedAt)
+            val id = tweet.getId
+            val rt = tweet.isRetweet
+            val rtid = if(rt) { tweet.getRetweetedStatus.getId } else id
+            
+            for((t,p) <- parseTweetText(tweet.getText, targets)) 
+                yield List(id, rt, rtid, time.toString, t, p).mkString("\t")
+        } // Close processTweet.
     } // Close ProfanityPowerIndexUtils.
 } // Close package.

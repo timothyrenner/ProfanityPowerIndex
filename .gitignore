@@ -4,3 +4,4 @@ site/index.html
 twitter4j.properties
 target/
 project/
+*.txt
