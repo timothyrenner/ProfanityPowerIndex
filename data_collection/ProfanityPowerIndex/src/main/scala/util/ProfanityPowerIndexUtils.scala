@@ -17,6 +17,20 @@ package util {
         val timeZone = TimeZone.getTimeZone("America/New_York")
         dateFormat.setTimeZone(timeZone)
             
+        /** Matches the word "ass" against several variants.
+         * 
+         * @param word The word to match.
+         * 
+         * @return true if any match is found, false otherwise.
+         */
+        private def matchAss(word: String) = {
+            (word == "ass") ||
+            (word == "asshole") ||
+            (word == "asshat") ||
+            (word == "jackass") ||
+            (word == "fuckass")
+        } // Close matchAss.
+        
         /** Matches the profanity, returning the root profanity, or None.
          * 
          * @param word The word to match.
@@ -29,7 +43,7 @@ package util {
                 case w if w.contains("shit") => Some("shit")
                 case w if (w.contains("damn") || w.contains("goddam")) =>
                     Some("damn")
-                case w if w.contains("ass") => Some("ass")
+                case w if matchAss(w) => Some("ass")
                 case w if w.contains("dick") => Some("dick")
                 case w if w.contains("douche") => Some("douche")
                 case w if w.contains("bitch") => Some("bitch")

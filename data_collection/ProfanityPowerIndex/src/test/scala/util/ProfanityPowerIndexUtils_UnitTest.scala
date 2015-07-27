@@ -11,6 +11,39 @@ package util {
    class ProfanityPowerIndexUtils_UnitTest extends FunSuite
          with PrivateMethodTester {
        
+        val matchAss = 
+            PrivateMethod[Boolean]('matchAss)
+            
+        test("matchAss matches \"ass\"") {
+            assert((ProfanityPowerIndexUtils 
+                    invokePrivate
+                    matchAss("ass")) == true)
+        } // Close test on "ass".
+        
+        test("matchAss matches \"asshole\"") {
+            assert((ProfanityPowerIndexUtils
+                    invokePrivate
+                    matchAss("asshole")) == true)
+        } // Close test on "asshole".
+        
+        test("matchAss matches \"asshat\"") {
+            assert((ProfanityPowerIndexUtils
+                    invokePrivate
+                    matchAss("asshat")) == true)
+        } // Close test on "asshat".
+        
+        test("matchAss matches \"jackass\"") {
+            assert((ProfanityPowerIndexUtils
+                    invokePrivate
+                    matchAss("jackass")) == true)
+        } // Close test on "jackass".
+        
+        test("matchAss matches \"fuckass\"") {
+            assert((ProfanityPowerIndexUtils
+                    invokePrivate
+                    matchAss("fuckass")) == true)
+        } // Close test on "fuckass".
+       
        /** A helper for calling the `matchProfanity` method. */
         val matchProfanity = 
             PrivateMethod[Option[String]]('matchProfanity)
