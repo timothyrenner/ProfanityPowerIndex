@@ -1,6 +1,8 @@
 package util {
     
     import java.util.Date
+    import java.util.TimeZone
+    import java.text.SimpleDateFormat
     import twitter4j.Status
     
     /** A helper class that parses the tweet text factored for reuse in local
@@ -10,6 +12,11 @@ package util {
      */
     object ProfanityPowerIndexUtils {
         
+        /** Create a formatter for Eastern time zone in ISO8601 format. */
+        val dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ")
+        val timeZone = TimeZone.getTimeZone("America/New_York")
+        dateFormat.setTimeZone(timeZone)
+            
         /** Matches the profanity, returning the root profanity, or None.
          * 
          * @param word The word to match.
@@ -80,7 +87,7 @@ package util {
         
         def processTweet(tweet: Status, targets:Map[String, String]) =
         {
-            val time = processTweetTime(tweet.getCreatedAt)
+            val time = dateFormat.format(processTweetTime(tweet.getCreatedAt))
             val id = tweet.getId
             val rt = tweet.isRetweet
             val rtid = if(rt) { tweet.getRetweetedStatus.getId } else id
