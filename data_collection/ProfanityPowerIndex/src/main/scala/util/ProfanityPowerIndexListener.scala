@@ -22,6 +22,12 @@ package util {
         
         def onScrubGeo(userId: Long, upToStatusId: Long) { }
         
-        def onException(ex: Exception) { ex.printStackTrace }
+        def onException(ex: Exception) { 
+            // Print, unless a null pointer.
+            ex match {
+                case e: NullPointerException => {}
+                case _ => ex.printStackTrace
+            } // Close match.
+        } // Close onException
     } // Close ProfanityPowerIndexListener.
 } // Close util.

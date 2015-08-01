@@ -12,5 +12,8 @@
         "carson": "Ben Carson",
         "rand": "Rand Paul",
         "graham": "Lindsey Graham"
-    }
+    },
+    "time": 30,
+    "batchLength": 10,
+    "filePrefix": "ppi_test"
 }

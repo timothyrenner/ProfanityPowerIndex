@@ -2,6 +2,7 @@
 package local {
     import twitter4j.TwitterStreamFactory
     import twitter4j.TwitterStream
+    import twitter4j.FilterQuery
     import scala.io.Source
     import org.json4s._
     import org.json4s.native.JsonMethods._
@@ -29,19 +30,20 @@ package local {
             // Get the tracking keywords and the target map.
             val tracking = (config \ "tracking").extract[List[String]]
             val targets  = (config \ "targets").extract[Map[String, String]]
+            val time = (config \ "time").extractOrElse(0L)
             
             // Add our profanity listener.
             twitterStream.addListener(new ProfanityPowerIndexListener(targets))
             // Initiate the stream with the tracking filter.
-            twitterStream.filter(tracking:_*)
+            twitterStream.filter(new FilterQuery().track(tracking.toArray))
             
-            // FOR DEBUGGING ONLY.
-            //Thread.sleep((3 * 60 + 30) * 60 * 1000)
-            Thread.sleep(30 * 1000)
+            if(time > 0L) {
+                Thread.sleep(time * 1000)
             
-            // Close the stream.
-            twitterStream.cleanUp
-            twitterStream.shutdown
+                // Close the stream.
+                    twitterStream.cleanUp
+                    twitterStream.shutdown
+            }
         } // Close main.
     } // Close ProfanityPowerIndexCollectLocal.
 } // Close package.
