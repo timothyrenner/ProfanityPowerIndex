@@ -1,5 +1,5 @@
 
-package local {
+package profanitypowerindex.local {
     import twitter4j.TwitterStreamFactory
     import twitter4j.TwitterStream
     import twitter4j.FilterQuery
@@ -7,9 +7,9 @@ package local {
     import org.json4s._
     import org.json4s.native.JsonMethods._
     
-    import util.ProfanityPowerIndexListener
+    import profanitypowerindex.util.ProfanityPowerIndexListener
    
-    object ProfanityPowerIndexCollectLocal {
+    object ProfanityPowerIndexCollectorLocal {
         
         /** Grabs the filtered stream specified by the json file provided as
          *  the first argument. That file needs to be in /src/main/resources .

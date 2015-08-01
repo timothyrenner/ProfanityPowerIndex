@@ -1,4 +1,4 @@
-package util {
+package profanitypowerindex.util {
    
    import org.scalatest.FunSuite
    import org.scalatest.PrivateMethodTester

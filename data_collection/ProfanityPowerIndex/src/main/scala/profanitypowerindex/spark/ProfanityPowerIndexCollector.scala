@@ -1,4 +1,4 @@
-package spark {
+package profanitypowerindex.spark {
     
     import org.apache.spark.streaming.{StreamingContext, Seconds}
     import org.apache.spark.SparkContext._
@@ -11,7 +11,7 @@ package spark {
     
     import scala.io.Source
     
-    import util.ProfanityPowerIndexUtils._
+    import profanitypowerindex.util.ProfanityPowerIndexUtils._
     
     object ProfanityPowerIndexCollector {
         

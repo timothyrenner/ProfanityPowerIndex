@@ -1,4 +1,4 @@
-package util {
+package profanitypowerindex.util {
     import ProfanityPowerIndexUtils.processTweet
     import twitter4j.StatusListener
     import twitter4j.StatusDeletionNotice

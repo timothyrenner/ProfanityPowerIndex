@@ -1,4 +1,4 @@
-package util {
+package profanitypowerindex.util {
     
     import java.util.Date
     import java.util.TimeZone
