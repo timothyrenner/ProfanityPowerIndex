@@ -3,9 +3,13 @@ from random import randint
 from datetime import datetime
 from datetime import timedelta
 
-candidates = ['Ted Cruz', 'Rand Paul', 'Marco Rubio', 'Ben Carson', 
-              'Mike Huckabee', 'Jeb Bush', 'Rick Perry', 'Rick Santorum',
-              'Donald Trump']
+candidates = ['Jeb Bush', 'Ben Carson', 'Chris Christie', 'Ted Cruz',
+              'Carly Fiorina', 'Jim Gilmore', 'Lindsey Graham',
+              'Mike Huckabee', 'Bobby Jindal', 'John Kasich',
+              'George Pataki', 'Rand Paul', 'Rick Perry', 'Marco Rubio',
+              'Rick Santorum', 'Donald Trump', 'Scott Walker',
+              'Lincoln Chafee', 'Hillary Clinton',
+              "Martin O'Malley", 'Bernie Sanders', 'Jim Webb']
 
 cuss_words = ['fuck', 'shit', 'ass', 'bitch', 'douche', 'dick', 'damn']
 

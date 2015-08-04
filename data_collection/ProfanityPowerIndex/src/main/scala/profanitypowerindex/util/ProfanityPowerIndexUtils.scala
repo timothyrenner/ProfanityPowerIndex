@@ -107,7 +107,7 @@ package profanitypowerindex.util {
             val rtid = if(rt) { tweet.getRetweetedStatus.getId } else id
             
             for((t,p) <- parseTweetText(tweet.getText, targets)) 
-                yield List(id, rt, rtid, time.toString, t, p).mkString("\t")
+                yield List(id, rtid, time.toString, t, p).mkString("\t")
         } // Close processTweet.
     } // Close ProfanityPowerIndexUtils.
 } // Close package.

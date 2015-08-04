@@ -25,7 +25,7 @@
         [:div.row {:id image-id}
             [:img.img-responsive {:src picture-link 
                                   :style (str/join ";" ["width: 180px"
-                                                        "height: 229px"
+                                                        "height: 180px"
                                                         "border:2px solid black"
                                                         "margin: 0 auto"])}]]
         [:div.row.text-center 
@@ -63,8 +63,8 @@
 
   (let [subjects-string (slurp (first args))
         subjects (json/parse-string subjects-string true)
-        start "2015-07-18T22:00:00.000000"
-        stop  "2015-07-18T23:00:00.000000"]
+        start "2015-08-02T12:30:00.000000"
+        stop  "2015-08-02T15:00:00.000000"]
 
     (println 
       (html5 {:lang "en"} 

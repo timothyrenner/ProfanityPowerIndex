@@ -41,7 +41,6 @@ package profanitypowerindex.spark {
                   .saveAsTextFiles(filePrefix)
             
             ssc.start()
-            // ssc.awaitTermination()
             
             if(time > 0L) {
                 Thread.sleep(time * 1000)
