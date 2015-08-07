@@ -39,7 +39,8 @@ In your browser go to `http://localhost:8000` and enjoy.
 
 ## Tweet Collector (Spark)
 
-***TODO***: When it's implemented.
+It works, but I haven't documented it yet.
+Check back soon.
 
 ## Tweet Collector (Storm)
 
@@ -47,7 +48,8 @@ In your browser go to `http://localhost:8000` and enjoy.
 
 ## Tweet Collector (Local Mode, Scala)
 
-***TODO***: When it's implemented.
+Also works, but isn't documented.
+Also check back soon.
 
 ## Site Generator
 
@@ -121,3 +123,9 @@ Redirect the output to save.
 ```bash
 python create_sample_debate_data.py > sample_data.tsv
 ```
+
+### Final Note
+There are a couple of parameters that need to be changed within the site builder.
+Be sure to look at the code. 
+Specifically the start and stop times, and the link to my Github page.
+Those are all in the `main` function.

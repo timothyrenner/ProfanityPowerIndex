@@ -1,0 +1,49 @@
+{
+    "tracking": [
+        "chris christie", "govchristie", "chrischristie",
+        "rand paul", "randpaul",
+        "mike huckabee", "govmikehuckabee",
+        "scott walker", "scottwalker",
+        "donald trump", "realdonaldtrump",
+        "jeb bush", "jebbush",
+        "ben carson", "realbencarson", 
+        "ted cruz", "tedcruz",
+        "marco rubio", "marcorubio",
+        "john kasich", "johnkasich"
+        ],
+    "targets": {
+    
+        "christie":       "Chris Christie",
+        "@govchristie":   "Chris Christie",
+        "@chrischristie": "Chris Christie",
+        
+        "rand":      "Rand Paul",
+        "@randpaul": "Rand Paul",
+        
+        "huckabee":         "Mike Huckabee",
+        "@govmikehuckabee": "Mike Huckabee",
+        
+        "walker":       "Scott Walker", 
+        "@scottwalker": "Scott Walker",
+        
+        "trump":            "Donald Trump", 
+        "@realdonaldtrump": "Donald Trump",
+        
+        "bush":     "Jeb Bush", 
+        "@jebbush": "Jeb Bush",
+        
+        "carson":         "Ben Carson",
+        "@realbencarson": "Ben Carson",
+        
+        "cruz":     "Ted Cruz",
+        "@tedcruz": "Ted Cruz",
+        
+        "rubio":       "Marco Rubio",
+        "@marcorubio": "Marco Rubio",
+        
+        "kasich":      "John Kasich",
+        "@johnkasich": "John Kasich"
+    },
+    "batchLength": 1,
+    "filePrefix": "hdfs://hdfs/ppi/ppi"
+}

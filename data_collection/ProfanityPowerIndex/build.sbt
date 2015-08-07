@@ -14,6 +14,9 @@ libraryDependencies += "org.scalatest" % "scalatest_2.10" % "3.0.0-M7" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.11"
 
+//libraryDependencies += "net.java.dev.jets3t" % "jets3t" % "0.7.4"
+                       //exclude("commons-codec", "commons-codec")
+
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
   case "application.conf"            => MergeStrategy.concat

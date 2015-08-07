@@ -1,0 +1,120 @@
+
+{
+    "tracking":[
+        "jeb bush", "jebbush",
+        
+        "ben carson", "realbencarson", 
+        
+        "chris christie", "govchristie", "chrischristie",
+        
+        "ted cruz", "tedcruz",
+        
+        "carly fiorina", "carlyfiorina",
+        
+        "jim gilmore", 
+        
+        "lindsey graham", "lindseygrahamsc",
+        
+        "mike huckabee", "govmikehuckabee",
+        
+        "bobby jindal", "bobbyjindal",
+        
+        "john kasich", "johnkasich", 
+        
+        "george pataki", "governorpataki",
+        
+        "rand paul", "randpaul",
+        
+        "rick perry", "governorperry",
+        
+        "marco rubio", "marcorubio",
+        
+        "rick santorum", "ricksantorum",
+        
+        "donald trump", "realdonaldtrump",
+        
+        "scott walker", "scottwalker",
+        
+        "lincoln chafee", "lincolnchafee",
+        
+        "hillary clinton", "hillaryclinton",
+        
+        "martin o'malley", "martinomalley",
+        
+        "bernie sanders", "sensanders", "berniesanders",
+        
+        "jim webb", "jimwebbusa"
+    ],
+    
+    "targets":{
+        "bush":     "Jeb Bush", 
+        "@jebbush": "Jeb Bush",
+        
+        "carson":         "Ben Carson",
+        "@realbencarson": "Ben Carson",
+        
+        "christie":       "Chris Christie",
+        "@govchristie":   "Chris Christie",
+        "@chrischristie": "Chris Christie",
+        
+        "cruz":     "Ted Cruz",
+        "@tedcruz": "Ted Cruz",
+        
+        "fiorina":      "Carly Fiorina",
+        "carlyfiorina": "Carly Fiorina",
+        
+        "gilmore": "Jim Gilmore",
+        
+        "graham":           "Lindsey Graham",
+        "@lindseygrahamsc": "Lindsey Graham",
+        
+        "huckabee":         "Mike Huckabee",
+        "@govmikehuckabee": "Mike Huckabee",
+        
+        "jindal":       "Bobby Jindal",
+        "@bobbyjindal": "Bobby Jindal",
+        
+        "kasich":      "John Kasich",
+        "@johnkasich": "John Kasich",
+        
+        "pataki":          "George Pataki",
+        "@governorpataki": "George Pataki",
+        
+        "rand":      "Rand Paul",
+        "@randpaul": "Rand Paul",
+        
+        "perry":          "Rick Perry", 
+        "@governorperry": "Rick Perry",
+        
+        "rubio":       "Marco Rubio",
+        "@marcorubio": "Marco Rubio",
+        
+        "santorum":      "Rick Santorum",
+        "@ricksantorum": "Rick Santorum",
+        
+        "trump":            "Donald Trump", 
+        "@realdonaldtrump": "Donald Trump",
+        
+        "walker":       "Scott Walker", 
+        "@scottwalker": "Scott Walker",
+        
+        "chafee":         "Lincoln Chafee",
+        "@lincolnchafee": "Lincoln Chafee",
+        
+        "clinton":         "Hillary Clinton",
+        "@hillaryclinton": "Hillary Clinton",
+        
+        "o'malley":       "Martin O'Malley",
+        "@martinomalley": "Martin O'Malley",
+        
+        "sanders":        "Bernie Sanders",
+        "@sensanders":    "Bernie Sanders",
+        "@berniesanders": "Bernie Sanders",
+        
+        "webb":        "Jim Webb",
+        "@jimwebbusa": "Jim Webb"
+    },
+    
+    "batchLength": 1,
+    "filePrefix": "hdfs://hdfs/ppi/ppi"
+}

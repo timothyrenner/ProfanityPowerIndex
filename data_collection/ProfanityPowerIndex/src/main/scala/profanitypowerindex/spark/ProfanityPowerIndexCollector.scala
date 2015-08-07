@@ -22,6 +22,10 @@ package profanitypowerindex.spark {
             val config = parse(
                 Source.fromURL(getClass.getResource("/"++args(0))).mkString)
             
+            // TODO: Yank these OUT of the fat jar. Jar needs to be publicly
+            // accessible to run on mesosphere, which means it's really not
+            // a good idea to put creds in it.
+                
             implicit val formats = DefaultFormats
             
             val tracking = (config \ "tracking").extract[List[String]]
@@ -30,10 +34,12 @@ package profanitypowerindex.spark {
             val batchLength = (config \ "batchLength").extractOrElse(1)
             val filePrefix = (config \ "filePrefix").extract[String]
             
+            
             // Set up spark.
             val sparkConf = new SparkConf()
                                 .setAppName("ProfanityPowerIndexCollector")
             val ssc = new StreamingContext(sparkConf, Seconds(batchLength))
+            
             val stream = TwitterUtils.createStream(ssc, None, tracking)
             
             // Process the stream.

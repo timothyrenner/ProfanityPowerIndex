@@ -1,6 +1,7 @@
 (ns site-generator.core
   (:require [hiccup.page :refer [html5 include-css include-js]]
             [hiccup.util :refer [escape-html]]
+            [hiccup.element :refer [link-to]]
             [clojure.string :as str]
             [cheshire.core :as json])
   (:gen-class))
@@ -63,8 +64,8 @@
 
   (let [subjects-string (slurp (first args))
         subjects (json/parse-string subjects-string true)
-        start "2015-08-02T12:30:00.000000"
-        stop  "2015-08-02T15:00:00.000000"]
+        start "2015-08-06T21:00-0400"
+        stop  "2015-08-06T23:00-0400"]
 
     (println 
       (html5 {:lang "en"} 
@@ -82,10 +83,9 @@
               [:h3.text-center "2016 Republican Primary Edition"]]
             [:hr]
             [:div.row
-              [:div.col-md-6
-                [:h2.text-center "1,000,000,000 Tweets"]]
-              [:div.col-md-6
-                [:h2.text-center "Fox News Debate, 8/6/2015"]]]
+                [:h2.text-center "Fox News Debate, 8/6/2015, 9-11 ET"]]
+            [:div.row
+                [:h5.text-center "Collected from the Twitter public timeline."]]
             [:hr]
             (interpose [:hr]
               (map (fn [c] (row (:id c) 
@@ -97,4 +97,19 @@
                               (str "\"" (second args) "\"")
                               (js-call "tsvCallback" subjects-string 
                                        (str "\"" start "\"")
-                                       (str "\"" stop "\"")))]]))))
+                                       (str "\"" stop "\"")))]
+            [:hr]
+            [:div.row 
+              [:p.text-center
+                "Technical shit: Collected with "
+                (link-to
+                    "http://spark.apache.org" "Apache Spark")
+                " with an Amazon EC2 cluster running "
+                (link-to
+                    "http://mesosphere.io" "Mesosphere's")
+                " DCOS. "
+                "Check out the code on " 
+                (link-to 
+                  "https://www.github.com/timothyrenner/ProfanityPowerIndex" 
+                  "Github") "."]]
+        ]))))

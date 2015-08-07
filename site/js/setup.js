@@ -109,7 +109,7 @@ function sparkline(d3, id, data, start, stop, width, height, gradient) {
     var line = d3.svg.line()
                      .x(function(d) { return xScale(d.time); })
                      .y(function(d) { return yScale(d.count); })
-                     .interpolate("basis");
+                     .interpolate("linear");
 
     // Create the time axis.
     var xAxis = d3.svg.axis()
@@ -215,7 +215,7 @@ function updateSparkline(d3, id, data, start, stop, width, height) {
     var line = d3.svg.line()
                      .x(function(d) { return xScale(d.time); })
                      .y(function(d) { return yScale(d.count); })
-                     .interpolate("basis");
+                     .interpolate("linear");
 
     var svg = d3.select("#"+id+"-svg");
     var transitionTime = 500;
