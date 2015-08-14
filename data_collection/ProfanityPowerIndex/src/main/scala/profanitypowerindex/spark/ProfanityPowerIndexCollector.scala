@@ -39,12 +39,15 @@ package profanitypowerindex.spark {
             val sparkConf = new SparkConf()
                                 .setAppName("ProfanityPowerIndexCollector")
             val ssc = new StreamingContext(sparkConf, Seconds(batchLength))
+            val accum = ssc.sparkContext.accumulator(0, "tweet-counter")
             
             val stream = TwitterUtils.createStream(ssc, None, tracking)
             
             // Process the stream.
-            stream.flatMap(x => processTweet(x, targets))
-                  .saveAsTextFiles(filePrefix)
+            stream.flatMap(x => {
+                    accum += 1
+                    processTweet(x, targets)
+                }).saveAsTextFiles(filePrefix)
             
             ssc.start()
             

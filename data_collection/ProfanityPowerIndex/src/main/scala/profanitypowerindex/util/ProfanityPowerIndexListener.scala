@@ -8,9 +8,12 @@ package profanitypowerindex.util {
     class ProfanityPowerIndexListener(targets: Map[String, String])
     extends StatusListener {
         
+        var tweetCounter = 0
+        
         def onStatus(status: Status) {
             
             processTweet(status, targets).foreach(println)
+            tweetCounter += 1
             
         } // Close onStatus.
         

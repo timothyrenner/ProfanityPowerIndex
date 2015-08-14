@@ -32,8 +32,11 @@ package profanitypowerindex.local {
             val targets  = (config \ "targets").extract[Map[String, String]]
             val time = (config \ "time").extractOrElse(0L)
             
+            // Create a listener instance.
+            val listener = new ProfanityPowerIndexListener(targets)
+            
             // Add our profanity listener.
-            twitterStream.addListener(new ProfanityPowerIndexListener(targets))
+            twitterStream.addListener(listener)
             // Initiate the stream with the tracking filter.
             twitterStream.filter(new FilterQuery().track(tracking.toArray))
             
@@ -41,8 +44,13 @@ package profanitypowerindex.local {
                 Thread.sleep(time * 1000)
             
                 // Close the stream.
-                    twitterStream.cleanUp
-                    twitterStream.shutdown
+                twitterStream.cleanUp
+                twitterStream.shutdown
+                
+                // Print the accumulated tweets to stderr.
+                // A little hackish, I admit.
+                Console.err.println("Total number of tweets: %d."
+                    .format(listener.tweetCounter))
             }
         } // Close main.
     } // Close ProfanityPowerIndexCollectLocal.
