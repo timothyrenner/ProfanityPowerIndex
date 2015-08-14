@@ -101,7 +101,7 @@ function sparkline(d3, id, data, start, stop, width, height, gradient) {
                                           function(d) { return d.time; }));
     
     var yScale = d3.scale.linear()
-                          .range([height - 2*heightOffset, heightOffset])
+                          .range([height - heightOffset, heightOffset])
                           .domain(d3.extent(dataByTime, 
                                             function(d) { return d.count; }));
 
