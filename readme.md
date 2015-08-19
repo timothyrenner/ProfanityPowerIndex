@@ -1,5 +1,7 @@
 # Profanity Power Index
 
+This guide contains (or will shortly contain) the information required to produce the graphic and collect the data for the [Profanity Power Index](http://timothyrenner.github.io/profanitypowerindex).
+
 ## Quickstart
 
 To just get a look at a sample graphic, `cd` into `/site/sample_data` and run
