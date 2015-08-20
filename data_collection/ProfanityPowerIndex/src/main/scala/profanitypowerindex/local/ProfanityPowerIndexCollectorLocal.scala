@@ -9,13 +9,58 @@ package profanitypowerindex.local {
     
     import profanitypowerindex.util.ProfanityPowerIndexListener
    
+    /** Extracts tweets from Twitter's public timeline using a local Twitter4j
+     *  listener and associates profanity with the targets. Output is printed
+     *  to STDOUT in tab-separated form with the following columns:
+     * 
+     *  <Tweet ID>
+     *  <ReTweet ID> (Same as Tweet ID if not a retweet).
+     *  <time> The time of the tweet.
+     *  <subject> The target.
+     *  <word> The profanity associated with the target.
+     * 
+     * @author Timothy Renner
+     */
     object ProfanityPowerIndexCollectorLocal {
         
-        /** Grabs the filtered stream specified by the json file provided as
-         *  the first argument. That file needs to be in /src/main/resources .
+        /** Grabs the filtered stream based on the provided configuration file.
+         * 
+         * @param args: First arg - JSON configuration file - needs to be on the
+         *                  classpath (so /src/main/resources).
+         *              Second arg - Twitter consumer key.
+         *              Third arg - Twitter consumer secret key.
+         *              Fourth arg - Twitter access key.
+         *              Fifth arg - Twitter access secret key.
          */
         def main(args: Array[String]) = {
             
+            if(args.length != 5) {
+                System.err.println(
+                    "Usage: ProfanityPowerIndexCollectorLocal " ++
+                    "<config.json> <consumer key> <consumer secret> " ++
+                    "<access key> <access secret>")
+                System.exit(1)
+            }
+            
+            val (twitterConsumerKey,
+                 twitterConsumerSecret,
+                 twitterAccessKey,
+                 twitterAccessSecret) = (args(1), args(2), args(3), args(4))
+            
+            // Configure the system with the credentials.
+            System.setProperty(
+                "twitter4j.oauth.consumerKey",
+                twitterConsumerKey)
+            System.setProperty(
+                "twitter4j.oauth.consumerSecret",
+                twitterConsumerSecret)
+            System.setProperty(
+                "twitter4j.oauth.accessToken",
+                twitterAccessKey)
+            System.setProperty(
+                "twitter4j.oauth.accessTokenSecret",
+                twitterAccessSecret)
+                
             // Annoying Java pattern.
             val twitterStream = new TwitterStreamFactory().getInstance
             
