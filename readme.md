@@ -39,19 +39,55 @@ python -m SimpleHTTPServer 8000
 
 In your browser go to `http://localhost:8000` and enjoy.
 
+## Tweet Collector (Local Mode, Scala)
+
+I built the local mode initially for testing, as it shares the same core logic as the distributed Spark Streaming build, but it could also be useful in case there are [issues running the cluster](http://timothyrenner.github.io/streaming/2015/08/16/adventures-in-the-mesosphere.html) or you just don't want to spend money on this blatantly stupid waste of time.
+It takes five command line arguments:
+    
+* A configuration file (JSON).
+* The Twitter consumer key.
+* The Twitter consumer secret key.
+* The Twitter access key.
+* The Twitter access secret key.
+    
+It may seem like a bit much when running locally, but it's done this way because it makes the distributed mode more secure. See [here](http://timothyrenner.github.io/streaming/2015/08/16/adventures-in-the-mesosphere.html) for how I managed to screw this up with my AWS keys.
+That was not a good morning.
+
+Feel free to modify it to use a `twitter4j.properties` file if you want, just be aware that if you do run it remotely your credentials are going with it.
+
+### Config File
+Here's an example of the structure of the config file:
+
+```json
+    {
+        "tracking": ["jeb bush", "jebbush", "ben carson", "realbencarson"],
+        "targets": {
+            "bush": "Jeb Bush",
+            "@jebbush": "Jeb Bush",
+            "carson": "Ben Carson",
+            "@realbencarson": "Ben Carson"
+        }
+        
+        "time": 120
+    }
+```
+
+#### Fields
+* `tracking` is an array of strings that will be used as filter queries against the Streaming API. Ideally it should contain both the full name (space included) and the twitter handle of each target.
+* `targets` is an object (map, really) that contains _tokens_ from within tweets to the full names of the targets. For `@mention`s this means the `@` needs to be there, since the tweet is tokenized on space only (a subject of future work, perhaps). The best way to use this is to include the handle and the _last name_ of the subject. Used in conjunction with `tracking`, this can ensure the proper attribution is made (e.g. making sure Katy Perry doesn't get counted for Rick Perry).
+* `time`: _Optional_. The total time in seconds for the run. If this is omitted, the program will run indefinitely.
+
 ## Tweet Collector (Spark)
 
-It works, but I haven't documented it yet.
-Check back soon.
+The Spark collector for the tweets contains exactly the same command line options as the local mode.
+The JSON config file requires two additional arguments (which are ignored by local mode):
+
+* `batchLength`: The number of seconds per micro-batch.
+* `filePrefix`: The prefix for the text file output (See the [Spark Streaming](http://spark.apache.org/docs/latest/streaming-programming-guide.html#output-operations-on-dstreams).
 
 ## Tweet Collector (Storm)
 
 ***TODO***: When it's implemented.
-
-## Tweet Collector (Local Mode, Scala)
-
-Also works, but isn't documented.
-Also check back soon.
 
 ## Site Generator
 
@@ -73,7 +109,7 @@ Read on for descriptions of `subjects.json` and `data.tsv`.
 
 The subject file is a JSON file with the following structure:
 
-```
+```json
 [
     { "name": "Rand Paul",
       "display_name": "Rand \"Filibuster\" Paul",
