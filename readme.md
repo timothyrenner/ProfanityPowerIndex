@@ -116,7 +116,7 @@ The subject file is a JSON file with the following structure (with one map per s
       "picture": "www.wikipedia.org",
       "id": "rand-paul",
       "colors": {
-        "sparkline": [{"offset": "xxx", "color": "xxx"}, ...],
+        "sparkline": [{"offset": "xxx", "color": "xxx"}],
         "barchart": { "base": "xxx", "hover": "xxx" }
     }
 ]
