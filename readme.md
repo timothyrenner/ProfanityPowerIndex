@@ -66,7 +66,7 @@ Here's an example of the structure of the config file:
             "@jebbush": "Jeb Bush",
             "carson": "Ben Carson",
             "@realbencarson": "Ben Carson"
-        }
+        },
         
         "time": 120
     }
@@ -107,7 +107,7 @@ Read on for descriptions of `subjects.json` and `data.tsv`.
 
 ### Subject File
 
-The subject file is a JSON file with the following structure:
+The subject file is a JSON file with the following structure (with one map per subject):
 
 ```json
 [
@@ -118,7 +118,7 @@ The subject file is a JSON file with the following structure:
       "colors": {
         "sparkline": [{"offset": "xxx", "color": "xxx"}, ...],
         "barchart": { "base": "xxx", "hover": "xxx" }
-    }, ...
+    }
 ]
 ```
 #### Fields
