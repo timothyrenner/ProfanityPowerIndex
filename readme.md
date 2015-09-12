@@ -1,6 +1,6 @@
 # Profanity Power Index
 
-This guide contains (or will shortly contain) the information required to produce the graphic and collect the data for the [Profanity Power Index](http://timothyrenner.github.io/profanitypowerindex).
+This guide contains the information required to produce the graphic and collect the data for the [Profanity Power Index](http://timothyrenner.github.io/profanitypowerindex).
 
 ## Quickstart
 
@@ -83,7 +83,7 @@ The Spark collector for the tweets contains exactly the same command line option
 The JSON config file requires two additional arguments (which are ignored by local mode):
 
 * `batchLength`: The number of seconds per micro-batch.
-* `filePrefix`: The prefix for the text file output (See the [Spark Streaming](http://spark.apache.org/docs/latest/streaming-programming-guide.html#output-operations-on-dstreams).
+* `filePrefix`: The prefix for the text file output (See the [Spark Streaming](http://spark.apache.org/docs/latest/streaming-programming-guide.html#output-operations-on-dstreams) documentation).
 
 ## Tweet Collector (Storm)
 
