@@ -24,11 +24,11 @@
       [:div.col-md-5 {:id barchart-id}]
       [:div.col-md-2 
         [:div.row {:id image-id}
-            [:img.img-responsive {:src picture-link 
-                                  :style (str/join ";" ["width: 180px"
-                                                        "height: 180px"
-                                                        "border:2px solid black"
-                                                        "margin: 0 auto"])}]]
+            [:img {:src picture-link 
+                   :style (str/join ";" ["width: 180px"
+                                         "height: 180px"
+                                         "border:2px solid black"
+                                         "margin: 1em auto 0"])}]]
         [:div.row.text-center 
          [:h5 (escape-html subj-name)]]]
       [:div.col-md-5 {:id sparkline-id}]]))
