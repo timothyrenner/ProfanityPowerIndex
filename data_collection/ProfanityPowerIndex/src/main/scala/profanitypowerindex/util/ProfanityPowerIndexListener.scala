@@ -15,6 +15,11 @@ package profanitypowerindex.util {
             processTweet(status, targets).foreach(println)
             tweetCounter += 1
             
+            if(tweetCounter % 100 == 0) {
+                Console.err.println("Total number of tweets: %d."
+                    .format(tweetCounter))
+            }
+            
         } // Close onStatus.
         
         def onDeletionNotice(notice: StatusDeletionNotice) { }
