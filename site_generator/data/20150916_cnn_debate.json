@@ -30,21 +30,6 @@
         }
     },
     {
-        "name": "Ben Carson",
-        "display_name": "Ben Carson",
-        "picture":"https://pbs.twimg.com/profile_images/639107224216993792/kJU5VKFt.jpg",
-        "id": "ben-carson",        
-        "colors": {
-            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
-                           {  "offset": "25%",  "color": "#fcae91" },
-                           {  "offset": "50%",  "color": "#fb6a4a" },
-                           {  "offset": "75%",  "color": "#de2d26" },
-                           {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026",
-                          "hover": "#800026" }
-        }
-    },
-    {
         "name": "Rand Paul",
         "display_name": "Rand Paul",
         "picture": "https://pbs.twimg.com/profile_images/378800000172093378/1fdc56b3070dfe288553f20ebb49e92a_400x400.jpeg",
@@ -60,10 +45,40 @@
         }
     },
     {
+        "name": "Jeb Bush",
+        "display_name": "Jeb Bush",
+        "picture": "https://pbs.twimg.com/profile_images/591000793303547905/eu1KYXqx_400x400.jpg",
+        "id": "jeb-bush",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
+        }
+    },
+    {
         "name": "Ted Cruz",
         "display_name": "Ted Cruz",
         "picture": "https://pbs.twimg.com/profile_images/478888071518093312/Rdiy3UhY_400x400.jpeg",
         "id": "ted-cruz",
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
+        }
+    },
+    {
+        "name": "Ben Carson",
+        "display_name": "Ben Carson",
+        "picture":"https://pbs.twimg.com/profile_images/639107224216993792/kJU5VKFt.jpg",
+        "id": "ben-carson",        
         "colors": {
             "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
                            {  "offset": "25%",  "color": "#fcae91" },
@@ -105,40 +120,25 @@
         }
     },
     {
-        "name": "Scott Walker",
-        "display_name": "Scott Walker",
-        "picture": "https://pbs.twimg.com/profile_images/611918888872226817/AQ401NFI_400x400.png",
-        "id": "scott-walker",
-        "colors": {
-            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
-                           {  "offset": "25%",  "color": "#fcae91" },
-                           {  "offset": "50%",  "color": "#fb6a4a" },
-                           {  "offset": "75%",  "color": "#de2d26" },
-                           {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026",
-                          "hover": "#800026" }
-        }
-    },
-    {
-        "name": "Jeb Bush",
-        "display_name": "Jeb Bush",
-        "picture": "https://pbs.twimg.com/profile_images/591000793303547905/eu1KYXqx_400x400.jpg",
-        "id": "jeb-bush",
-        "colors": {
-            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
-                           {  "offset": "25%",  "color": "#fcae91" },
-                           {  "offset": "50%",  "color": "#fb6a4a" },
-                           {  "offset": "75%",  "color": "#de2d26" },
-                           {  "offset": "100%", "color": "#a50f15" } ],
-            "barchart": { "base" : "#bd0026",
-                          "hover": "#800026" }
-        }
-    },
-    {
         "name": "Marco Rubio",
         "display_name": "Marco Rubio",
         "picture": "https://pbs.twimg.com/profile_images/588332605969342464/l3r5Akro_400x400.jpg",
         "id": "marco-rubio",        
+        "colors": {
+            "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                           {  "offset": "25%",  "color": "#fcae91" },
+                           {  "offset": "50%",  "color": "#fb6a4a" },
+                           {  "offset": "75%",  "color": "#de2d26" },
+                           {  "offset": "100%", "color": "#a50f15" } ],
+            "barchart": { "base" : "#bd0026",
+                          "hover": "#800026" }
+        }
+    },
+    {
+        "name": "Scott Walker",
+        "display_name": "Scott Walker",
+        "picture": "https://pbs.twimg.com/profile_images/611918888872226817/AQ401NFI_400x400.png",
+        "id": "scott-walker",
         "colors": {
             "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
                            {  "offset": "25%",  "color": "#fcae91" },

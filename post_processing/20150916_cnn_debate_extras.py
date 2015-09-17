@@ -5,11 +5,11 @@ candidates = ["Chris Christie", "Rand Paul", "Mike Huckabee",
               "Ben Carson", "Ted Cruz", "Marco Rubio",
               "John Kasich", "Carly Fiorina"]
 words = ["fuck", "shit", "ass", "bitch", "douche", "dick", "damn"]
-times = ["2015-09-16T19:%02d-0400"%(i) for i in range(30,60)] + \
+times = ["2015-09-16T19:%02d-0400"%(i) for i in range(45,60)] + \
         ["2015-09-16T20:%02d-0400"%(i) for i in range(60)] + \
         ["2015-09-16T21:%02d-0400"%(i) for i in range(60)] + \
         ["2015-09-16T22:%02d-0400"%(i) for i in range(60)] +\
-        ["2015-09016T23:%02d-0400"%(i) for i in range(30)]
+        ["2015-09-16T23:%02d-0400"%(i) for i in range(16)]
 
 data = [{'subject': s, 'word': w, 'time': t, 'count': 0}
         for s in candidates

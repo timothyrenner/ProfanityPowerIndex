@@ -64,8 +64,8 @@
 
   (let [subjects-string (slurp (first args))
         subjects (json/parse-string subjects-string true)
-        start "2015-08-06T21:00-0400"
-        stop  "2015-08-06T23:00-0400"]
+        start "2015-09-16T20:00-0400"
+        stop  "2015-09-16T23:00-0400"]
 
     (println 
       (html5 {:lang "en"} 
@@ -83,7 +83,7 @@
               [:h3.text-center "2016 Republican Primary Edition"]]
             [:hr]
             [:div.row
-                [:h2.text-center "Fox News Debate, 8/6/2015, 9-11 ET"]]
+                [:h2.text-center "CNN Debate, 9/16/2015, 8-11 ET"]]
             [:div.row
                 [:h5.text-center "Collected from the Twitter public timeline."]]
             [:hr]

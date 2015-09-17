@@ -30,8 +30,8 @@ CREATE TABLE counts (subject TEXT,
 -- Insert the (filtered) collected data into the table.
 INSERT INTO counts 
 SELECT * FROM raw_counts
-WHERE time >= '2015-09-16T19:30-0400' AND
-      time <= '2015-09-16T23:30-0400';
+WHERE time >= '2015-09-16T19:45-0400' AND
+      time <= '2015-09-16T23:15-0400';
    
 -- Finally, reapply the groupby and sort.
 DROP TABLE IF EXISTS final_counts;
