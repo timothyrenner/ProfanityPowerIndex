@@ -41,20 +41,24 @@
  "Two arguments: the first is the name of a JSON file with the following 
   structure:
 
-  `[{
-     \"name\": \"Rand Paul\",
-     \"display_name\": \"Rand \\\"Filibuster\\\" Paul\",
-     \"picture\": \"www.wikipedia.org\", 
-     \"id\": \"rand-paul\",
-     \"colors\": {
-       \"sparkline\": [{ \"offset\": \"xxx\", \"color\": \"xxx\"}, ... ],
-       \"barchart\": { \"base\": \"xxx\", \"hover\": \"xxx\" }
-     }
-   },
-   {
-     \"name\": \"Ted Cruz\",
-     ... and so forth
-   }]`
+  `{
+      \"subjects\": [{
+        \"name\": \"Rand Paul\",
+        \"display_name\": \"Rand \\\"Filibuster\\\" Paul\",
+        \"picture\": \"www.wikipedia.org\", 
+        \"id\": \"rand-paul\",
+        \"colors\": {
+          \"sparkline\": [{ \"offset\": \"xxx\", \"color\": \"xxx\"}, ... ],
+          \"barchart\": { \"base\": \"xxx\", \"hover\": \"xxx\" }
+        }
+      },
+      {
+        \"name\": \"Ted Cruz\",
+        ... and so forth
+      }],
+    \"startTime\":\"YYYY-MM-DDTHH:MM-ZZZZ\"
+    \"stopTime\":\"YYYY-MM-DDTHH:MM-ZZZZ\"
+  }`
 
    The second is a tab separated data file with the following columns, headers
    included: subject, word, time, count
@@ -62,10 +66,11 @@
    The time column is in ISO 8601 or some other format recognizable by
    `new Date(time)` in Javascript."
 
-  (let [subjects-string (slurp (first args))
-        subjects (json/parse-string subjects-string true)
-        start "2015-09-16T20:00-0400"
-        stop  "2015-09-16T23:00-0400"]
+  (let [config-string (slurp (first args))
+        config (json/parse-string config-string true)
+        subjects (:subjects config)
+        start (:startTime config)
+        stop  (:stopTime config)]
 
     (println 
       (html5 {:lang "en"} 
@@ -95,7 +100,8 @@
                    subjects))]
             [:script (js-call "d3.tsv" 
                               (str "\"" (second args) "\"")
-                              (js-call "tsvCallback" subjects-string 
+                              (js-call "tsvCallback" 
+                                          (json/generate-string subjects) 
                                        (str "\"" start "\"")
                                        (str "\"" stop "\"")))]
             [:hr]

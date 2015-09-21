@@ -110,16 +110,21 @@ Read on for descriptions of `subjects.json` and `data.tsv`.
 The subject file is a JSON file with the following structure (with one map per subject):
 
 ```json
-[
-    { "name": "Rand Paul",
-      "display_name": "Rand \"Filibuster\" Paul",
-      "picture": "www.wikipedia.org",
-      "id": "rand-paul",
-      "colors": {
-        "sparkline": [{"offset": "xxx", "color": "xxx"}],
-        "barchart": { "base": "xxx", "hover": "xxx" }
-    }
-]
+{
+    "subjects":
+        [
+            { "name": "Rand Paul",
+              "display_name": "Rand \"Filibuster\" Paul",
+              "picture": "www.wikipedia.org",
+              "id": "rand-paul",
+              "colors": {
+                 "sparkline": [{"offset": "xxx", "color": "xxx"}],
+                 "barchart": { "base": "xxx", "hover": "xxx" }
+            }
+        ],
+    "startTime": "YYYY-MM-DDTHH:MM-ZZZZ",
+    "stopTime": "YYYY-MM-DDTHH:MM-ZZZZ"
+}
 ```
 #### Fields
 
@@ -127,6 +132,8 @@ The subject file is a JSON file with the following structure (with one map per s
 * **picture** A link to a picture of the subject. This gets shoved into a 180px by 229px image tag. You can change it if you want, but it may have undesired consequences wrt the CSS positioning.
 * **id** A name that can be used as a CSS ID selector to uniquely identify DOM elements for a subject.
 * **colors** The colors for the subject's plots. The **sparkline** is an array of objects that will be used in an [SVG gradient](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients). The idea was taken from [this plot](http://bl.ocks.org/mbostock/3969722) by Mike Bostock. The **barchart** is an object with the "base" color for the barchart bars and a color to transition to when hovered.
+* **startTime** The start time of the actual debate in ISO 8601.
+* **stopTime** The stop time of the actual debate in ISO 8601.
 
 ### Data File
 

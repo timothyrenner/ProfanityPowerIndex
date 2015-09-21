@@ -6,8 +6,8 @@ from datetime import timedelta
 candidates = ['Jeb Bush', 'Ben Carson', 'Chris Christie', 'Ted Cruz',
               'Carly Fiorina', 'Jim Gilmore', 'Lindsey Graham',
               'Mike Huckabee', 'Bobby Jindal', 'John Kasich',
-              'George Pataki', 'Rand Paul', 'Rick Perry', 'Marco Rubio',
-              'Rick Santorum', 'Donald Trump', 'Scott Walker',
+              'George Pataki', 'Rand Paul', 'Marco Rubio',
+              'Rick Santorum', 'Donald Trump',
               'Lincoln Chafee', 'Hillary Clinton',
               "Martin O'Malley", 'Bernie Sanders', 'Jim Webb']
 
