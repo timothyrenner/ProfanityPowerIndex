@@ -17,7 +17,7 @@ You might also want to check out `sample_subjects.json` while you're there, but 
 From there run
 
 ```bash
-lein run ../site/sample_data/sample_subjects.json\
+lein run ../site/sample_data/all_config.json\
          sample_data/sample_data.tsv >\
          ../site/index.html
 ```
@@ -25,7 +25,7 @@ lein run ../site/sample_data/sample_subjects.json\
 Here's what the args are, very quickly.
 This will be discussed in more detail later in the document.
 
-1. `../site/sample_data/sample_subjects.json` is a sort-of configuration file that gives information the templating engine needs about the subjects like: picture URL, color schemes, and CSS id tags.
+1. `../site/sample_data/all_config.json` is a configuration file that gives information the templating engine needs about the subjects like: picture URL, color schemes, and CSS id tags.
 
 2. `sample_data/sample_data.tsv` is the path *from the `index.html` file* to the data. It's not going to be used as a path in the templating engine, just the site's HTML. That's why you **don't** need `../site/`. Yes this is confusing. If I come up with a better way I'll implement it.
 
@@ -92,7 +92,7 @@ The JSON config file requires two additional arguments (which are ignored by loc
 ## Site Generator
 
 The site generator is a [leiningen](http://leiningen.org/) project (`brew install lein` on a mac) written in Clojure.
-It uses the [hiccup](https://github.com/weavejester/hiccup) to generate all of the HTML.
+It uses the [hiccup](https://github.com/weavejester/hiccup) template engine to generate all of the HTML.
 
 The site generator takes two arguments: the path to the subject file and the path to the dataset.
 
@@ -105,9 +105,9 @@ lein run /path/to/subjects.json http/relative/path/to/data.tsv
 
 Read on for descriptions of `subjects.json` and `data.tsv`.
 
-### Subject File
+### Site Generator Config File
 
-The subject file is a JSON file with the following structure (with one map per subject):
+The site generator config file is a JSON file with the following structure (with one map per subject):
 
 ```json
 {
@@ -129,7 +129,7 @@ The subject file is a JSON file with the following structure (with one map per s
 #### Fields
 
 * **name** The name of the subject.
-* **picture** A link to a picture of the subject. This gets shoved into a 180px by 229px image tag. You can change it if you want, but it may have undesired consequences wrt the CSS positioning.
+* **picture** A link to a picture of the subject. This gets shoved into a 180px by 180px image tag. You can change it if you want, but it may have undesired consequences wrt the CSS positioning. Mind the aspect ratio as well.
 * **id** A name that can be used as a CSS ID selector to uniquely identify DOM elements for a subject.
 * **colors** The colors for the subject's plots. The **sparkline** is an array of objects that will be used in an [SVG gradient](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients). The idea was taken from [this plot](http://bl.ocks.org/mbostock/3969722) by Mike Bostock. The **barchart** is an object with the "base" color for the barchart bars and a color to transition to when hovered.
 * **startTime** The start time of the actual debate in ISO 8601.
@@ -142,7 +142,7 @@ The time column should be in ISO 8601 or any other format recognizable by `new D
 
 ### One Last Thing
 
-The data file and the `subjects.json` file need to match in that the names of the subjects in the dataset must match the names of the subjects in the file.
+The data file and the `generator-config.json` file need to match in that the names of the subjects in the dataset must match the names of the subjects in the file.
 Otherwise things won't get drawn and stuff.
 
 ### Running
@@ -150,7 +150,7 @@ Otherwise things won't get drawn and stuff.
 Run with leiningen
 
 ```bash
-lein run /path/to/subjects.json /index/to/data.tsv > ../site/index.html
+lein run /path/to/generator-config.json /index/to/data.tsv > ../site/index.html
 ```
 
 ## Site
