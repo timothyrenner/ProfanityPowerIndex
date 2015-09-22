@@ -24,15 +24,11 @@
         
         "rand paul", "randpaul",
         
-        "rick perry", "governorperry",
-        
         "marco rubio", "marcorubio",
         
         "rick santorum", "ricksantorum",
         
         "donald trump", "realdonaldtrump",
-        
-        "scott walker", "scottwalker",
         
         "lincoln chafee", "lincolnchafee",
         
@@ -82,17 +78,11 @@
         "rand":      "Rand Paul",
         "@randpaul": "Rand Paul",
         
-        "perry":          "Rick Perry", 
-        "@governorperry": "Rick Perry",
-        
         "rubio":       "Marco Rubio",
         "@marcorubio": "Marco Rubio",
         
         "santorum":      "Rick Santorum",
         "@ricksantorum": "Rick Santorum",
-        
-        "trump":            "Donald Trump", 
-        "@realdonaldtrump": "Donald Trump",
         
         "walker":       "Scott Walker", 
         "@scottwalker": "Scott Walker",
