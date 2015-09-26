@@ -89,6 +89,41 @@ The JSON config file requires two additional arguments (which are ignored by loc
 
 ***TODO***: When it's implemented.
 
+## Post Processor
+
+The streaming data collector's don't aggregate the tweet events as they come in because time-dependent aggregation can be tricky for streaming data.
+So to perform the aggregation some post processing is required.
+This happens in two stages:
+
+1. Jump start the dataset by filling in every time/word/subject slot with a count of zero. This makes the visualization interpolators behave when there isn't much activity (see [here ](http://timothyrenner.github.io/profanitypowerindex/20150916-cnn/#john-kasich-sparkline) for an example).
+2. Aggregate the event data, and merge with the jump-started dataset.
+
+### Jump Start
+There's a python3 script in the `post_processing/` directory called `jumpstart.py`.
+It reads the site generator's config file, grabbing the subjects and the start/end times, and builds out a dataset of all zeros, outputting to a csv.
+The next section describes the site generator's config file.
+
+The start/end times in that file represent the _actual_ times the event started. 
+If you collect data before and after the event start (to show ramped-up interest or something), you can provide a lead time that gets slapped on before and after the event.
+
+The script is used as follows:
+    
+    python3 jumpstart.py /path/to/site-generator-config.json [OPTIONS]
+    
+Options:
+    
+    -l --lead-time <time> Time in minutes to put at the beginning/end of the run. Default 15.
+    
+    -o --output <file> The name of the output file. Default "output.csv"
+    
+    -h --help Displays arguments
+    
+### Aggregation
+Currently this is done on a purely ad-hoc basis.
+It uses SQLite3 to perform the aggregation since the datasets haven't really been huge (tens of thousands of events).
+Take a look at the repo for examples and adapt them accordingly.
+I do plan on turning this into a script when I get the chance, because who wouldn't want to pour more time into needless automation :) ?
+
 ## Site Generator
 
 The site generator is a [leiningen](http://leiningen.org/) project (`brew install lein` on a mac) written in Clojure.
