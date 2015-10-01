@@ -119,10 +119,19 @@ Options:
     -h --help Displays arguments
     
 ### Aggregation
-Currently this is done on a purely ad-hoc basis.
-It uses SQLite3 to perform the aggregation since the datasets haven't really been huge (tens of thousands of events).
-Take a look at the repo for examples and adapt them accordingly.
-I do plan on turning this into a script when I get the chance, because who wouldn't want to pour more time into needless automation :) ?
+The event aggregation is done via [SQLite3](https://www.sqlite.org/), but is fully automated in a bash script, `process_events.sh`.
+This script also requires [csvkit](https://csvkit.readthedocs.org/en/0.9.1/) for some date picking magic.
+
+It's usage is simple:
+
+```bash
+process_events.sh /path/to/raw_data.csv /path/to/jumpstart_data.csv
+```
+
+It outputs a tab-separated file with the time, subject, word, and count (including headers) in the exact form required for the visualization.
+It even filters the raw data to confine it between the start and stop times in the jump started dataset.
+
+The output goes to stdout, so you'll want to redirect it to the file of your choice.
 
 ## Site Generator
 
