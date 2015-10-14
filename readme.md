@@ -80,10 +80,13 @@ Here's an example of the structure of the config file:
 ## Tweet Collector (Spark)
 
 The Spark collector for the tweets contains exactly the same command line options as the local mode.
-The JSON config file requires two additional arguments (which are ignored by local mode):
+Spark mode is designed to store the tweets (text, time) as well as the profanity into a Cassandra database.
+It sets up the keyspace `ppi` and creates two tables: `tweets` and `profanity`.
+The JSON config file requires three additional arguments (which are ignored by local mode):
 
 * `batchLength`: The number of seconds per micro-batch.
-* `filePrefix`: The prefix for the text file output (See the [Spark Streaming](http://spark.apache.org/docs/latest/streaming-programming-guide.html#output-operations-on-dstreams) documentation).
+* `cassandraHost`: The hostname of the Cassandra database.
+* `cassandraPort`: The port of the Cassandra database.
 
 ## Tweet Collector (Storm)
 
