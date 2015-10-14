@@ -1,0 +1,96 @@
+{
+    "subjects": [
+        {
+            "name": "Lincoln Chafee",
+            "display_name": "Lincoln Chafee",
+            "picture": "https://pbs.twimg.com/profile_images/378800000433899667/8238019d8e6e4b2117a79850576e5069_400x400.jpeg",
+            "id": "lincoln-chafee",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Hillary Clinton",
+            "display_name": "Hillary Clinton",
+            "picture": "https://pbs.twimg.com/profile_images/625852134907469824/waxtV3lF_400x400.png",
+            "id": "hillary-clinton",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Martin O'Malley",
+            "display_name": "Martin O'Malley",
+            "picture": "https://pbs.twimg.com/profile_images/623344834401685504/PrYH3-HB_400x400.jpg",
+            "id": "martin-omalley",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Bernie Sanders",
+            "display_name": "Bernie Sanders",
+            "picture": "https://pbs.twimg.com/profile_images/593768630619414528/NtUnu7BX_400x400.png",
+            "id": "bernie-sanders",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Jim Webb",
+            "display_name": "Jim Webb",
+            "picture": "https://pbs.twimg.com/profile_images/603792003298656258/uAchir_7_400x400.jpg",
+            "id": "jim-webb",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Donald Trump",
+            "display_name": "Donald Trump",
+            "picture": "https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_400x400.jpg",
+            "id": "donald-trump",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        }
+    ],
+    "startTime":"2015-10-13T21:00-0400",
+    "stopTime":"2015-10-13T23:00-0400"
+}

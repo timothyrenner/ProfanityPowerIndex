@@ -1,0 +1,38 @@
+{
+    "tracking":[
+        "donald trump", "realdonaldtrump",
+        
+        "lincoln chafee", "lincolnchafee",
+        
+        "hillary clinton", "hillaryclinton",
+        
+        "martin o'malley", "martinomalley",
+        
+        "bernie sanders", "sensanders", "berniesanders",
+        
+        "jim webb", "jimwebbusa"
+    ],
+    "targets":{
+        "chafee":         "Lincoln Chafee",
+        "@lincolnchafee": "Lincoln Chafee",
+        
+        "clinton":         "Hillary Clinton",
+        "@hillaryclinton": "Hillary Clinton",
+        
+        "o'malley":       "Martin O'Malley",
+        "@martinomalley": "Martin O'Malley",
+        
+        "sanders":        "Bernie Sanders",
+        "@sensanders":    "Bernie Sanders",
+        "@berniesanders": "Bernie Sanders",
+        
+        "webb":        "Jim Webb",
+        "@jimwebbusa": "Jim Webb",
+        
+        "trump": "Donald Trump",
+        "@realdonaldtrump": "Donald Trump"
+    },
+    "batchlength": 1,
+    "cassandraHost": "cassandra-dcos-node.cassandra.dcos.mesos",
+    "cassandraPort": 9160
+}
