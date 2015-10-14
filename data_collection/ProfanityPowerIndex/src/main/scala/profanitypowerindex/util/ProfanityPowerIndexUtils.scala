@@ -98,16 +98,18 @@ package profanitypowerindex.util {
             tweetTime.setTime((tweetTime.getTime/60000)*60000) 
             return tweetTime
         } // Close processTweetTime.
-        
+                                
         def processTweet(tweet: Status, targets:Map[String, String]) =
         {
             val time = dateFormat.format(processTweetTime(tweet.getCreatedAt))
-            val id = tweet.getId
+                                 .toString
+            val id = tweet.getId.toString
             val rt = tweet.isRetweet
-            val rtid = if(rt) { tweet.getRetweetedStatus.getId } else id
+            val rtid = if(rt) { tweet.getRetweetedStatus.getId.toString } 
+                       else id.toString
             
             for((t,p) <- parseTweetText(tweet.getText, targets)) 
-                yield List(id, rtid, time.toString, t, p).mkString("\t")
+                yield (id, rtid, time, t, p)
         } // Close processTweet.
     } // Close ProfanityPowerIndexUtils.
 } // Close package.

@@ -11,6 +11,12 @@ package profanitypowerindex.spark {
     
     import scala.io.Source
     
+    import com.datastax.spark.connector.SomeColumns
+    import com.datastax.spark.connector.streaming._
+    import com.datastax.spark.connector.cql.CassandraConnector
+    
+    import twitter4j.json.DataObjectFactory
+    
     import profanitypowerindex.util.ProfanityPowerIndexUtils._
     
     /** Extracts tweets from Twitter's public timeline using Spark Streaming and
@@ -29,6 +35,30 @@ package profanitypowerindex.spark {
      * @author Timothy Renner
      */
     object ProfanityPowerIndexCollector {
+        
+        /** Sets up the cassandra database for tweet collection.
+         * 
+         * @param sparkConf The spark configuration. Needs 
+         * spark.cassandra.connection.host and spark.connection.cassandra.port
+         * set.
+         * 
+         */
+        def cassandraInit(sparkConf: SparkConf) {
+            
+            CassandraConnector(sparkConf).withSessionDo { session =>
+                // Create the keyspace.
+                session.execute("CREATE KEYSPACE ppi WITH REPLICATION = " ++
+                                "{'class': 'SimpleStrategy', " ++
+                                "'replication_factor':2}")
+                // Create the table for all tweets.
+                session.execute("CREATE TABLE ppi.tweets (id TEXT, " ++
+                                "time TIMESTAMP, tweet TEXT, PRIMARY KEY (id))")
+                // Create table for extracted profanity.
+                session.execute("CREATE TABLE ppi.profanity (id TEXT, " ++
+                                "rt_id TEXT, time TEXT, word TEXT, " ++
+                                "subject TEXT, PRIMARY KEY(id, time))")
+            }
+        } // Close cassandraInit.
         
         /** Gets the filtered stream based on the provided configuration file.
          * 
@@ -78,22 +108,36 @@ package profanitypowerindex.spark {
             val targets = (config \ "targets").extract[Map[String, String]]
             val time = (config \ "time").extractOrElse(0L)
             val batchLength = (config \ "batchLength").extractOrElse(1)
-            val filePrefix = (config \ "filePrefix").extract[String]
+            val cassandraHost = (config \ "cassandraHost").extract[String]
+            val cassandraPort = (config \ "cassandraPort").extract[String]
             
             
             // Set up spark.
             val sparkConf = new SparkConf()
                                 .setAppName("ProfanityPowerIndexCollector")
+                                .set("spark.cassandra.connection.host",
+                                     cassandraHost) 
+                                .set("spark.cassandra.connection.port",
+                                     cassandraPort)
+            
             val ssc = new StreamingContext(sparkConf, Seconds(batchLength))
-            val accum = ssc.sparkContext.accumulator(0, "tweet-counter")
+            
+            // Initialize Cassandra.
+            cassandraInit(sparkConf)
             
             val stream = TwitterUtils.createStream(ssc, None, tracking)
             
             // Process the stream.
-            stream.flatMap(x => {
-                    accum += 1 // Counts the total tweets.
-                    processTweet(x, targets)
-                }).saveAsTextFiles(filePrefix)
+            // Save the entire tweet to Cassandra.
+            stream.map(x => (x.getId.toString, x.getCreatedAt ,x.getText))
+                  .saveToCassandra("ppi", "tweets", 
+                                   SomeColumns("id", "time", "tweet"))
+            // Save the extracted info to Cassandra.
+            stream.flatMap(x => processTweet(x, targets))
+                  .saveToCassandra("ppi", "profanity", 
+                                   SomeColumns("id", "rt_id", "time", 
+                                               "word", "subject"))
+            
             
             ssc.start()
             

@@ -84,6 +84,9 @@
         "santorum":      "Rick Santorum",
         "@ricksantorum": "Rick Santorum",
         
+        "trump": "Donald Trump",
+        "@realdonaldtrump": "Donald Trump",
+        
         "walker":       "Scott Walker", 
         "@scottwalker": "Scott Walker",
         
@@ -106,5 +109,6 @@
     
     "time": 120,
     "batchLength": 10,
-    "filePrefix": "ppi_test"
+    "cassandraHost": "localhost",
+    "cassandraPort": 9042
 }

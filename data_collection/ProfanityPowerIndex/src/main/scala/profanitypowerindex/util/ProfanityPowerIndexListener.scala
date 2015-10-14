@@ -12,7 +12,10 @@ package profanitypowerindex.util {
         
         def onStatus(status: Status) {
             
-            processTweet(status, targets).foreach(println)
+            processTweet(status, targets).foreach {
+                t => println(t.productIterator.toList.mkString("\t")) 
+            }
+        
             tweetCounter += 1
             
             if(tweetCounter % 100 == 0) {
