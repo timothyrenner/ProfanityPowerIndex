@@ -3,7 +3,7 @@
         {
             "name": "Lincoln Chafee",
             "display_name": "Lincoln Chafee",
-            "picture": "https://pbs.twimg.com/profile_images/378800000433899667/8238019d8e6e4b2117a79850576e5069_400x400.jpeg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/lincoln_chafee_twitter.jpg",
             "id": "lincoln-chafee",
             "colors": {
                 "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
@@ -18,7 +18,7 @@
         {
             "name": "Hillary Clinton",
             "display_name": "Hillary Clinton",
-            "picture": "https://pbs.twimg.com/profile_images/625852134907469824/waxtV3lF_400x400.png",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/hillary_clinton_twitter.png",
             "id": "hillary-clinton",
             "colors": {
                 "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
@@ -33,7 +33,7 @@
         {
             "name": "Martin O'Malley",
             "display_name": "Martin O'Malley",
-            "picture": "https://pbs.twimg.com/profile_images/623344834401685504/PrYH3-HB_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/martin_omalley_twitter.jpg",
             "id": "martin-omalley",
             "colors": {
                 "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
@@ -48,7 +48,7 @@
         {
             "name": "Bernie Sanders",
             "display_name": "Bernie Sanders",
-            "picture": "https://pbs.twimg.com/profile_images/593768630619414528/NtUnu7BX_400x400.png",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/bernie_sanders_twitter.png",
             "id": "bernie-sanders",
             "colors": {
                 "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
@@ -63,7 +63,7 @@
         {
             "name": "Jim Webb",
             "display_name": "Jim Webb",
-            "picture": "https://pbs.twimg.com/profile_images/603792003298656258/uAchir_7_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/jim_webb_twitter.jpg",
             "id": "jim-webb",
             "colors": {
                 "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
@@ -78,7 +78,7 @@
         {
             "name": "Donald Trump",
             "display_name": "Donald Trump",
-            "picture": "https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/trump_twitter.jpg",
             "id": "donald-trump",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },

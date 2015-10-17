@@ -3,7 +3,7 @@
         {
             "name": "Donald Trump",
             "display_name": "Donald Trump",
-            "picture": "https://pbs.twimg.com/profile_images/1980294624/DJT_Headshot_V2_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/trump_twitter.jpg",
             "id": "donald-trump",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -18,7 +18,7 @@
         {
             "name": "Carly Fiorina",
             "display_name": "Carly Fiorina",
-            "picture": "https://pbs.twimg.com/profile_images/595179129013538816/weoj-HQY_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/carly_fiorina_twitter.jpg",
             "id": "carly-fiorina",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -33,7 +33,7 @@
         {
             "name": "Rand Paul",
             "display_name": "Rand Paul",
-            "picture": "https://pbs.twimg.com/profile_images/378800000172093378/1fdc56b3070dfe288553f20ebb49e92a_400x400.jpeg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/rand_paul_twitter.png",
             "id": "rand-paul",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -48,7 +48,7 @@
         {
             "name": "Jeb Bush",
             "display_name": "Jeb Bush",
-            "picture": "https://pbs.twimg.com/profile_images/591000793303547905/eu1KYXqx_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/jeb_bush_twitter.jpg",
             "id": "jeb-bush",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -63,7 +63,7 @@
         {
             "name": "Ted Cruz",
             "display_name": "Ted Cruz",
-            "picture": "https://pbs.twimg.com/profile_images/478888071518093312/Rdiy3UhY_400x400.jpeg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/ted_cruz_twitter.jpeg",
             "id": "ted-cruz",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -78,7 +78,7 @@
         {
             "name": "Ben Carson",
             "display_name": "Ben Carson",
-            "picture":"https://pbs.twimg.com/profile_images/639107224216993792/kJU5VKFt.jpg",
+            "picture":"https://s3-us-west-2.amazonaws.com/profanity-power-index/images/ben_carson_twitter.jpg",
             "id": "ben-carson",        
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -93,7 +93,7 @@
         {
             "name": "Chris Christie",
             "display_name": "Chris Christie",
-            "picture": "https://pbs.twimg.com/profile_images/614760759965265920/8ahsjx48_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/chris_christie_twitter.jpg",
             "id": "chris-christie",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -108,7 +108,7 @@
         {
             "name": "Mike Huckabee",
             "display_name": "Mike Huckabee",
-            "picture": "https://pbs.twimg.com/profile_images/595604836667691008/34kTwIqb_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/mike_huckabee_twitter.jpg",
             "id": "mike-huckabee",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -123,7 +123,7 @@
         {
             "name": "Marco Rubio",
             "display_name": "Marco Rubio",
-            "picture": "https://pbs.twimg.com/profile_images/588332605969342464/l3r5Akro_400x400.jpg",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/marco_rubio_twitter.jpg",
             "id": "marco-rubio",        
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -138,7 +138,7 @@
         {
             "name": "Scott Walker",
             "display_name": "Scott Walker",
-            "picture": "https://pbs.twimg.com/profile_images/644517192717856772/-FDkuhd-.png",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/scott_walker_twitter.png",
             "id": "scott-walker",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
@@ -153,7 +153,7 @@
         {
             "name": "John Kasich",
             "display_name": "John Kasich",
-            "picture": "https://pbs.twimg.com/profile_images/623191528626716672/i7M8s0FC_400x400.png",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/john_kasich_twitter.png",
             "id": "john-kasich",
             "colors": {
                 "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
