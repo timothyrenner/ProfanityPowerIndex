@@ -97,14 +97,32 @@ package profanitypowerindex.util {
             tweetTime.setTime((tweetTime.getTime/60000)*60000) 
             return tweetTime
         } // Close processTweetTime.
-                                
-        def processTweet(tweet: Status, targets:Map[String, String]) =
+        
+        /** Processes the tweet to obtain the profanity associated with
+         *  the targets, the tweet time and the original tweet ID (if it's a 
+         *  retweet).
+         *
+         * @param tweet The tweet to process.
+         * @param targets A map from the keyword name (for obtaining the 
+         *  target from the tweet) to the full name.
+         * @param truncateTime Truncate the tweet time to the nearest minute.
+         *  This is handy for SQLite post processing, but not necessary for
+         *  InfluxDB ingestion.
+         *
+         * @return A 5-tuple containing the tweet ID, retweet ID (if retweet,
+         *  otherwise the tweet ID again), the time as an ISO 8601 formatted
+         *  string (truncated to the minute if selected), the full name of the
+         *  target, and the profanity.
+         */
+        def processTweet(tweet: Status, targets: Map[String, String],
+                         truncateTime: Boolean = true) =
         {
-            val time = dateFormat.format(processTweetTime(tweet.getCreatedAt))
-                                 .toString
+            val time = dateFormat.format(
+                        if(truncateTime) processTweetTime(tweet.getCreatedAt)
+                        else tweet.getCreatedAt).toString
             val id = tweet.getId.toString
-            val rt = tweet.isRetweet
-            val rtid = if(rt) { tweet.getRetweetedStatus.getId.toString } 
+            val rtid = if(tweet.isRetweet) 
+                        tweet.getRetweetedStatus.getId.toString
                        else id.toString
             
             for((t,p) <- parseTweetText(tweet.getText, targets)) 
