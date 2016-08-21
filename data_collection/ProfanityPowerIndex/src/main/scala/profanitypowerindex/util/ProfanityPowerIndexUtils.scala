@@ -27,8 +27,7 @@ package profanitypowerindex.util {
             (word == "ass") ||
             (word == "asshole") ||
             (word == "asshat") ||
-            (word == "jackass") ||
-            (word == "fuckass")
+            (word == "jackass")
         } // Close matchAss.
         
         /** Matches the profanity, returning the root profanity, or None.
