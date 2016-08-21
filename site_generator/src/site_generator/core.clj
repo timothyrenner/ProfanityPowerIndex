@@ -80,7 +80,7 @@
                              "ajax/libs/jquery/1.11.2/jquery.min.js"))
             (include-js (str "https://maxcdn.bootstrapcdn.com/"
                              "bootstrap/3.3.4/js/bootstrap.min.js"))
-            (include-js "http://d3js.org/d3.v3.min.js")
+            (include-js "https://d3js.org/d3.v3.min.js")
             (include-js "js/profanitypowerindex.js")
           [:div.container
             [:div.row

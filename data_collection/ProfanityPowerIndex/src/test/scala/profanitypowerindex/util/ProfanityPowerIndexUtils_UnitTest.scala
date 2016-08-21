@@ -37,12 +37,6 @@ package profanitypowerindex.util {
                     invokePrivate
                     matchAss("jackass")) == true)
         } // Close test on "jackass".
-        
-        test("matchAss matches \"fuckass\"") {
-            assert((ProfanityPowerIndexUtils
-                    invokePrivate
-                    matchAss("fuckass")) == true)
-        } // Close test on "fuckass".
        
        /** A helper for calling the `matchProfanity` method. */
         val matchProfanity = 
