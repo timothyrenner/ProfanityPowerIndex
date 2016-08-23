@@ -18,8 +18,9 @@ libraryDependencies += "com.datastax.spark" %%
                        "spark-cassandra-connector" % 
                        "1.5.0-M1"
 
-//libraryDependencies += "net.java.dev.jets3t" % "jets3t" % "0.7.4"
-                       //exclude("commons-codec", "commons-codec")
+libraryDependencies += "com.paulgoldbaum" %% "scala-influxdb-client" % "0.5.1"
+
+libraryDependencies += "joda-time" % "joda-time" % "2.9.4"
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
