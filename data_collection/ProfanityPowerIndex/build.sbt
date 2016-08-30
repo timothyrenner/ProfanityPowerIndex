@@ -30,3 +30,7 @@ assemblyMergeStrategy in assembly := {
 }
 
 net.virtualvoid.sbt.graph.Plugin.graphSettings
+
+enablePlugins(JavaAppPackaging)
+
+mainClass in Compile := Some("profanitypowerindex.influx.ProfanityPowerIndexCollectorInflux")
