@@ -14,10 +14,10 @@ package profanitypowerindex.influx {
 
     import org.joda.time.DateTime
 
-    class ProfanityPowerIndexListenerInflux(targets: Map[String, String])
+    class ProfanityPowerIndexListenerInflux(targets: Map[String, String],
+    influxdb: InfluxDB)
     extends StatusListener {
 
-        val influxdb = InfluxDB.connect("localhost", 8086)
         val database = influxdb.selectDatabase("profanity")
 
         def onStatus(status: Status) {

@@ -3,8 +3,12 @@ package profanitypowerindex.influx {
     import twitter4j.TwitterStreamFactory
     import twitter4j.TwitterStream
     import twitter4j.FilterQuery
+
+    import com.paulgoldbaum.influxdbclient.InfluxDB
     
     import scala.io.Source
+
+    import scala.concurrent.ExecutionContext.Implicits.global
 
     import org.json4s._
     import org.json4s.native.JsonMethods._
@@ -71,8 +75,12 @@ package profanitypowerindex.influx {
             val targets = (config \ "targets").extract[Map[String, String]]
             val time = (config \ "time").extractOrElse(0L)
 
+            // Connect to the database.
+            val influxdb = InfluxDB.connect("localhost", 8086)
+
             // Create a listener instance.
-            val listener = new ProfanityPowerIndexListenerInflux(targets)
+            val listener = 
+                new ProfanityPowerIndexListenerInflux(targets, influxdb)
 
             // Add our profanity listener.
             twitterStream.addListener(listener)
@@ -85,9 +93,9 @@ package profanitypowerindex.influx {
                 // Close the stream.
                 twitterStream.cleanUp
                 twitterStream.shutdown
-                
-                // Close the program.
-                System.exit(0)
+
+                // Close the connection to influxDB.
+                influxdb.close
             }
         } // Close main.
     } // Close ProfanityPowerIndexCollectorInflux.
