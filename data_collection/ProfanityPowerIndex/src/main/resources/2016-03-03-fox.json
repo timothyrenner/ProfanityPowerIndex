@@ -1,0 +1,23 @@
+{
+    "tracking": [
+        "donald trump", "realdonaldtrump",
+        "ted cruz", "tedcruz",
+        "marco rubio", "marcorubio",
+        "john kasich", "johnkasich"
+        ],
+    "targets": {
+        "trump":            "Donald Trump", 
+        "@realdonaldtrump": "Donald Trump",
+        
+        "cruz":     "Ted Cruz",
+        "@tedcruz": "Ted Cruz",
+        
+        "rubio":       "Marco Rubio",
+        "@marcorubio": "Marco Rubio",
+        
+        "kasich":      "John Kasich",
+        "@johnkasich": "John Kasich"
+    },
+    "batchLength": 1,
+    "filePrefix": "hdfs://hdfs/ppi/ppi"
+}
