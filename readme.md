@@ -39,7 +39,20 @@ python -m SimpleHTTPServer 8000
 
 In your browser go to `http://localhost:8000` and enjoy.
 
-## Tweet Collector (Local Mode, Scala)
+## Building
+
+The data collector is built with sbt, the post processor doesn't require building, and the site builder is built with Leiningen.
+
+The sbt configuration is a little more complicated.
+To build the Spark collector, use `sbt assembly` to make a fat jar.
+That can be used for `spark-submit`.
+For the local collectors, you can do `sbt "run OPTIONS"` and select the main class, or use `sbt stage` to build a launcher script to start the program without sbt.
+The launcher script uses the [sbt-native-packager](http://www.scala-sbt.org/sbt-native-packager/) plugin, with the default main class set to the InfluxDB collector.
+The script has a `-main` option to select the STDOUT collector if you want to run that instead.
+
+The site builder is explained later, but it's much simpler to run than the sbt stuff.
+
+## Tweet Collector (Local Mode, STDOUT)
 
 I built the local mode initially for testing, as it shares the same core logic as the distributed Spark Streaming build, but it could also be useful in case there are [issues running the cluster](http://timothyrenner.github.io/streaming/2015/08/16/adventures-in-the-mesosphere.html) or you just don't want to spend money on this blatantly stupid waste of time.
 It takes five command line arguments:
@@ -77,22 +90,7 @@ Here's an example of the structure of the config file:
 * `targets` is an object (map, really) that contains _tokens_ from within tweets to the full names of the targets. For `@mention`s this means the `@` needs to be there, since the tweet is tokenized on space only (a subject of future work, perhaps). The best way to use this is to include the handle and the _last name_ of the subject. Used in conjunction with `tracking`, this can ensure the proper attribution is made (e.g. making sure Katy Perry doesn't get counted for Rick Perry).
 * `time`: _Optional_. The total time in seconds for the run. If this is omitted, the program will run indefinitely.
 
-## Tweet Collector (Spark)
-
-The Spark collector for the tweets contains exactly the same command line options as the local mode.
-Spark mode is designed to store the tweets (text, time) as well as the profanity into a Cassandra database.
-It sets up the keyspace `ppi` and creates two tables: `tweets` and `profanity`.
-The JSON config file requires three additional arguments (which are ignored by local mode):
-
-* `batchLength`: The number of seconds per micro-batch.
-* `cassandraHost`: The hostname of the Cassandra database.
-* `cassandraPort`: The port of the Cassandra database.
-
-## Tweet Collector (Storm)
-
-***TODO***: When it's implemented.
-
-## Post Processor
+### Post Processor (Local, STDOUT)
 
 The streaming data collector's don't aggregate the tweet events as they come in because time-dependent aggregation can be tricky for streaming data.
 So to perform the aggregation some post processing is required.
@@ -135,6 +133,48 @@ It outputs a tab-separated file with the time, subject, word, and count (includi
 It even filters the raw data to confine it between the start and stop times in the jump started dataset.
 
 The output goes to stdout, so you'll want to redirect it to the file of your choice.
+
+## Tweet Collector (Spark)
+
+The Spark collector for the tweets contains exactly the same command line options as the local mode.
+Spark mode is designed to store the tweets (text, time) as well as the profanity into a Cassandra database.
+It sets up the keyspace `ppi` and creates two tables: `tweets` and `profanity`.
+The JSON config file requires three additional arguments (which are ignored by local mode):
+
+* `batchLength`: The number of seconds per micro-batch.
+* `cassandraHost`: The hostname of the Cassandra database.
+* `cassandraPort`: The port of the Cassandra database.
+
+Post processing is the same as for local STDOUT mode - pull down the `profanity` table into a tab separated file.
+
+## Tweet Collector (Local, InfluxDB)
+
+There's also an option to use [InfluxDB](https://influxdata.com/time-series-platform/influxdb/) to store the profanity in local mode.
+
+It expects InfluxDB to be running on `localhost:8086`.
+Future versions may make this configurable, but it's not hard to change in the code either.
+It can be started (on my Mac) either in the background as a service, or simply in its own terminal, like so
+
+```bash
+influxd
+```
+
+### Post Processor (Local, InfluxDB)
+
+The post processing step for the InfluxDB mode is simpler than the local mode since InfluxDB allows grouping by time much more flexibly than SQLite.
+The post processor is located in `post_processing/influx`.
+
+```bash
+./extract_influx.sh start_time stop_time
+```
+
+where `start_time` and `stop_time` are the datetimes to grab the data in a format recognizable by the `gdate` (from GNU coreutils).
+ISO 8601 or RFC3339 are good bets.
+(Note: to install `gdate` on mac, use `brew install coreutils`).
+
+The script converts the datetimes provided into UTC and puts them in the `WHERE` clause of an InfluxDB query that aggregates the profanity to the minute level, filling missing values with 0.
+InfluxDB doesn't give the data in _quite_ the formate needed, so there's an `awk` script that the output gets piped to before being converted to tab separated values.
+The script output is sent to STDOUT - capture it into a CSV to put it into the site.
 
 ## Site Generator
 
