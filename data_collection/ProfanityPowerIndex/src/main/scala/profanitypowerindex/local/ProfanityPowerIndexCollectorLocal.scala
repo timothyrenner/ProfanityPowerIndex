@@ -6,8 +6,6 @@ package profanitypowerindex.local {
     import scala.io.Source
     import org.json4s._
     import org.json4s.native.JsonMethods._
-    
-    import profanitypowerindex.util.ProfanityPowerIndexListener
    
     /** Extracts tweets from Twitter's public timeline using a local Twitter4j
      *  listener and associates profanity with the targets. Output is printed

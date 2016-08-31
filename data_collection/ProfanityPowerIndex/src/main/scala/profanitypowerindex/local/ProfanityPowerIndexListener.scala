@@ -1,5 +1,5 @@
-package profanitypowerindex.util {
-    import ProfanityPowerIndexUtils.processTweet
+package profanitypowerindex.local {
+    import profanitypowerindex.util.ProfanityPowerIndexUtils.processTweet
     import twitter4j.StatusListener
     import twitter4j.StatusDeletionNotice
     import twitter4j.StallWarning
