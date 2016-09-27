@@ -23,14 +23,14 @@ package profanitypowerindex.influx {
         def onStatus(status: Status) {
             
             val profanityPoints = 
-                processTweet(status, targets).map {
+                processTweet(status, targets, false).map {
                     case (id, rtid, time, t, p) =>
                         // DateTime String constructor reads ISO8601 by
                         // default.
                         Point("profanity", new DateTime(time).getMillis)
                             .addTag("word", p)
                             .addTag("subject", t)
-                            .addField("id", id)
+                            .addTag("id", id)
                             .addField("retweet_id", rtid) 
                     }
 

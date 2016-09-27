@@ -118,7 +118,8 @@ package profanitypowerindex.util {
                          truncateTime: Boolean = true) =
         {
             val time = dateFormat.format(
-                        if(truncateTime) processTweetTime(tweet.getCreatedAt)
+                        if(truncateTime) 
+                            processTweetTime(tweet.getCreatedAt)
                         else tweet.getCreatedAt).toString
             val id = tweet.getId.toString
             val rtid = if(tweet.isRetweet) 
