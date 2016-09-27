@@ -1,0 +1,309 @@
+
+{
+    "subjects": [
+        {
+            "name": "Jeb Bush",
+            "display_name": "Jeb Bush",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/jeb_bush_twitter.jpg",
+            "id": "jeb-bush",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Ben Carson",
+            "display_name": "Ben Carson",
+            "picture":"https://s3-us-west-2.amazonaws.com/profanity-power-index/images/ben_carson_twitter.jpg",
+            "id": "ben-carson",        
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Chris Christie",
+            "display_name": "Chris Christie",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/chris_christie_twitter.jpg",
+            "id": "chris-christie",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }  
+        },
+        {
+            "name": "Ted Cruz",
+            "display_name": "Ted Cruz",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/ted_cruz_twitter.jpeg",
+            "id": "ted-cruz",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Carly Fiorina",
+            "display_name": "Carly Fiorina",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/carly_fiorina_twitter.jpg",
+            "id": "carly-fiorina",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+            
+        },
+        {
+            "name": "Jim Gilmore",
+            "display_name": "Jim Gilmore",
+            "picture": "https://abs.twimg.com/sticky/default_profile_images/default_profile_3_400x400.png",
+            "id": "jim-gilmore", 
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Lindsey Graham",
+            "display_name": "Lindsey Graham",
+            "picture": "https://pbs.twimg.com/profile_images/605484946178732032/xTAv1FtM_400x400.jpg",
+            "id": "lindsey-graham",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Mike Huckabee",
+            "display_name": "Mike Huckabee",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/mike_huckabee_twitter.jpg",
+            "id": "mike-huckabee",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Bobby Jindal",
+            "display_name": "Bobby Jindal",
+            "picture": "https://pbs.twimg.com/profile_images/626079151460450304/1k_c5vMg_400x400.png",
+            "id": "bobby-jindal",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "John Kasich",
+            "display_name": "John Kasich",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/john_kasich_twitter.png",
+            "id": "john-kasich",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "George Pataki",
+            "display_name": "George Pataki",
+            "picture": "https://pbs.twimg.com/profile_images/603934306193383424/wbiabKhJ_400x400.jpg",
+            "id": "george-pataki",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Rand Paul",
+            "display_name": "Rand Paul",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/rand_paul_twitter.png",
+            "id": "rand-paul",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Marco Rubio",
+            "display_name": "Marco Rubio",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/marco_rubio_twitter.jpg",
+            "id": "marco-rubio",        
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Rick Santorum",
+            "display_name": "Rick Santorum",
+            "picture": "https://pbs.twimg.com/profile_images/583694454915076096/YEhBSmOi_400x400.jpg",
+            "id": "rick-santorum",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Donald Trump",
+            "display_name": "Donald Trump",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/trump_twitter.jpg",
+            "id": "donald-trump",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Lincoln Chafee",
+            "display_name": "Lincoln Chafee",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/lincoln_chafee_twitter.jpg",
+            "id": "lincoln-chafee",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Hillary Clinton",
+            "display_name": "Hillary Clinton",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/hillary_clinton_twitter.png",
+            "id": "hillary-clinton",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Martin O'Malley",
+            "display_name": "Martin O'Malley",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/martin_omalley_twitter.jpg",
+            "id": "martin-omalley",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Bernie Sanders",
+            "display_name": "Bernie Sanders",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/bernie_sanders_twitter.png",
+            "id": "bernie-sanders",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        },
+        {
+            "name": "Jim Webb",
+            "display_name": "Jim Webb",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/jim_webb_twitter.jpg",
+            "id": "jim-webb",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        }
+    ],
+    "startTime":"2015-09-16T20:00-0400",
+    "stopTime":"2015-09-16T23:00-0400"
+}
+    
