@@ -13,7 +13,7 @@ package profanitypowerindex.util {
     object ProfanityPowerIndexUtils {
         
         /** Create a formatter for Eastern time zone in ISO8601 format. */
-        val dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmZ")
+        val dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
         val timeZone = TimeZone.getTimeZone("America/New_York")
         dateFormat.setTimeZone(timeZone)
             
