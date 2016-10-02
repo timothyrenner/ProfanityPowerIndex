@@ -1,18 +1,31 @@
 package profanitypowerindex.local {
     import profanitypowerindex.util.ProfanityPowerIndexUtils.processTweet
+    
     import twitter4j.StatusListener
     import twitter4j.StatusDeletionNotice
     import twitter4j.StallWarning
     import twitter4j.Status
+
+    import org.joda.time.format.ISODateTimeFormat
     
+    /** A Twitter4j listener that writes the events to STDOUT and total
+     *  tweets processed to STDERR.
+     *
+     * @author Timothy Renner
+     */
     class ProfanityPowerIndexListener(targets: Map[String, String])
     extends StatusListener {
         
         var tweetCounter = 0
         
+        val dateFormat = ISODateTimeFormat.dateTime()
+
         def onStatus(status: Status) {
             
-            processTweet(status, targets).foreach {
+            processTweet(status, targets).map {
+                case (id, rtid, time, t, p) =>
+                    (id, rtid, dateFormat.print(time), t, p)
+            }.foreach {
                 t => println(t.productIterator.toList.mkString("\t")) 
             }
         

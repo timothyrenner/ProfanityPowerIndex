@@ -14,8 +14,12 @@ package profanitypowerindex.influx {
 
     import org.joda.time.DateTime
 
+    /** A Twitter4j listener that writes events to InfluxDB.
+     *
+     * @author Timothy Renner
+     */
     class ProfanityPowerIndexListenerInflux(targets: Map[String, String],
-    influxdb: InfluxDB)
+        influxdb: InfluxDB)
     extends StatusListener {
 
         val database = influxdb.selectDatabase("profanity")
@@ -27,7 +31,7 @@ package profanitypowerindex.influx {
                     case (id, rtid, time, t, p) =>
                         // DateTime String constructor reads ISO8601 by
                         // default.
-                        Point("profanity", new DateTime(time).getMillis)
+                        Point("profanity", time.getMillis)
                             .addTag("word", p)
                             .addTag("subject", t)
                             .addTag("id", id)

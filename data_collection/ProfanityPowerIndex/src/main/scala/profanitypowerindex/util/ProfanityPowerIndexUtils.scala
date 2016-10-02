@@ -12,7 +12,7 @@ package profanitypowerindex.util {
      */
     object ProfanityPowerIndexUtils {
         
-        /** Create a formatter for ISO8601 format. */
+        /** A formatter for ISO8601 format. */
         val dateFormat = ISODateTimeFormat.dateTime()
             
         /** Matches the word "ass" against several variants.
@@ -119,14 +119,10 @@ package profanitypowerindex.util {
                 new DateTime(tweet.getCreatedAt).toDateTime(
                     DateTimeZone.forID("America/New_York"))
             
-            // Print to a string.
-            // TODO: Remove the string conversion and push it to the listeners.
-            // The influxdb listener actually needs the datetime in UTC, so
-            // really we should push the formatting out too.
-            val time = dateFormat.print(
-                        if(truncateTime) 
+            val time = if(truncateTime) 
                             processTweetTime(tweetTime)
-                        else tweetTime)
+                       else tweetTime
+
             val id = tweet.getId.toString
             val rtid = if(tweet.isRetweet) 
                         tweet.getRetweetedStatus.getId.toString

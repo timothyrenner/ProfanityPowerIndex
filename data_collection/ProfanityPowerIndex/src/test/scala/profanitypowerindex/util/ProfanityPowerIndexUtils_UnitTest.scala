@@ -2,7 +2,7 @@ package profanitypowerindex.util {
    
    import org.scalatest.FunSuite
    import org.scalatest.PrivateMethodTester
-   import java.util.Date
+   import org.joda.time.DateTime
    
    /** Unit tests the ProfanityPowerIndexUtils class.
     * 
@@ -137,8 +137,8 @@ package profanitypowerindex.util {
        test("processTweetTime returns the correct value.") {
            assert(
                ProfanityPowerIndexUtils.processTweetTime(
-                   new Date(1437661282123L)) ==
-                new Date(1437661260000L))
+                   new DateTime(1437661282123L)) ==
+                new DateTime(1437661260000L))
        } // Close test on processTweetTime.
            
    } // Close ProfanityPowerIndexUtils_UnitTest.
