@@ -1,8 +1,8 @@
 package profanitypowerindex.util {
     
-    import java.util.Date
-    import java.util.TimeZone
-    import java.text.SimpleDateFormat
+    import org.joda.time.DateTime
+    import org.joda.time.DateTimeZone
+    import org.joda.time.format.ISODateTimeFormat
     import twitter4j.Status
     
     /** A helper class that parses the tweet text factored for reuse in local
@@ -12,10 +12,8 @@ package profanitypowerindex.util {
      */
     object ProfanityPowerIndexUtils {
         
-        /** Create a formatter for Eastern time zone in ISO8601 format. */
-        val dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
-        val timeZone = TimeZone.getTimeZone("America/New_York")
-        dateFormat.setTimeZone(timeZone)
+        /** Create a formatter for ISO8601 format. */
+        val dateFormat = ISODateTimeFormat.dateTime()
             
         /** Matches the word "ass" against several variants.
          * 
@@ -93,10 +91,9 @@ package profanitypowerindex.util {
          * 
          * @return The time rounded to the nearest minute.
          */
-        def processTweetTime(tweetTime: Date): Date = {
-            tweetTime.setTime((tweetTime.getTime/60000)*60000) 
-            return tweetTime
-        } // Close processTweetTime.
+        def processTweetTime(tweetTime: DateTime): DateTime = 
+            new DateTime((tweetTime.getMillis/60000)*60000)
+        
         
         /** Processes the tweet to obtain the profanity associated with
          *  the targets, the tweet time and the original tweet ID (if it's a 
@@ -117,10 +114,19 @@ package profanitypowerindex.util {
         def processTweet(tweet: Status, targets: Map[String, String],
                          truncateTime: Boolean = true) =
         {
-            val time = dateFormat.format(
+            // Extract the time and put it in a Joda date time.
+            val tweetTime = 
+                new DateTime(tweet.getCreatedAt).toDateTime(
+                    DateTimeZone.forID("America/New_York"))
+            
+            // Print to a string.
+            // TODO: Remove the string conversion and push it to the listeners.
+            // The influxdb listener actually needs the datetime in UTC, so
+            // really we should push the formatting out too.
+            val time = dateFormat.print(
                         if(truncateTime) 
-                            processTweetTime(tweet.getCreatedAt)
-                        else tweet.getCreatedAt).toString
+                            processTweetTime(tweetTime)
+                        else tweetTime)
             val id = tweet.getId.toString
             val rtid = if(tweet.isRetweet) 
                         tweet.getRetweetedStatus.getId.toString
