@@ -11,6 +11,8 @@ package profanitypowerindex.influx {
     import com.paulgoldbaum.influxdbclient.Parameter.Precision
     
     import scala.concurrent.ExecutionContext.Implicits.global
+    import scala.util.Random
+    import scala.math.abs
 
     import org.joda.time.DateTime
 
@@ -23,23 +25,39 @@ package profanitypowerindex.influx {
     extends StatusListener {
 
         val database = influxdb.selectDatabase("profanity")
+        val rng = new Random()
 
+        /** Convert to microseconds and add a random subsecond-level noise 
+         *  factor.
+         *
+         * @param The time in milliseconds.
+         * @return The time in microseconds with subsecond-level noise added.
+         */
+        def jitter(time: Long):Long = 
+            (time * 1000) + (abs(rng.nextLong) % 1000000L)
+         
         def onStatus(status: Status) {
             
             val profanityPoints = 
                 processTweet(status, targets, false).map {
                     case (id, rtid, time, t, p) =>
-                        // DateTime String constructor reads ISO8601 by
-                        // default.
-                        Point("profanity", time.getMillis)
+                        // We jitter the time to prevent duplicates.
+                        // Twitter timeline produces data at the second-level
+                        // only, which results in overwrites into InfluxDB
+                        // unless the tweet ID is indexed. To avoid that, I'm
+                        // jittering the time at the subsecond level by a
+                        // random factor and writing at the microsecond level.
+                        // Microsecond-level jitters are probably a bit much,
+                        // but it does work.
+                        Point("profanity", jitter(time.getMillis))
                             .addTag("word", p)
                             .addTag("subject", t)
-                            .addTag("id", id)
+                            .addField("id", id)
                             .addField("retweet_id", rtid) 
                     }
 
             database.bulkWrite(profanityPoints,
-                               precision=Precision.MILLISECONDS)
+                               precision=Precision.MICROSECONDS)
 
         } // Close onStatus.
 
