@@ -408,6 +408,21 @@ function tsvCallback(subjects, start, stop) {
                 time: newTime,
                 count: parseInt(x.count)
             };
+        // Sort the data by time, then word.
+        }).sort(function(a,b) {
+            if(a.time < b.time) {
+                return -1;
+            } else if (a.time > b.time) {
+                return 1;
+            } else {
+                if(a.word < b.word) {
+                    return -1;
+                } else if (a.word > b.word) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
         });
 
         var maxValue = getMaxValue(cleanedData);
