@@ -1,0 +1,38 @@
+
+{
+    "subjects": [
+        {
+            "name": "Donald Trump",
+            "display_name": "Donald Trump",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/trump_twitter.jpg",
+            "id": "donald-trump",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Hillary Clinton",
+            "display_name": "Hillary Clinton",
+            "picture": "https://s3-us-west-2.amazonaws.com/profanity-power-index/images/hillary_clinton_twitter.png",
+            "id": "hillary-clinton",
+            "colors": {
+                "sparkline": [ { "offset": "0%", "color": "#c6dbef"},
+                               { "offset": "25%", "color": "#9ecae1"},
+                               { "offset": "50%", "color": "#6baed6"},
+                               { "offset": "75%", "color": "#3182bd"},
+                               { "offset": "100%", "color": "#08519c"} ],
+                "barchart": { "base": "#08519c",
+                              "hover": "#08306b" }
+            }
+        }
+    ],
+    "startTime":"2016-10-19T21:00-0400",
+    "stopTime":"2016-10-19T22:30-0400"
+}
+    
