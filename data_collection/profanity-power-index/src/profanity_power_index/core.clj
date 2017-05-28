@@ -13,17 +13,16 @@
 ;; Partitioning transducer.
 (defn partitioner-xform []
   (comp
-    ;; Partition by whether it's a tweet terminator.
-    (partition-by #(str/includes? % "\r\n"))
-    ;; Merge the terminator with the rest of the tweet.
-    (partition-all 2)
-    ;; Flatten the nested sequence of chunks.
-    (map flatten)
-    ;; And concatenate into one string.
-    (map #(apply str %))
-    ;; And finally filter out empty strings.
-    (filter #(not (str/blank? %)))))
-
+    ;; Split on the carriage return. These occur only at the end of a tweet.
+    (mapcat (fn [s] (str/split s #"\r")))
+    ;; Now partition the incoming vectors by a blank string.
+    ;; This groups the tweet chunks into vectors, and the boundaries into
+    ;; empty strings.
+    (partition-by str/blank?)
+    ;; Mash everything together into a string.
+    (map (fn [s] (apply str s)))
+    ;; Finally, filter out the newline boundaries.
+    (filter (fn [s] (not (str/blank? s))))))
 
 ;; (def transfer-chan (chan 5))
 (def transfer-chan (chan 5))
@@ -41,8 +40,7 @@
     ;; This is the 'error' function for the callback. It has a response and
     ;; a throwable.
     (fn [err thr] (binding [*out* *err*] 
-      (println "ERROR:" err) 
-      (println (str thr))))))
+      (println "ERROR:" err)))))
 
 ;;;; PROCESSING HELPERS ;;;;
 (defn contains-profanity? [text]
@@ -63,13 +61,20 @@
     (catch Exception e 
     (do
       (println e)
-      (println text)
       {:text ""}))))
 
 (defn parse-filter []
   (comp
     (map safe-parse-json)
-    (filter (fn [t] (-> t :text str/lower-case contains-profanity?)))))
+    (filter 
+      (fn [t] 
+        (-> t
+            ;; Pull the text out, or an empty string. 
+            (:text "")
+            ;; Convert to lower case.
+            str/lower-case 
+            ;; Check for profanity.
+            contains-profanity?)))))
 
 (defn turbine-topology-vector [elastic-url]
   (let [es-conn (esr/connect elastic-url)]
@@ -80,8 +85,8 @@
     ;; but we need to deserialize to execute the filters.
     [:spread :input 
       [[:deser1 (parse-filter)]
-      [:deser2 (parse-filter)]
-      [:deser3 (parse-filter)]]]
+       [:deser2 (parse-filter)]
+       [:deser3 (parse-filter)]]]
     ;; Unify all of the parsed values asynchronously.
     [:union [:deser1 :deser2 :deser3]
              [:to-out (map identity)]]
@@ -113,10 +118,9 @@
     ;; Read from the dechunker chan in a go loop and drop into turbine.
     (go-loop []
       (let [tweet-chunk (<! transfer-chan)]
-        ; (println tweet-chunk)
         (turbine-in tweet-chunk))
       (recur))
     
-    (statuses-filter :params {:track "trump"}
+    (statuses-filter :params {:track ["trump" "pence"]}
                      :oauth-creds creds
                      :callbacks *callback*)))
