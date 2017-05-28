@@ -6,7 +6,8 @@
             [clojure.string :as str]
             [turbine.core :refer [make-topology]]
             [clojurewerkz.elastisch.rest :as esr]
-            [clojurewerkz.elastisch.rest.document :as esd])
+            [clojurewerkz.elastisch.rest.document :as esd]
+            [clojure.tools.cli :refer [parse-opts]])
   (:import [twitter.callbacks.protocols AsyncStreamingCallback])
   (:gen-class))
 
@@ -107,7 +108,17 @@
 (defn -main
   [& args]
   
-  (let [creds (make-oauth-creds (System/getenv "CONSUMER_KEY")
+  (let [options 
+          (parse-opts
+            args
+            [[:short-opt "-t"
+              :long-opt "--track"
+              :required "TRACK"
+              :desc "A tracking string for the Twitter API."
+              :id :track
+              :assoc-fn (fn [m k t] (update m k #(conj % t)))]])
+
+        creds (make-oauth-creds (System/getenv "CONSUMER_KEY")
                                 (System/getenv "CONSUMER_SECRET")
                                 (System/getenv "API_KEY")
                                 (System/getenv "API_SECRET"))
@@ -121,6 +132,6 @@
         (turbine-in tweet-chunk))
       (recur))
     
-    (statuses-filter :params {:track ["trump" "pence"]}
+    (statuses-filter :params {:track (get-in options [:options :track])}
                      :oauth-creds creds
                      :callbacks *callback*)))
