@@ -7,7 +7,9 @@
             [turbine.core :refer [make-topology]]
             [clojurewerkz.elastisch.rest :as esr]
             [clojurewerkz.elastisch.rest.document :as esd]
-            [clojure.tools.cli :refer [parse-opts]])
+            [clojure.tools.cli :refer [parse-opts]]
+            [clojure.edn :as edn]
+            [clojure.java.io :as io])
   (:import [twitter.callbacks.protocols AsyncStreamingCallback])
   (:gen-class))
 
@@ -77,7 +79,7 @@
             ;; Check for profanity.
             contains-profanity?)))))
 
-(defn turbine-topology-vector [elastic-url]
+(defn turbine-topology-vector [elastic-url elastic-index]
   (let [es-conn (esr/connect elastic-url)]
     [[:in :input (partitioner-xform)]
 
@@ -97,7 +99,7 @@
           (esd/put 
             es-conn 
             ;; Name of the index.
-            "profanity_power_index_20170520" 
+            elastic-index
             ;; Type
             "tweet" 
             ;; Extract the id from the tweet.
@@ -108,7 +110,8 @@
 (defn -main
   [& args]
   
-  (let [options 
+  (let [env (-> "env.edn" io/resource io/file slurp edn/read-string)
+        options 
           (parse-opts
             args
             [[:short-opt "-t"
@@ -118,14 +121,16 @@
               :id :track
               :assoc-fn (fn [m k t] (update m k #(conj % t)))]])
 
-        creds (make-oauth-creds (System/getenv "CONSUMER_KEY")
-                                (System/getenv "CONSUMER_SECRET")
-                                (System/getenv "API_KEY")
-                                (System/getenv "API_SECRET"))
+        creds (make-oauth-creds (:twitter-consumer-key env)
+                                (:twitter-consumer-secret env)
+                                (:twitter-api-key env)
+                                (:twitter-api-secret env))
         turbine-in (first 
                     (make-topology 
-                      (turbine-topology-vector "http://localhost:9200")))] 
-    
+                      (turbine-topology-vector 
+                        (:elasticsearch-url env "http://localhost:9200")
+                        (:elasticsearch-index env "profanity_power_index"))))] 
+
     ;; Read from the dechunker chan in a go loop and drop into turbine.
     (go-loop []
       (let [tweet-chunk (<! transfer-chan)]
