@@ -18,7 +18,8 @@
   (comp
     ;; Split on the carriage return. These occur only at the end of a tweet.
     (mapcat (fn [s] (str/split s #"\r")))
-    ;; Now partition the incoming vectors by a blank string.
+    ;; Now partition the incoming vectors by a blank string, which works because
+    ;; the tweet boundary is \r\n, so \n returns true for str/blank?
     ;; This groups the tweet chunks into vectors, and the boundaries into
     ;; empty strings.
     (partition-by str/blank?)
@@ -104,13 +105,15 @@
             "tweet" 
             ;; Extract the id from the tweet.
             (:id_str t) 
-            ;; Convert the document to JSON for elasticsearch indexing.
+            ;; The tweet itself, which doesn't need to be converted to JSON
+            ;; explicitly.
             t))]]))
 
 (defn -main
   [& args]
   
-  (let [env (-> "env.edn" io/resource io/file slurp edn/read-string)
+  (let [env 
+          (-> "env.edn" io/resource io/file slurp edn/read-string)
         options 
           (parse-opts
             args
