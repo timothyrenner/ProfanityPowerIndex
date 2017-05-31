@@ -97,7 +97,7 @@
     ;; Send to Elasticsearch.
     [:sink :to-out
       (fn [t] 
-          (esd/put 
+        (esd/put
             es-conn 
             ;; Name of the index.
             elastic-index
@@ -133,6 +133,11 @@
                       (turbine-topology-vector 
                         (:elasticsearch-url env "http://localhost:9200")
                         (:elasticsearch-index env "profanity_power_index"))))] 
+
+    ;; Validate that there's something to track.
+    (when (nil? (get-in options [:options :track]))
+      (println "Requires at least one tracking term.")
+      (System/exit 1))
 
     ;; Read from the dechunker chan in a go loop and drop into turbine.
     (go-loop []
