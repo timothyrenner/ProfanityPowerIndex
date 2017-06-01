@@ -57,7 +57,8 @@
       (str/includes? text "asshole")
       (str/includes? text "asshat")
       (str/includes? text "jackass")
-      (str/includes? text "dumbass")))
+      (str/includes? text "dumbass")
+      (str/includes? text "covfefe")))
 
 (defn safe-parse-json [text]
   (try
