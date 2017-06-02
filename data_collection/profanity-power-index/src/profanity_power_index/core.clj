@@ -36,8 +36,8 @@
   (AsyncStreamingCallback.
     ;; resp is the HTTP response, baos is the stream itself.
     ;; This is the 'on-body' function for the callback.
-    ;; Note that tweets can be chunked. This is a problem ... for turbine.
-    ;; A partition-by transducer with (= % "\n") might do the trick.
+    ;; It does no processing - turbine will combine the tweets with a transducer
+    ;; on the input channel.
     (fn [response baos] (>!! transfer-chan (.toString baos)))
     ;; This is the 'failure' function for the callback.
     (fn [resp] (binding [*out* *err*] (println "failed")))
