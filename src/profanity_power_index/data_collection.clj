@@ -1,4 +1,4 @@
-(ns profanity-power-index.core
+(ns profanity-power-index.data-collection
   (:require [twitter.oauth :refer [make-oauth-creds]]
             [twitter.api.streaming :refer [statuses-filter]]
             [clojure.data.json :as json]
@@ -6,15 +6,11 @@
             [clojure.string :as str]
             [turbine.core :refer [make-topology]]
             [clojurewerkz.elastisch.rest :as esr]
-            [clojurewerkz.elastisch.rest.document :as esd]
-            [clojure.tools.cli :refer [parse-opts]]
-            [clojure.edn :as edn]
-            [clojure.java.io :as io])
-  (:import [twitter.callbacks.protocols AsyncStreamingCallback])
-  (:gen-class))
+            [clojurewerkz.elastisch.rest.document :as esd])
+  (:import [twitter.callbacks.protocols AsyncStreamingCallback]))
 
 ;; Partitioning transducer.
-(defn partitioner-xform []
+(defn- partitioner-xform []
   (comp
     ;; Split on the carriage return. These occur only at the end of a tweet.
     (mapcat (fn [s] (str/split s #"\r")))
@@ -47,7 +43,7 @@
       (println "ERROR:" err)))))
 
 ;;;; PROCESSING HELPERS ;;;;
-(defn contains-profanity? [text]
+(defn- contains-profanity? [text]
   (or (str/includes? text "fuck")
       (str/includes? text "shit")
       (str/includes? text "bitch")
@@ -60,7 +56,7 @@
       (str/includes? text "dumbass")
       (str/includes? text "covfefe")))
 
-(defn safe-parse-json [text]
+(defn- safe-parse-json [text]
   (try
     (json/read-json text)
     (catch Exception e 
@@ -68,7 +64,7 @@
       (println e)
       {:text ""}))))
 
-(defn parse-filter []
+(defn- parse-filter []
   (comp
     (map safe-parse-json)
     (filter 
@@ -81,7 +77,7 @@
             ;; Check for profanity.
             contains-profanity?)))))
 
-(defn turbine-topology-vector [elastic-url elastic-index]
+(defn- turbine-topology-vector [elastic-url elastic-index]
   (let [es-conn (esr/connect elastic-url)]
     [[:in :input (partitioner-xform)]
 
@@ -110,22 +106,8 @@
             ;; explicitly.
             t))]]))
 
-(defn -main
-  [& args]
-  
-  (let [env 
-          (-> "env.edn" io/resource io/file slurp edn/read-string)
-        options 
-          (parse-opts
-            args
-            [[:short-opt "-t"
-              :long-opt "--track"
-              :required "TRACK"
-              :desc "A tracking string for the Twitter API."
-              :id :track
-              :assoc-fn (fn [m k t] (update m k #(conj % t)))]])
-
-        creds (make-oauth-creds (:twitter-consumer-key env)
+(defn collect [env options]
+  (let [creds (make-oauth-creds (:twitter-consumer-key env)
                                 (:twitter-consumer-secret env)
                                 (:twitter-api-key env)
                                 (:twitter-api-secret env))
@@ -134,7 +116,7 @@
                       (turbine-topology-vector 
                         (:elasticsearch-url env "http://localhost:9200")
                         (:elasticsearch-index env "profanity_power_index"))))] 
-
+    
     ;; Validate that there's something to track.
     (when (nil? (get-in options [:options :track]))
       (println "Requires at least one tracking term.")
