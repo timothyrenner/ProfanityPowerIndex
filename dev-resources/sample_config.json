@@ -1,0 +1,51 @@
+{
+    "subjects": [
+        {
+            "name": "Donald Trump",
+            "display_name": "Donald Trump",
+            "picture": "https://pbs.twimg.com/profile_images/749781656177745920/1Gy4EH2g.jpg",
+            "id": "donald-trump",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Mike Pence",
+            "display_name": "Mike Pence",
+            "picture": "https://pbs.twimg.com/profile_images/817805976262811648/pP-XV5Sm.jpg",
+            "id": "mike-pence",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        },
+        {
+            "name": "Paul Ryan",
+            "display_name": "Paul Ryan",
+            "picture": "https://pbs.twimg.com/profile_images/816642042000535552/dU_6-LFL.jpg",
+            "id": "paul-ryan",
+            "colors": {
+                "sparkline": [ { "offset": "0%",    "color": "#fcbba1" },
+                               {  "offset": "25%",  "color": "#fcae91" },
+                               {  "offset": "50%",  "color": "#fb6a4a" },
+                               {  "offset": "75%",  "color": "#de2d26" },
+                               {  "offset": "100%", "color": "#a50f15" } ],
+                "barchart": { "base" : "#bd0026",
+                              "hover": "#800026" }
+            }
+        }
+    ],
+    "startTime": "2017-06-01T21:00:00-0500",
+    "stopTime": "2017-06-01T21:05:00-0500"
+}

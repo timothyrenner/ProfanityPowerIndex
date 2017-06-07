@@ -4,7 +4,8 @@
             [clojure.edn :as edn]
             [clojure.java.io :as io]
             [profanity-power-index.data-collection :refer [collect]]
-            [profanity-power-index.data-extraction :refer [extract]])
+            [profanity-power-index.data-extraction :refer [extract]]
+            [profanity-power-index.site-generator :refer [generate]])
   (:gen-class))
 
 (def collect-spec
@@ -57,5 +58,6 @@
                   (collect env options))
       "extract" (let [options (parse-opts (rest args) extract-spec)]
                   (extract env options))
+      "generate" (generate (rest args))
       (println (str command "is not a command.")))
 ))
