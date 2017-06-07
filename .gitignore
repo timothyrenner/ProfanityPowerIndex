@@ -8,3 +8,5 @@ target/
 *.db
 *.keys
 images/
+.lein-repl-history
+*.edn
