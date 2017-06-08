@@ -16,13 +16,6 @@
     :id :track
     :assoc-fn (fn [m k t] (update m k #(conj % t)))]])
 
-;; TODO: Figure out how best to specify the mapping between the filter
-;; query for elasticsearch and the target name. Could be paired args as 
-;; command line arguments (if supported) or a JSON file.
-;; It doesn't look like multiple arguments are supported directly. However, the
-;; tracking queries end up in :options, and the target names end up in 
-;; :arguments. As long as they come in pairs, they can be zipped together and
-;; used. This is much better than a JSON file.
 (def extract-spec
   [[:short-opt "-s"
     :long-opt "--start"
@@ -46,6 +39,13 @@
     :desc "The name of the file to store the output."
     :id :output]])
 
+(def generate-spec
+  [[:short-opt "-o"
+   :long-opt "--output-directory"
+   :required "DIRECTORY_NAME"
+   :desc "The name of the output directory for the site."
+   :id :output-directory]])
+
 (defn -main
   [& args]
   
@@ -58,6 +58,7 @@
                   (collect env options))
       "extract" (let [options (parse-opts (rest args) extract-spec)]
                   (extract env options))
-      "generate" (generate (rest args))
+      "generate" (let [options (parse-opts (rest args) generate-spec)]
+                    (generate options))
       (println (str command "is not a command.")))
 ))
