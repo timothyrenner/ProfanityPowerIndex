@@ -44,7 +44,8 @@
    :long-opt "--output-directory"
    :required "DIRECTORY_NAME"
    :desc "The name of the output directory for the site."
-   :id :output-directory]])
+   :id :output-directory
+   :default "site"]])
 
 (defn -main
   [& args]
@@ -60,5 +61,4 @@
                   (extract env options))
       "generate" (let [options (parse-opts (rest args) generate-spec)]
                     (generate options))
-      (println (str command "is not a command.")))
-))
+      (println (str command "is not a command.")))))
