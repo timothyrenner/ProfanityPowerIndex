@@ -47,13 +47,21 @@
    :id :output-directory
    :default "site"]])
 
+(def main-spec
+  [[:long-opt "--env"
+    :required "ENV_FILE_NAME"
+    :desc "The name of the environment file."
+    :default "env.edn"
+    :id :env]])
+
 (defn -main
   [& args]
   
-  (let [env 
-          (-> "env.edn" io/resource io/file slurp edn/read-string)
+  (let [options (parse-opts args main-spec)
+        env-file (get-in options [:options :env])
+        env (-> env-file slurp edn/read-string)
         command (first args)]
-
+    
     (case command
       "collect" (let [options (parse-opts (rest args) collect-spec)]
                   (collect env options))
