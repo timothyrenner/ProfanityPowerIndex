@@ -10,6 +10,8 @@
                  [clojurewerkz/elastisch "3.0.0-beta2"]
                  [org.clojure/tools.cli "0.3.5"]
                  [org.clojure/data.csv "0.1.4"]
+                 [org.clojure/tools.logging "0.4.0"]
+                 [org.slf4j/slf4j-log4j12 "1.7.25"]
                  [hiccup "1.0.5"]]
   :main ^:skip-aot profanity-power-index.core
   :target-path "target/%s"

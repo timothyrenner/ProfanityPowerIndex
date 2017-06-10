@@ -6,7 +6,8 @@
             [clojure.string :as str]
             [turbine.core :refer [make-topology]]
             [clojurewerkz.elastisch.rest :as esr]
-            [clojurewerkz.elastisch.rest.document :as esd])
+            [clojurewerkz.elastisch.rest.document :as esd]
+            [clojure.tools.logging :as log])
   (:import [twitter.callbacks.protocols AsyncStreamingCallback]))
 
 ;; Partitioning transducer.
@@ -36,11 +37,12 @@
     ;; on the input channel.
     (fn [response baos] (>!! transfer-chan (.toString baos)))
     ;; This is the 'failure' function for the callback.
-    (fn [resp] (binding [*out* *err*] (println "failed")))
+    (fn [resp] 
+      (log/error (str "Twitter API response failed: " resp)))
     ;; This is the 'error' function for the callback. It has a response and
     ;; a throwable.
-    (fn [err thr] (binding [*out* *err*] 
-      (println "ERROR:" err)))))
+    (fn [err thr] 
+      (log/error (str "Error processing response: " err)))))
 
 ;;;; PROCESSING HELPERS ;;;;
 (defn- contains-profanity? [text]
@@ -61,7 +63,7 @@
     (json/read-json text)
     (catch Exception e 
     (do
-      (println e)
+      (log/error "Error parsing JSON: " e)
       {:text ""}))))
 
 (defn- parse-filter []
@@ -79,6 +81,8 @@
 
 (defn- turbine-topology-vector [elastic-url elastic-index]
   (let [es-conn (esr/connect elastic-url)]
+    (log/info (str "Connected to Elasticsearch: " elastic-url))
+    (log/info "Starting Turbine topology.")
     [[:in :input (partitioner-xform)]
 
     ;; JSON deserialization is probably the slowest part of this, and we can
@@ -119,7 +123,7 @@
     
     ;; Validate that there's something to track.
     (when (nil? (get-in options [:options :track]))
-      (println "Requires at least one tracking term.")
+      (log/fatal "Requires at least one tracking term.")
       (System/exit 1))
 
     ;; Read from the dechunker chan in a go loop and drop into turbine.
@@ -128,6 +132,7 @@
         (turbine-in tweet-chunk))
       (recur))
     
+    (log/info "Connecting to Twitter streaming API.")
     (statuses-filter :params {:track (get-in options [:options :track])}
                      :oauth-creds creds
                      :callbacks *callback*)))
