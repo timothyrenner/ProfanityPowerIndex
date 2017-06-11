@@ -4,199 +4,183 @@ This guide contains the information required to produce the graphic and collect 
 
 ## Quickstart
 
-To just get a look at a sample graphic, `cd` into `/site/sample_data` and run
+To just get a look at a sample graphic, `cd` into `dev-resources/` and run
 
 ```bash
-python create_sample_debate_data.py > sample_data.tsv
+python create_sample_debate_data.py
 ```
-This creates a tab separated file with simulated debate data.
-You might also want to check out `sample_subjects.json` while you're there, but don't change anything because it needs to match the `tsv` data.
+This creates a tab separated file with simulated debate data, `sample_data.csv`.
+You might also want to check out `sample_config.json` while you're there, but don't change anything because it needs to match the `csv` data.
 
-`cd` back up to root and go into `site_generator`.
+`cd` back up to root and run
 
 From there run
 
 ```bash
-lein run ../site/sample_data/all_config.json\
-         sample_data/sample_data.tsv >\
-         ../site/index.html
+lein run generate dev-resources/sample_config.json dev-resources/sample_data.csv
 ```
 
+This creates a directory called `site`.
 Here's what the args are, very quickly.
 This will be discussed in more detail later in the document.
 
-1. `../site/sample_data/all_config.json` is a configuration file that gives information the templating engine needs about the subjects like: picture URL, color schemes, and CSS id tags.
+1. `dev-resources/sample_config.json` is a configuration file that gives information the templating engine needs about the subjects like: picture URL, color schemes, and CSS id tags.
 
-2. `sample_data/sample_data.tsv` is the path *from the `index.html` file* to the data. It's not going to be used as a path in the templating engine, just the site's HTML. That's why you **don't** need `../site/`. Yes this is confusing. If I come up with a better way I'll implement it.
-
-3. `../site/index.html` is the path to the index file you want. The templater prints to STDOUT so it needs to be redirected.
+2. `dev-resources/sample_data.csv` is the file with the data.
 
 Finally, `cd` into `site/` and fire up an HTTP server
 
 ```bash
-python -m SimpleHTTPServer 8000
+# You are using Python 3 .... right?
+python -m http.server 8000
 ```
 
 In your browser go to `http://localhost:8000` and enjoy.
 
-## Building
+## Overview
 
-The data collector is built with sbt, the post processor doesn't require building, and the site builder is built with Leiningen.
+The Profanity Power Index is (now) a single Clojure program with three commands:
 
-The sbt configuration is a little more complicated.
-To build the Spark collector, use `sbt assembly` to make a fat jar.
-That can be used for `spark-submit`.
-For the local collectors, you can do `sbt "run OPTIONS"` and select the main class, or use `sbt stage` to build a launcher script to start the program without sbt.
-The launcher script uses the [sbt-native-packager](http://www.scala-sbt.org/sbt-native-packager/) plugin, with the default main class set to the InfluxDB collector.
-The script has a `-main` option to select the STDOUT collector if you want to run that instead.
+* `collect` Collects data from the Twitter API and streams it into Elasticsearch.
+* `extract` Pulls data from Elasticsearch into a CSV file.
+* `generate` Takes a CSV file and a JSON configuration and generates a website with an interactive D3.js visualization.
 
-The site builder is explained later, but it's much simpler to run than the sbt stuff.
+Run it one of two ways:
 
-## Tweet Collector (Local Mode, STDOUT)
+1. [Leiningen](https://github.com/technomancy/leiningen)
 
-I built the local mode initially for testing, as it shares the same core logic as the distributed Spark Streaming build, but it could also be useful in case there are [issues running the cluster](http://timothyrenner.github.io/streaming/2015/08/16/adventures-in-the-mesosphere.html) or you just don't want to spend money on this blatantly stupid waste of time.
-It takes five command line arguments:
-    
-* A configuration file (JSON).
-* The Twitter consumer key.
-* The Twitter consumer secret key.
-* The Twitter access key.
-* The Twitter access secret key.
-    
-It may seem like a bit much when running locally, but it's done this way because it makes the distributed mode more secure. See [here](http://timothyrenner.github.io/streaming/2015/08/16/adventures-in-the-mesosphere.html) for how I managed to screw this up with my AWS keys.
-That was not a good morning.
-
-Feel free to modify it to use a `twitter4j.properties` file if you want, just be aware that if you do run it remotely your credentials are going with it.
-
-### Config File
-Here's an example of the structure of the config file:
-
-```json
-    {
-        "tracking": ["jeb bush", "jebbush", "ben carson", "realbencarson"],
-        "targets": {
-            "bush": "Jeb Bush",
-            "@jebbush": "Jeb Bush",
-            "carson": "Ben Carson",
-            "@realbencarson": "Ben Carson"
-        },
-        
-        "time": 120
-    }
+```
+lein run <command> <OPTS>
 ```
 
-#### Fields
-* `tracking` is an array of strings that will be used as filter queries against the Streaming API. Ideally it should contain both the full name (space included) and the twitter handle of each target.
-* `targets` is an object (map, really) that contains _tokens_ from within tweets to the full names of the targets. For `@mention`s this means the `@` needs to be there, since the tweet is tokenized on space only (a subject of future work, perhaps). The best way to use this is to include the handle and the _last name_ of the subject. Used in conjunction with `tracking`, this can ensure the proper attribution is made (e.g. making sure Katy Perry doesn't get counted for Rick Perry).
-* `time`: _Optional_. The total time in seconds for the run. If this is omitted, the program will run indefinitely.
-
-### Post Processor (Local, STDOUT)
-
-The streaming data collector's don't aggregate the tweet events as they come in because time-dependent aggregation can be tricky for streaming data.
-So to perform the aggregation some post processing is required.
-This happens in two stages:
-
-1. Jump start the dataset by filling in every time/word/subject slot with a count of zero. This makes the visualization interpolators behave when there isn't much activity (see [here ](http://timothyrenner.github.io/profanitypowerindex/20150916-cnn/#john-kasich-sparkline) for an example).
-2. Aggregate the event data, and merge with the jump-started dataset.
-
-### Jump Start
-There's a python3 script in the `post_processing/` directory called `jumpstart.py`.
-It reads the site generator's config file, grabbing the subjects and the start/end times, and builds out a dataset of all zeros, outputting to a csv.
-The next section describes the site generator's config file.
-
-The start/end times in that file represent the _actual_ times the event started. 
-If you collect data before and after the event start (to show ramped-up interest or something), you can provide a lead time that gets slapped on before and after the event.
-
-The script is used as follows:
-    
-    python3 jumpstart.py /path/to/site-generator-config.json [OPTIONS]
-    
-Options:
-    
-    -l --lead-time <time> Time in minutes to put at the beginning/end of the run. Default 15.
-    
-    -o --output <file> The name of the output file. Default "output.csv"
-    
-    -h --help Displays arguments
-    
-### Aggregation
-The event aggregation is done via [SQLite3](https://www.sqlite.org/), but is fully automated in a bash script, `process_events.sh`.
-This script also requires [csvkit](https://csvkit.readthedocs.org/en/0.9.1/) for some date picking magic.
-
-It's usage is simple:
+2. Java
 
 ```bash
-process_events.sh /path/to/raw_data.csv /path/to/jumpstart_data.csv
+# To compile, first you have to tell Leiningen to build with a SNAPSHOT dependency.
+# The only SNAPSHOT dependency is Turbine - read about it below.
+export LEIN_SNAPSHOTS_IN_RELEASE=true
+lein uberjar
+
+# Now you can run it with java.
+java -jar target/uberjar/profanity-power-index-2.0-standalone.jar <command> <OPTS>
 ```
 
-It outputs a tab-separated file with the time, subject, word, and count (including headers) in the exact form required for the visualization.
-It even filters the raw data to confine it between the start and stop times in the jump started dataset.
+Each command has its own set of options.
+`collect` and `extract` also need some configuration for talking to Twitter and Elasticsearch.
+The environment information needs to be stored in an [EDN](https://github.com/edn-format/edn) format (which basically means define a Clojure data structure, in our case a map).
+Here's an example with the required keys, configured to talk to a locally running Elasticsearch instance.
 
-The output goes to stdout, so you'll want to redirect it to the file of your choice.
-
-## Tweet Collector (Spark)
-
-The Spark collector for the tweets contains exactly the same command line options as the local mode.
-Spark mode is designed to store the tweets (text, time) as well as the profanity into a Cassandra database.
-It sets up the keyspace `ppi` and creates two tables: `tweets` and `profanity`.
-The JSON config file requires three additional arguments (which are ignored by local mode):
-
-* `batchLength`: The number of seconds per micro-batch.
-* `cassandraHost`: The hostname of the Cassandra database.
-* `cassandraPort`: The port of the Cassandra database.
-
-Post processing is the same as for local STDOUT mode - pull down the `profanity` table into a tab separated file.
-
-## Tweet Collector (Local, InfluxDB)
-
-There's also an option to use [InfluxDB](https://influxdata.com/time-series-platform/influxdb/) to store the profanity in local mode.
-
-It expects InfluxDB to be running on `localhost:8086`.
-Future versions may make this configurable, but it's not hard to change in the code either.
-It can be started (on my Mac) either in the background as a service, or simply in its own terminal, like so
-
-```bash
-influxd
+```clojure
+{
+    :twitter-consumer-key "your-consumer-key"
+    :twitter-consumer-secret "your-consumer-secret"
+    :twitter-api-key "your-api-key"
+    :twitter-api-secret "your-api-secret"
+    :elasticsearch-url "http://localhost:9200"
+    :elasticsearch-index "profanity_power_index"
+}
 ```
 
-### Post Processor (Local, InfluxDB)
+You can specify this file with the `--env` argument, which defaults to `env.edn` (meaning it should be in the current directory you're running in).
 
-The post processing step for the InfluxDB mode is simpler than the local mode since InfluxDB allows grouping by time much more flexibly than SQLite.
-The post processor is located in `post_processing/influx`.
+### Installing Turbine
 
-```bash
-./extract_influx.sh start_time stop_time
+[Turbine](https://github.com/timothyrenner/turbine) is a data processing library I wrote, and is the only dependency **not** on Clojars / Maven Central.
+To install it, clone the repo (linked) and run `lein install`.
+Once turbine is feature complete I'll add it to Clojars, but it isn't there yet.
+It does have enough functionality for the purposes of this application and works  well.
+
+## `collect`
+
+Assuming you have Twitter API keys, turbine installed, and a running Elasticsearch instance, this is a straightforward command to execute.
+There is one option that can be repeated as necessary: `--track [-t]`, which specifies the tracking keyword in the Twitter [streaming API](https://dev.twitter.com/streaming/overview/request-parameters#track).
+
+For example, to track President Trump, Vice President Pence, and Speaker Paul Ryan, with the environment configured in `env.edn`, you'd run:
+
+```
+lein run collect --track trump -t pence -t speakerryan
 ```
 
-where `start_time` and `stop_time` are the datetimes to grab the data in a format recognizable by the `gdate` (from GNU coreutils).
-ISO 8601 or RFC3339 are good bets.
-(Note: to install `gdate` on mac, use `brew install coreutils`).
+This would fire up a connection to Twitter, send the data for processing through turbine, which dumps it into Elasticsearch.
+If you want to use Kibana, you can create some pretty cool dashboards while the data streams if you'd like, but that isn't required to get the data.
 
-The script converts the datetimes provided into UTC and puts them in the `WHERE` clause of an InfluxDB query that aggregates the profanity to the minute level, filling missing values with 0.
-InfluxDB doesn't give the data in _quite_ the formate needed, so there's an `awk` script that the output gets piped to before being converted to tab separated values.
-The script output is sent to STDOUT - capture it into a CSV to put it into the site.
+## `extract`
 
-## Site Generator
+The `extract` subcommand is used to pull the data out of Elasticsearch into a CSV file for consumption by the site generator (or anything that can read a CSV file).
+Here are the options:
 
-The site generator is a [leiningen](http://leiningen.org/) project (`brew install lein` on a mac) written in Clojure.
-It uses the [hiccup](https://github.com/weavejester/hiccup) template engine to generate all of the HTML.
-
-The site generator takes two arguments: the path to the subject file and the path to the dataset.
-
-
-To run the site generator, cd into the `site_generator` directory and execute
-
-```bash
-lein run /path/to/subjects.json http/relative/path/to/data.tsv
+```
+--start-time -s START_TIME   The start time for the extraction.
+--end-time   -e END_TIME     The end time for the extraction.
+--target     -t QUERY TARGET The query string and associated target.
+--output     -o OUTPUT_FILE  The name of the output file.
 ```
 
-Read on for descriptions of `subjects.json` and `data.tsv`.
+The times need to be in a very specific format: `YYYY-MM-DDTHH:mm:ssZ`, where Z is the time zone.
+So June 9, 2017 at 10:30 PM CDT would be `2017-06-09T22:30:00-0500`.
 
-### Site Generator Config File
+The `--target` option takes two arguments: the query string and the target name.
+The query string is used in a `match` query from Elasticsearch, and the target name is used for those matches in the resulting CSV file.
+The match query is applied to two fields: `text` and `quoted.text`.
+This is because Twitter's tracking command will return tweets with matches in the quoted text, even when there isn't a match in the text of the tweet itself.
 
-The site generator config file is a JSON file with the following structure (with one map per subject):
+So to match Donald Trump, Mike Pence, and Paul Ryan for tweets between 8:30 and 9:30 PI on Jun 1, 2017 Central Daylight Time, this is what you'd run:
 
-```json
+```
+lein run extract \
+--start-time 2017-06-01T20:30:00-0500 \
+--end-time 2017-06-01T21:30:00-0500 \
+--target *trump* "Donald Trump" \
+--target *pence* "Mike Pence" \
+--target *ryan* "Paul Ryan" \
+--output test.csv
+```
+
+Note the quotes around the target names.
+If these aren't present the arguments will not be parsed correctly and the resulting CSV will be malformed.
+
+The above command results in a file `test.csv` with the following tab separated fields: `subject` (defined by the second argument of the `-t` option), `word`, `time`, and `count`.
+The file has a header.
+
+## `generate`
+
+The `generate` command takes a CSV (presumably created with the `extract` function) and a configuration file and generates a website with an interactive Javascript visualization.
+
+It also takes an `--output-directory` or `-o` option to specify the directory to create the site in - default is ... `site`.
+Because I'm creative.
+
+If you've got a config file and data file and you want to make a site in `my_site`, this is what you'd execute.
+
+```
+lein run generate \
+    my_config.json \
+    my_data.csv \
+    --output my_site
+```
+
+The application will create a directory `my_site` with a structure that looks like the following:
+
+```
+my_site/
+    index.html
+    js/profanitypowerindex.js
+    data/my_data.csv
+```
+
+`cd` into that directory and fire up a web server and you have a fully functioning site with an interactive visualization.
+Do note that the data file `my_site/data/my_data.csv` is _copied_ from the original.
+The data file is the same format outputted by the `extract` command: a tab separated file with four fields - `subject`, `word`, `time`, and `count`. 
+It also needs a header, or D3 won't be able to properly interpret the field names.
+
+The config file is a little more complicated, and requires more explanation.
+
+### generator Config File
+
+The generator config file sets up parameters for the visualization on a target by target basis.
+
+It has the following structure:
+
+```javascript
 {
     "subjects":
         [
@@ -207,57 +191,40 @@ The site generator config file is a JSON file with the following structure (with
               "colors": {
                  "sparkline": [{"offset": "xxx", "color": "xxx"}],
                  "barchart": { "base": "xxx", "hover": "xxx" }
-            }
+            },
+            {
+                "name": "Donald Trump",
+                // ... other fields for Trump.
+            } ,
+            // ... other people that were tracked.
         ],
     "startTime": "YYYY-MM-DDTHH:MM-ZZZZ",
     "stopTime": "YYYY-MM-DDTHH:MM-ZZZZ"
 }
 ```
+
 #### Fields
 
 * **name** The name of the subject.
 * **picture** A link to a picture of the subject. This gets shoved into a 180px by 180px image tag. You can change it if you want, but it may have undesired consequences wrt the CSS positioning. Mind the aspect ratio as well.
-* **id** A name that can be used as a CSS ID selector to uniquely identify DOM elements for a subject.
+* **id** A name that can be used as a CSS ID selector to uniquely identify DOM elements for a subject. Hopefully it's obvious this has to be unique.
 * **colors** The colors for the subject's plots. The **sparkline** is an array of objects that will be used in an [SVG gradient](https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Gradients). The idea was taken from [this plot](http://bl.ocks.org/mbostock/3969722) by Mike Bostock. The **barchart** is an object with the "base" color for the barchart bars and a color to transition to when hovered.
 * **startTime** The start time of the actual debate in ISO 8601.
 * **stopTime** The stop time of the actual debate in ISO 8601.
 
-### Data File
-
-A tab separated file with the following columns: subject, word, time, and count.
-The time column should be in ISO 8601 or any other format recognizable by `new Date(time)` in javascript, since that's how it's interpreted.
+For a concrete example, a sample configuration is in `dev-resources/sample_config.json`.
 
 ### One Last Thing
 
 The data file and the `generator-config.json` file need to match in that the names of the subjects in the dataset must match the names of the subjects in the file.
 Otherwise things won't get drawn and stuff.
 
-### Running
-
-Run with leiningen
-
-```bash
-lein run /path/to/generator-config.json /index/to/data.tsv > ../site/index.html
-```
-
-## Site
-
-The site itself with everything required to create the site, less the `index.html` file, which is built with the site generator program.
-It contains the javascript file `setup.js`, which has all the plot functions required.
-It also contains a directory with sample data - a sample `subjects.json` file and a `create_sample_data.py` python program to create the sample data.
-
 ### Creating Sample Data
 
 The `create_sample_data.py` file builds some simulated sample data to load into the visualization.
-Running it simply writes tab separated columns (subject, word, time, count) as tab separated values.
-Redirect the output to save.
+Running it simply writes tab separated columns (subject, word, time, count) as tab separated values to `sample_data.csv`.
 
 ```bash
-python create_sample_debate_data.py > sample_data.tsv
+python create_sample_debate_data.py
 ```
-
-### Final Note
-There are a couple of parameters that need to be changed within the site builder.
-Be sure to look at the code. 
-Specifically the start and stop times, and the link to my Github page.
-Those are all in the `main` function.
+It requires python 3 to run.
