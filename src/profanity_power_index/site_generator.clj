@@ -65,7 +65,7 @@
     (io/copy (io/file (second (:arguments options))) data-file)
 
     ;; Copy js.
-    (io/copy (-> "js/profanitypowerindex.js" io/resource io/file) js-file)
+    (io/copy (-> "js/profanitypowerindex.js" io/resource slurp) js-file)
 
     ;; Write index.html out.
     (spit index-file
