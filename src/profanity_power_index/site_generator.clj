@@ -108,6 +108,9 @@
                 " and "
                 (link-to
                   "https://github.com/elastic/elasticsearch" "Elasticsearch. ")
+                " visualization built with "
+                (link-to
+                  "https://d3js.org/" "D3.js. ")
                 "Check out the code on " 
                 (link-to 
                   "https://www.github.com/timothyrenner/ProfanityPowerIndex" 
