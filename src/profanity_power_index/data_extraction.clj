@@ -24,12 +24,12 @@
         :profanity {
             :filters {
                 :filters {
-                    :fuck   {:match {:text "fuck*"}}
-                    :shit   {:match {:text "shit*"}}
-                    :bitch  {:match {:text "bitch*"}}
-                    :ass    {:match {:text "ass*"}}
-                    :dick   {:match {:text "dick*"}}
-                    :douche {:match {:text "douche*"}}
+                    :fuck {:query_string {:query "text:*fuck*"}}
+                    :shit {:query_string {:query "text:*shit*"}}
+                    :bitch {:query_string {:query "text:bitch*"}}
+                    :ass {:query_string {:query "text:ass*"}}
+                    :dick {:query_string {:query "text:*dick*"}}
+                    :douche {:query_string {:query "text:douche*"}}
                     :covfefe {:match {:text "covfefe"}}
                 }
             }
@@ -50,8 +50,16 @@
     }
 )
 
+(defn target-match [q]
+    {
+        :query_string {
+            :query q
+            :fields ["text", "quoted_status.text"]
+        }
+    }
+)
+
  ;; The target aggregation is a function of the matches and target names.
- ;; TODO: Look at quoted text as well.
  (defn- target [targets]
    {
         :target {
@@ -59,7 +67,7 @@
                 :filters
                     ;; Use the map transducer to build the nested map for the 
                     ;; query string. 
-                    (into {} (map (fn [[q t]] [t {:match {:text q}}])) targets)
+                    (into {} (map (fn [[q t]] [t (target-match q)])) targets)
             }
         }
    }

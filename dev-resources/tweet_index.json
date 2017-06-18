@@ -53,6 +53,15 @@
       },
       "dynamic_templates": [
         {
+          "text_template": {
+            "match":"*text",
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "text"
+            }
+          }
+        },
+        {
           "string_template": {
             "match": "*",
             "match_mapping_type": "string",
