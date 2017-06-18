@@ -83,6 +83,19 @@ Here's an example with the required keys, configured to talk to a locally runnin
 
 You can specify this file with the `--env` argument, which defaults to `env.edn` (meaning it should be in the current directory you're running in).
 
+### Setting up Elasticsearch
+
+There are a couple of shell scripts in `dev-resources` to help with managing Elasticsearch.
+They're configured to set up an instance at `localhost:9200`, but it's pretty easy to modify them since they're literally one `curl` command.
+
+`create_index.sh` sets up an index called `profanity_power_index` on `localhost:9200`.
+Keep in mind if you want to change it you'll also need to change the corresponding entry in `env.edn`.
+
+`tweet_index.json` is the index definition of the tweet.
+It's a single mapping for a `tweet` type.
+I pulled it from [this repo](https://github.com/elastic/examples/blob/master/ElasticStack_twitter/twitter_template.json), which is maintained by Elastic.
+I made a slight modification to the dynamic mappings so that the `quoted_status.text` field gets analyzed.
+
 ### Installing Turbine
 
 [Turbine](https://github.com/timothyrenner/turbine) is a data processing library I wrote, and is the only dependency **not** on Clojars / Maven Central.
@@ -120,8 +133,8 @@ The times need to be in a very specific format: `YYYY-MM-DDTHH:mm:ssZ`, where Z 
 So June 9, 2017 at 10:30 PM CDT would be `2017-06-09T22:30:00-0500`.
 
 The `--target` option takes two arguments: the query string and the target name.
-The query string is used in a `match` query from Elasticsearch, and the target name is used for those matches in the resulting CSV file.
-The match query is applied to two fields: `text` and `quoted.text`.
+The query string is used in a `query_string` query from Elasticsearch, and the target name is used for those matches in the resulting CSV file.
+The `query_string` query is applied to two fields: `text` and `quoted.text`.
 This is because Twitter's tracking command will return tweets with matches in the quoted text, even when there isn't a match in the text of the tweet itself.
 
 So to match Donald Trump, Mike Pence, and Paul Ryan for tweets between 8:30 and 9:30 PI on Jun 1, 2017 Central Daylight Time, this is what you'd run:
