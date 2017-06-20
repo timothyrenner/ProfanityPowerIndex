@@ -83,32 +83,39 @@
   (let [es-conn (esr/connect elastic-url)]
     (log/info (str "Connected to Elasticsearch: " elastic-url))
     (log/info "Starting Turbine topology.")
-    [[:in :input (partitioner-xform)]
+    [
+      ;; Apply the partitioner to the input.
+      [:in :input (partitioner-xform)]
 
-    ;; JSON deserialization is probably the slowest part of this, and we can
-    ;; filter in parallel too. Most of the data will be dropped by the filters,
-    ;; but we need to deserialize to execute the filters.
-    [:spread :input 
-      [[:deser1 (parse-filter)]
-       [:deser2 (parse-filter)]
-       [:deser3 (parse-filter)]]]
-    ;; Unify all of the parsed values asynchronously.
-    [:union [:deser1 :deser2 :deser3]
-             [:to-out (map identity)]]
-    ;; Send to Elasticsearch.
-    [:sink :to-out
-      (fn [t] 
-        (esd/put
-            es-conn 
-            ;; Name of the index.
-            elastic-index
-            ;; Type
-            "tweet" 
-            ;; Extract the id from the tweet.
-            (:id_str t) 
-            ;; The tweet itself, which doesn't need to be converted to JSON
-            ;; explicitly.
-            t))]]))
+      ;; JSON deserialization is probably the slowest part of this, and we can
+      ;; filter in parallel too. Most of the data will be dropped by the 
+      ;; filters, but we need to deserialize to execute the filters.
+      [:spread 
+        :input 
+        [[:deser1 (parse-filter)]
+         [:deser2 (parse-filter)]
+         [:deser3 (parse-filter)]]]
+
+      ;; Unify all of the parsed values asynchronously.
+      [:union 
+        [:deser1 :deser2 :deser3]
+        [:to-out (map identity)]]
+
+      ;; Send to Elasticsearch.
+      [:sink :to-out
+        (fn [t] 
+          (esd/put
+              es-conn 
+              ;; Name of the index.
+              elastic-index
+              ;; Type
+              "tweet" 
+              ;; Extract the id from the tweet.
+              (:id_str t) 
+              ;; The tweet itself, which doesn't need to be converted to JSON
+              ;; explicitly.
+              t))]
+    ]))
 
 (defn collect [env options]
   (let [creds (make-oauth-creds (:twitter-consumer-key env)
